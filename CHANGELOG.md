@@ -3,5 +3,6 @@
 
 API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 
-## [Unreleased]
-### Changed:
+## [1.0.0]
+### Added:
+- Installed laravel v8.6.3
