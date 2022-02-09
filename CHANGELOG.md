@@ -4,12 +4,12 @@
 API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 
 ## [1.0.2] 09.02.2022
-### Added:g
+### Added:
 - Laravel Ide-helper
 
 
-## [1.0.3] 09.02.2022
-### Added:g
+## [1.0.1] 09.02.2022
+### Added:
 - Laravel sanctum
  
 
