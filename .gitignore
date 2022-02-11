@@ -13,4 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-.styleci.yml
+/.styleci.yml
+.phpstorm.meta.php
+_ide_helper.php

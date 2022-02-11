@@ -16347,6 +16347,74 @@
      
 }
 
+    namespace LaravelJsonApi\Core\Facades { 
+            /**
+     * Class JsonApi
+     *
+     */ 
+        class JsonApi {
+                    /**
+         * 
+         *
+         * @return \Route 
+         * @static 
+         */ 
+        public static function route()
+        {
+                        /** @var \LaravelJsonApi\Core\JsonApiService $instance */
+                        return $instance->route();
+        }
+                    /**
+         * Get the active server, or a named server.
+         *
+         * @param string|null $name
+         * @return \LaravelJsonApi\Contracts\Server\Server 
+         * @static 
+         */ 
+        public static function server($name = null)
+        {
+                        /** @var \LaravelJsonApi\Core\JsonApiService $instance */
+                        return $instance->server($name);
+        }
+                    /**
+         * Get the active server, if there is one.
+         *
+         * @return \LaravelJsonApi\Contracts\Server\Server|null 
+         * @static 
+         */ 
+        public static function serverIfExists()
+        {
+                        /** @var \LaravelJsonApi\Core\JsonApiService $instance */
+                        return $instance->serverIfExists();
+        }
+         
+    }
+     
+}
+
+    namespace LaravelJsonApi\Laravel\Facades { 
+            /**
+     * Class JsonApiRoute
+     *
+     */ 
+        class JsonApiRoute {
+                    /**
+         * Register routes for the named JSON API server.
+         *
+         * @param string $name
+         * @return \LaravelJsonApi\Laravel\Routing\PendingServerRegistration 
+         * @static 
+         */ 
+        public static function server($name)
+        {
+                        /** @var \LaravelJsonApi\Laravel\Routing\Registrar $instance */
+                        return $instance->server($name);
+        }
+         
+    }
+     
+}
+
     namespace Illuminate\Http { 
             /**
      * 
@@ -19882,6 +19950,8 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
+            class JsonApi extends \LaravelJsonApi\Core\Facades\JsonApi {}
+            class JsonApiRoute extends \LaravelJsonApi\Laravel\Facades\JsonApiRoute {}
      
 }
 
