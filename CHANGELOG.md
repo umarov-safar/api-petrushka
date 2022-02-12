@@ -3,6 +3,10 @@
 
 API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 
+## [1.0.5]  12.02.2022
+### Changed:
+- Проверко в UserPolicy в метод update
+
 ## [1.0.4]  12.02.2022
 ### Added:
 - Просмотр и редактирование своего профиля issue #2
