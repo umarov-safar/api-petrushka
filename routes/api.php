@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +23,9 @@ Route::post('auth/phone', [AuthController::class, 'login']);
 Route::post('auth/phone/{phone}', [AuthController::class, 'checkCode'])->whereNumber('phone');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::post('auth/logout', [AuthController::class, 'logout']); // logout
+
+    // User routes
+    Route::resource('users', UserController::class);
 });
+

@@ -3,7 +3,11 @@
 
 API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 
-## [1.0.3] 09.02.2022
+## [1.0.4]  12.02.2022
+### Added:
+- Просмотр и редактирование своего профиля issue #2
+
+## [1.0.3] 11.02.2022
 ### Added:
 - Installed laravel-json-api/laravel
 

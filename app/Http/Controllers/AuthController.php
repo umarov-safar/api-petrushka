@@ -52,10 +52,9 @@ class AuthController extends Controller
                 'user' => $user,
                 'token' => $token->plainTextToken
             ]);
-
-        } else {
-            return  response(['message' => 'неверный код']);
         }
+
+        return  response(['message' => 'неверный код']);
 
     }
 
