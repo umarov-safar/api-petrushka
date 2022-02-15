@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use \App\Http\Controllers\Api\Admin\V1\AbilityController;
+use \App\Http\Controllers\Api\Admin\V1\RoleController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +32,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('users', UserController::class);
 });
 
+
+
+JsonApiRoute::server('Admin\V1')
+    ->prefix('admin/v1')
+    ->middleware('auth:sanctum')
+    ->resources(function ($server) {
+        //roles routes
+        $server->resource('roles', RoleController::class)
+            ->relationships(function ($relationships) {
+            $relationships->hasMany('abilities');
+            $relationships->hasMany('users');
+        });
+        //abilities routes
+        $server->resource('abilities', AbilityController::class);
+
+    });

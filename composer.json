@@ -11,7 +11,8 @@
         "laravel-json-api/laravel": "^1.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.14",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "silber/bouncer": "v1.0.0-rc.11"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
