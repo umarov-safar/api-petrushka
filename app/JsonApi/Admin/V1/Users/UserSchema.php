@@ -4,8 +4,10 @@ namespace App\JsonApi\Admin\V1\Users;
 
 use App\Models\User;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
@@ -33,6 +35,8 @@ class UserSchema extends Schema
             Str::make('name'),
             Str::make('email'),
             Str::make('phone'),
+            Number::make('code')->hidden(),
+            Boolean::make('isBlock'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -57,7 +61,9 @@ class UserSchema extends Schema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make();
+        return PagePagination::make()
+            ->withPageKey('page')
+            ->withPerPageKey('limit');
     }
 
 }

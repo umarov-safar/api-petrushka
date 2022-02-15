@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isA('superadmin', 'admin');
     }
 
     /**
@@ -29,8 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        // $user->is_admintrator will be change to adminstrator role when we use Bouncer
-        return $user->id === $model->id || $user->is_admintrator;
+        return $user->id === $model->id || $user->isAn('superadmin','admin');
     }
 
     /**
@@ -41,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isA('superadmin','admin');
     }
 
     /**
@@ -53,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->id === $model->id || $user->is_administrator;
+        return $user->id === $model->id || $user->isAn('superadmin','admin');
     }
 
     /**
@@ -65,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->id === $model->id || $user->isAn('superadmin','admin');
     }
 
     /**

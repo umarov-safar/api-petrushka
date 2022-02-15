@@ -6,6 +6,7 @@ use \App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use \App\Http\Controllers\Api\Admin\V1\AbilityController;
 use \App\Http\Controllers\Api\Admin\V1\RoleController;
+use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,6 @@ JsonApiRoute::server('Admin\V1')
         //abilities routes
         $server->resource('abilities', AbilityController::class);
 
+        //users routes
+        $server->resource('users', UserForAdminController::class);
     });
