@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use \App\Http\Controllers\Api\Admin\V1\AbilityController;
 use \App\Http\Controllers\Api\Admin\V1\RoleController;
 use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
-
+use App\Http\Controllers\Api\V1\CompanyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -50,4 +50,12 @@ JsonApiRoute::server('Admin\V1')
 
         //users routes
         $server->resource('users', UserForAdminController::class);
+    });
+
+JsonApiRoute::server('V1')
+    ->prefix('v1')
+    ->middleware('auth:sanctum')
+    ->resources(function ($server) {
+        //companies routes
+        $server->resource('companies', CompanyController::class);
     });
