@@ -18,8 +18,6 @@ class CompanyRequest extends ResourceRequest
     {
         $company = $this->model();
 
-        \Log::info(auth()->user());
-
         $unique = Rule::unique('companies');
 
         if($company) {

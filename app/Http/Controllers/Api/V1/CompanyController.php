@@ -17,7 +17,7 @@ class CompanyController extends Controller
 
     use Actions\FetchMany;
     use Actions\FetchOne;
-    use Actions\Store;
+//    use Actions\Store;
 //    use Actions\Update;
     use Actions\Destroy;
     use Actions\FetchRelated;
