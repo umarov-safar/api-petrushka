@@ -9,6 +9,7 @@ use \App\Http\Controllers\Api\Admin\V1\RoleController;
 use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\PartnerController;
+use App\Http\Controllers\Api\V1\CompanyUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +64,7 @@ JsonApiRoute::server('V1')
     ->resources(function ($server) {
         //companies routes
         $server->resource('companies', CompanyController::class);
+
+        // company user routes
+        $server->resource('companyuser', CompanyUserController::class);
     });
