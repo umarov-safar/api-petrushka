@@ -1,12 +1,12 @@
 <?php
 
-namespace App\JsonApi\V1\CompanyUsers;
+namespace App\JsonApi\Partner\V1\PartnerUsers;
 
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class CompanyUserRequest extends ResourceRequest
+class PartnerUserRequest extends ResourceRequest
 {
 
     protected function prepareForValidation()
@@ -26,16 +26,16 @@ class CompanyUserRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $company_user = $this->model();
+        $partner_user = $this->model();
 
-        $unique = Rule::unique('company_user');
+        $unique = Rule::unique('partner_user');
 
-        if($company_user) {
-            $unique = $unique->ignore($company_user);
+        if($partner_user) {
+            $unique = $unique->ignore($partner_user);
         }
 
         return [
-            'companyId' => 'required|exists:companies,id',
+            'partnerId' => 'required|exists:partners,id',
             'phone' => 'required|digits_between:3,15|' . $unique,
             "status" => 'boolean'
         ];

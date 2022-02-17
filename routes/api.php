@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\PartnerController;
 use App\Http\Controllers\Api\V1\CompanyUserController;
+use \App\Http\Controllers\Api\Partner\PartnerUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-
+// routes for admin
 JsonApiRoute::server('Admin\V1')
     ->prefix('admin/v1')
     ->middleware('auth:sanctum')
@@ -58,6 +59,7 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('partners', PartnerController::class);
     });
 
+// Routes for all users
 JsonApiRoute::server('V1')
     ->prefix('v1')
     ->middleware('auth:sanctum')
@@ -67,4 +69,13 @@ JsonApiRoute::server('V1')
 
         // company user routes
         $server->resource('companyuser', CompanyUserController::class);
+    });
+
+
+//Routes for partners
+JsonApiRoute::server('Partner\V1')
+    ->prefix('partner/v1')
+    ->middleware('auth:sanctum')
+    ->resources(function ($server) {
+        $server->resource('partneruser', PartnerUserController::class);
     });
