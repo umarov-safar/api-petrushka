@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\V1\Companies;
+namespace App\JsonApi\Admin\V1\Partners;
 
-use App\Models\Company;
+use App\Models\Admin\Partner;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -13,7 +13,7 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class CompanySchema extends Schema
+class PartnerSchema extends Schema
 {
 
     /**
@@ -21,10 +21,7 @@ class CompanySchema extends Schema
      *
      * @var string
      */
-    public static string $model = Company::class;
-
-
-
+    public static string $model = Partner::class;
 
     /**
      * Get the resource fields.
@@ -35,10 +32,11 @@ class CompanySchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('inn'),
+            Str::make('name'),
             Str::make('info'),
-            Boolean::make('isBlock'),
+            Str::make('phone'),
             Number::make('adminUserId'),
+            Boolean::make('isBlock'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -63,9 +61,7 @@ class CompanySchema extends Schema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make()
-            ->withPageKey('page')
-            ->withPerPageKey('limit');
+        return PagePagination::make();
     }
 
 }

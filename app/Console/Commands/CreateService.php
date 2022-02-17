@@ -57,7 +57,7 @@ class CreateService extends Command
         fwrite($dtoFilePath, $this->dataFile($name, $folder));
         fclose($dtoFilePath);
 
-        $this->line('<fg=green;bg=black>You create successfully dto class!</>');
+        $this->line('<fg=green;bg=black>Service class created successfully!</>');
         return null;
 
     }
@@ -71,7 +71,16 @@ namespace {$namespace};
 
 class {$name} {
 
-    //code
+    public function create()
+    {
+        //code here
+    }
+
+
+    public function update()
+    {
+        //code here
+    }
 
 }";
 

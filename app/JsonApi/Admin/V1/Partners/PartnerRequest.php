@@ -1,11 +1,13 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Users;
+namespace App\JsonApi\Admin\V1\Partners;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
+use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class UserRequest extends ResourceRequest
+class PartnerRequest extends ResourceRequest
 {
 
     public function prepareForValidation()
@@ -16,6 +18,8 @@ class UserRequest extends ResourceRequest
         $this->getInputSource()->replace(['data' => $data]);
     }
 
+
+
     /**
      * Get the validation rules for the resource.
      *
@@ -23,20 +27,19 @@ class UserRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $user = $this->model();
+        $partner = $this->model();
 
-        $unique = Rule::unique('users');
+        $unique = Rule::unique('partners');
 
-        if($user) {
-            $unique = $unique->ignore($user);
+        if($partner) {
+            $unique = $unique->ignore($partner);
         }
 
         return [
             // @TODO
-            'name' => 'nullable|string',
-            'email' => 'nullable|email|' . $unique,
-            'isBlock' => 'boolean',
+            "name" => 'required|string',
             'phone' => 'required|digits_between:3,15|'. $unique,
+            'isBlock' => JsonApiRule::boolean(),
         ];
     }
 

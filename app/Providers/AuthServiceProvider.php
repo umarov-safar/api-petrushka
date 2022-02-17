@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Admin\Partner;
 use App\Models\Admin\Role;
 use App\Models\User;
 use App\Policies\Admin\AbilityPolicy;
+use App\Policies\Admin\PartnerPolicy;
 use App\Policies\Admin\RolePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Ability::class => AbilityPolicy::class,
         Role::class => RolePolicy::class,
+        Partner::class => PartnerPolicy::class,
     ];
 
     /**

@@ -61,6 +61,7 @@ class UserController extends Controller
             return false;
         }
 
+        $user = User::find($user->getKey());
         return new DataResponse($user);
     }
 
@@ -90,6 +91,7 @@ class UserController extends Controller
             return false;
         }
 
+        $user = User::find($user->getKey());
         return new DataResponse($user);
     }
 

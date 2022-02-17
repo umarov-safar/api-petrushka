@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models\Admin;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Partner extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = ['name', 'phone', 'info', 'is_block', 'admin_user_id'];
+
+    protected $casts = [
+        'info' => 'array'
+    ];
+}
