@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Admin\V1;
 
-use App\Dtos\Admin\AbilityDto;
+use App\Dtos\AbilityDto;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Abilities\AbilityQuery;
 use App\JsonApi\Admin\V1\Abilities\AbilityRequest;
 use App\JsonApi\Admin\V1\Abilities\AbilitySchema;
-use App\Services\Admin\AbilityService;
+use App\Services\AbilityService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use Silber\Bouncer\Database\Ability;

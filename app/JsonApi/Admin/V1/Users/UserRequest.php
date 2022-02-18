@@ -10,6 +10,8 @@ class UserRequest extends ResourceRequest
 
     public function prepareForValidation()
     {
+        if($this->isMethod('DELETE')) return;
+
         $data = $this->data;
         $data['attributes']['phone'] = preg_replace('/[^0-9]/', '', $this->data['attributes']['phone']);
 

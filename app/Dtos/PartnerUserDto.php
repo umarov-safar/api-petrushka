@@ -1,12 +1,12 @@
 <?php
 namespace App\Dtos;
 
-class CompanyUserDto {
+class PartnerUserDto {
 
     /**
      * @var int
      */
-    protected int $company_id;
+    protected int $partner_id;
 
     /**
      * @var string
@@ -24,32 +24,32 @@ class CompanyUserDto {
     protected bool $status;
 
     /**
-     * @param int $user_id
-     * @param int $company_id
+     * @param int $partner_id
      * @param string $phone
      * @param array|null $setting_info
      * @param bool $status
      */
     public function __construct(
-        int $company_id,
+        int $partner_id,
         string $phone,
         ?array $setting_info,
         bool $status
     )
     {
-        $this->company_id = $company_id;
+        $this->partner_id = $partner_id;
         $this->phone = $phone;
         $this->setting_info = $setting_info;
         $this->status = $status;
     }
 
 
+
     /**
      * @return int
      */
-    public function getCompanyId(): int
+    public function getPartnerId(): int
     {
-        return $this->company_id;
+        return $this->partner_id;
     }
 
     /**
@@ -75,7 +75,6 @@ class CompanyUserDto {
     {
         return $this->status;
     }
-
 
 
 }

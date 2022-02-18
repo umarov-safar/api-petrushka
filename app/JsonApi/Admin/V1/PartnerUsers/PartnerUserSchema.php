@@ -1,35 +1,32 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Roles;
+namespace App\JsonApi\Admin\V1\PartnerUsers;
 
-use App\Models\Role;
+use App\Models\PartnerUser;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class RoleSchema extends Schema
+class PartnerUserSchema extends Schema
 {
 
     public static function type(): string
     {
-        return 'roles';
+        return "partneruser";
     }
 
-    public function meta() {
-        return ['foo' => 'bar'];
-    }
     /**
      * The model the schema corresponds to.
      *
      * @var string
      */
-    public static string $model = Role::class;
+    public static string $model = PartnerUser::class;
 
     /**
      * Get the resource fields.
@@ -40,12 +37,11 @@ class RoleSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name'),
-            Str::make('title'),
-            Number::make('level'),
-            Number::make('scope'),
-            HasMany::make('abilities'),
-            HasMany::make('users'),
+            Number::make('userId'),
+            Number::make('partnerId'),
+            Str::make('phone'),
+            Str::make('settingInfo'),
+            Boolean::make('status'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -70,10 +66,7 @@ class RoleSchema extends Schema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make()
-            ->withPageKey('page')
-            ->withPerPageKey('limit')
-            ->withDefaultPerPage(20);
+        return PagePagination::make();
     }
 
 }

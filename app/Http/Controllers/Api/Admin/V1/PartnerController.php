@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Api\Admin\V1;
 
-use App\Dtos\Admin\PartnerDto;
+use App\Dtos\PartnerDto;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Partners\PartnerQuery;
 use App\JsonApi\Admin\V1\Partners\PartnerRequest;
 use App\JsonApi\Admin\V1\Partners\PartnerSchema;
-use App\Models\Admin\Partner;
-use App\Models\User;
-use App\Services\Admin\PartnerService;
-use JetBrains\PhpStorm\Pure;
+use App\Models\Partner;
+use App\Services\PartnerService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
@@ -34,14 +32,10 @@ class PartnerController extends Controller
     protected PartnerService $partnerService;
 
 
-    /**
-     * @param PartnerService $partnerService
-     */
     public function __construct()
     {
         $this->partnerService = new PartnerService();
     }
-
 
     /**
      * Create partner
@@ -54,15 +48,11 @@ class PartnerController extends Controller
     {
         $attributes = $request->data['attributes'];
 
-        //get user by phone or create new to save id to user_admin_id field in partner table
-        $user = User::firstOrCreate(['phone' => $attributes['phone']]);
-
         $dto = new PartnerDto(
             $attributes['name'],
             $attributes['phone'],
             $attributes['info'] ?? null,
             $attributes['isBlock'] ?? 0,
-            $user->id,
         );
 
         $partner = $this->partnerService->create($dto);
@@ -89,9 +79,8 @@ class PartnerController extends Controller
         $dto = new PartnerDto(
             $attributes['name'],
             $attributes['phone'],
-            $attributes['info'] ?? null,
+            $attributes['info'] ?? $partner->info,
             $attributes['isBlock'] ?? 0,
-            $partner->admin_user_id
         );
 
         $partner = $this->partnerService->update($dto, $partner->id);

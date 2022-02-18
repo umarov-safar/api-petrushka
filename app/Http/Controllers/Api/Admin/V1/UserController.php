@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Admin\V1;
 
-use App\Dtos\Admin\UserDto;
+use App\Dtos\UserDto;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Users\UserQuery;
 use App\JsonApi\Admin\V1\Users\UserRequest;
 use App\JsonApi\Admin\V1\Users\UserSchema;
 use App\Models\User;
-use App\Services\Admin\UserService;
+use App\Services\UserService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 

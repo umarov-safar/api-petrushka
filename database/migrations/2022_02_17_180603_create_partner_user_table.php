@@ -15,7 +15,7 @@ class CreatePartnerUserTable extends Migration
     {
         Schema::create('partner_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Admin\Partner::class);
+            $table->foreignIdFor(\App\Models\Partner::class);
             $table->foreignIdFor(\App\Models\User::class);
             $table->string('phone')->unique();
             $table->boolean('status')->default(0);

@@ -7,10 +7,10 @@ use App\Http\Controllers\UserController;
 use \App\Http\Controllers\Api\Admin\V1\AbilityController;
 use \App\Http\Controllers\Api\Admin\V1\RoleController;
 use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
-use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\PartnerController;
-use App\Http\Controllers\Api\V1\CompanyUserController;
-use \App\Http\Controllers\Api\Partner\PartnerUserController;
+use App\Http\Controllers\Api\Admin\V1\CompanyController;
+use App\Http\Controllers\Api\Admin\V1\CompanyUserController;
+use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,20 +55,27 @@ JsonApiRoute::server('Admin\V1')
         //users routes
         $server->resource('users', UserForAdminController::class);
 
+        //companies
+        $server->resource('companies', CompanyController::class);
+
+        //company users
+        $server->resource('companyuser', CompanyUserController::class);
+
         //partners routes
         $server->resource('partners', PartnerController::class);
+
+        //partner users routes
+        $server->resource('partneruser', PartnerUserController::class);
+
     });
+
 
 // Routes for all users
 JsonApiRoute::server('V1')
     ->prefix('v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-        //companies routes
-        $server->resource('companies', CompanyController::class);
 
-        // company user routes
-        $server->resource('companyuser', CompanyUserController::class);
     });
 
 
@@ -77,5 +84,5 @@ JsonApiRoute::server('Partner\V1')
     ->prefix('partner/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-        $server->resource('partneruser', PartnerUserController::class);
+
     });

@@ -29,7 +29,5 @@ return [
     'servers' => [
 //        'v1' => \App\JsonApi\V1\Server::class,
         "Admin\V1" => \App\JsonApi\Admin\V1\Server::class,
-        "V1" => \App\JsonApi\V1\Server::class,
-        "Partner\V1" => \App\JsonApi\Partner\V1\Server::class,
     ],
 ];

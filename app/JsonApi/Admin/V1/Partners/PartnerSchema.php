@@ -2,7 +2,7 @@
 
 namespace App\JsonApi\Admin\V1\Partners;
 
-use App\Models\Admin\Partner;
+use App\Models\Partner;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;

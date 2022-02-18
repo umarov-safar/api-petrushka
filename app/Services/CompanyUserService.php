@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Dtos\CompanyUserDto;
 use App\Models\CompanyUser;
+use App\Models\User;
 
 class CompanyUserService {
 
@@ -15,7 +16,9 @@ class CompanyUserService {
     {
         $company_user = new CompanyUser();
 
-        $company_user->user_id = $request->getUserId();
+        $user = User::firstOrCreate(['phone' => $request->getPhone()]);
+
+        $company_user->user_id = $user->id;
         $company_user->company_id = $request->getCompanyId();
         $company_user->phone = $request->getPhone();
         $company_user->setting_info = $request->getSettingInfo();
@@ -36,7 +39,6 @@ class CompanyUserService {
     {
         $company_user = CompanyUser::find($id);
 
-        $company_user->user_id = $request->getUserId();
         $company_user->company_id = $request->getCompanyId();
         $company_user->phone = $request->getPhone();
         $company_user->setting_info = $request->getSettingInfo();

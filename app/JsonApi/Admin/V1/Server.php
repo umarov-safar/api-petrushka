@@ -39,6 +39,9 @@ class Server extends BaseServer
             AbilitySchema::class,
             UserSchema::class,
             PartnerSchema::class,
+            PartnerUsers\PartnerUserSchema::class,
+            Companies\CompanySchema::class,
+            CompanyUsers\CompanyUserSchema::class,
         ];
     }
 }
