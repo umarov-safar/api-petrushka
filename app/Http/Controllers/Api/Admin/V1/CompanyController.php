@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Companies\CompanyQuery;
 use App\JsonApi\Admin\V1\Companies\CompanyRequest;
 use App\JsonApi\Admin\V1\Companies\CompanySchema;
+use App\JsonApi\Admin\V1\CompanyUsers\CompanyUserCollectionQuery;
 use App\Models\Company;
 use App\Services\CompanyService;
 use LaravelJsonApi\Core\Responses\DataResponse;
@@ -83,6 +84,12 @@ class CompanyController extends Controller
 
         $company = Company::find($company->getKey());
         return new DataResponse($company);
+    }
+
+
+    public function updateCompanyUsers(CompanySchema $schema, CompanyRequest $request, CompanyUserCollectionQuery $query, Company $company)
+    {
+        \Log::info($request->all());
     }
 
 }

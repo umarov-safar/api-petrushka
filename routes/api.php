@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\Admin\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\CompanyUserController;
 use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 
+//Controller of customer
+use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -56,33 +59,28 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('users', UserForAdminController::class);
 
         //companies
-        $server->resource('companies', CompanyController::class);
+        $server->resource('companies', CompanyController::class)
+            ->relationships(function($relationships) {
+               $relationships->hasMany('companyUsers');
+            });
 
         //company users
-        $server->resource('companyuser', CompanyUserController::class);
+        $server->resource('company-users', CompanyUserController::class);
 
         //partners routes
         $server->resource('partners', PartnerController::class);
 
         //partner users routes
-        $server->resource('partneruser', PartnerUserController::class);
+        $server->resource('partner-user', PartnerUserController::class);
 
     });
 
 
 // Routes for all users
-JsonApiRoute::server('V1')
-    ->prefix('v1')
+JsonApiRoute::server('Customer\V1')
+    ->prefix('customer/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-
-    });
-
-
-//Routes for partners
-JsonApiRoute::server('Partner\V1')
-    ->prefix('partner/v1')
-    ->middleware('auth:sanctum')
-    ->resources(function ($server) {
-
+        // company user routes
+        $server->resource('company-user', CustomerCompanyUserController::class);
     });

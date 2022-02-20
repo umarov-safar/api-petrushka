@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\CompanyUsers;
+namespace App\JsonApi\Customer\V1\CompanyUsers;
 
 use App\Models\CompanyUser;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
@@ -15,6 +15,10 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class CompanyUserSchema extends Schema
 {
+    public static function type(): string
+    {
+        return 'company-user';
+    }
 
     /**
      * The model the schema corresponds to.
@@ -22,13 +26,6 @@ class CompanyUserSchema extends Schema
      * @var string
      */
     public static string $model = CompanyUser::class;
-
-
-
-    public static function type(): string
-    {
-        return 'company-users';
-    }
 
     /**
      * Get the resource fields.
@@ -68,9 +65,7 @@ class CompanyUserSchema extends Schema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make()
-            ->withKeyName('page')
-            ->withPerPageKey('limit');
+        return PagePagination::make();
     }
 
 }

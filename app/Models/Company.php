@@ -15,4 +15,12 @@ class Company extends Model
     protected $casts = [
         'info' => 'array',
     ];
+
+
+    public function companyUsers()
+    {
+        return $this->belongsToMany(User::class, 'company_user')->withPivot('phone', 'setting_info', 'status');
+    }
+
+
 }

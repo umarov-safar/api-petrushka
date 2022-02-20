@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\CompanyUsers;
+namespace App\JsonApi\Customer\V1\Companies;
 
-use App\Models\CompanyUser;
+use App\Models\Company;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -13,7 +13,7 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class CompanyUserSchema extends Schema
+class CompanySchema extends Schema
 {
 
     /**
@@ -21,14 +21,7 @@ class CompanyUserSchema extends Schema
      *
      * @var string
      */
-    public static string $model = CompanyUser::class;
-
-
-
-    public static function type(): string
-    {
-        return 'company-users';
-    }
+    public static string $model = Company::class;
 
     /**
      * Get the resource fields.
@@ -39,11 +32,10 @@ class CompanyUserSchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('companyId'),
-            Number::make('userId'),
-            Str::make('phone'),
-            Boolean::make('status'),
-            Str::make('settingInfo'),
+            Number::make('inn'),
+            Str::make('info'),
+            Boolean::make('isBlock'),
+            Number::make('adminUserId'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -69,7 +61,7 @@ class CompanyUserSchema extends Schema
     public function pagination(): ?Paginator
     {
         return PagePagination::make()
-            ->withKeyName('page')
+            ->withPageKey('page')
             ->withPerPageKey('limit');
     }
 

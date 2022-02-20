@@ -18,7 +18,7 @@ class PartnerUserSchema extends Schema
 
     public static function type(): string
     {
-        return "partneruser";
+        return "partner-user";
     }
 
     /**

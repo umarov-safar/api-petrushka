@@ -34,6 +34,27 @@ class CompanyPolicy
     }
 
     /**
+     * @param User $user
+     * @param Company $company
+     * @return bool
+     */
+    public function viewCompanyUsers(User $user, Company $company)
+    {
+        return true;
+    }
+
+
+    /**
+     * @param User $user
+     * @param Company $company h
+     *
+     * @return bool
+     */
+    public function updateCompanyUsers(User $user, Company $company)
+    {
+        return true;
+    }
+    /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
