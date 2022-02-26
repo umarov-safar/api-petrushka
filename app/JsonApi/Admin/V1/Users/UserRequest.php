@@ -42,4 +42,13 @@ class UserRequest extends ResourceRequest
         ];
     }
 
+
+    public function messages()
+    {
+        return [
+            'isBlock.boolean' => 'Блокировать дольжно быть 1 или 0',
+            'phone.required' => 'Поля телефон обязательный'
+        ];
+    }
+
 }

@@ -47,12 +47,20 @@ class UserController extends Controller
     {
         $attributes = $request->data['attributes'];
 
+        $roles = $request->data['relationships']['roles']['data'] ?? null;
+        $abilities = $request->data['relationships']['abilities']['data'] ?? null;
+
+        $roles = $roles ? pluckIds($roles) : $roles;
+        $abilities = $roles ? pluckIds($abilities) : $abilities;
+
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
             $attributes['isBlock'] ?? null,
             $attributes['phone'],
             $attributes['code'] ?? null,
+            $roles,
+            $abilities
         );
 
         $user = $this->userService->create($dto);
@@ -77,12 +85,20 @@ class UserController extends Controller
     {
         $attributes = $request->data['attributes'];
 
+        $roles = $request->data['relationships']['roles']['data'] ?? null;
+        $abilities = $request->data['relationships']['abilities']['data'] ?? null;
+
+        $roles = $roles ? pluckIds($roles) : $roles;
+        $abilities = $roles ? pluckIds($abilities) : $abilities;
+
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
             $attributes['isBlock'] ?? null,
             $attributes['phone'],
             $attributes['code'] ?? null,
+            $roles,
+            $abilities,
         );
 
         $user = $this->userService->update($dto, $user->id);

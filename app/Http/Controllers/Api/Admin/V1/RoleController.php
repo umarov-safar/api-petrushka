@@ -43,7 +43,6 @@ class RoleController extends Controller
      */
     public function store(RoleSchema $schema, RoleRequest $request, RoleQuery $query): false|DataResponse
     {
-
         $attributes = $request->data['attributes'];
 
         $abilities = $request->data['relationships']['abilities']['data'] ?? null;

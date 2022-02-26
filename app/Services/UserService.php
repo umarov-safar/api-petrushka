@@ -20,6 +20,14 @@ class UserService {
             return false;
         }
 
+        if($request->getRoles()){
+            $user->roles()->sync($request->getRoles());
+        }
+
+        if($request->getAbilities()) {
+            $user->abilities()->sync($request->getAbilities());
+        }
+
         return  $user;
     }
 
@@ -37,6 +45,14 @@ class UserService {
 
         if(!$user->save()){
             return false;
+        }
+
+        if($request->getRoles()){
+            $user->roles()->sync($request->getRoles());
+        }
+
+        if($request->getAbilities()) {
+            $user->abilities()->sync($request->getAbilities());
         }
 
         return  $user;

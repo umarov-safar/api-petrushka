@@ -23,11 +23,22 @@ class UserDto {
      */
     protected int $phone;
 
-
     /**
      * @var int|null
      */
     protected ?int $code;
+
+    /**
+     * @var array|null
+     */
+    protected ?array $roles;
+
+
+    /**
+     *
+     */
+    protected ?array $abilities;
+
 
     /**
      * @param string|null $name
@@ -40,7 +51,9 @@ class UserDto {
         ?string $email,
         bool $isBlock,
         int $phone,
-        ?int $code
+        ?int $code,
+        ?array $roles,
+        ?array $abilities
     )
     {
         $this->name = $name;
@@ -48,6 +61,8 @@ class UserDto {
         $this->isBlock = $isBlock;
         $this->phone = $phone;
         $this->code = $code;
+        $this->roles = $roles;
+        $this->abilities = $abilities;
     }
 
 
@@ -91,5 +106,24 @@ class UserDto {
     {
         return $this->code;
     }
+
+    /**
+     * @return array|null
+     */
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAbilities(): ?array
+    {
+        return $this->abilities;
+    }
+
+
+
 
 }
