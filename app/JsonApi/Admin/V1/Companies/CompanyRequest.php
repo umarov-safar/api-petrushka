@@ -9,6 +9,16 @@ use LaravelJsonApi\Validation\Rule as JsonApiRule;
 class CompanyRequest extends ResourceRequest
 {
 
+    protected function prepareForValidation()
+    {
+        if($this->isMethod('DELETE')) return;
+
+        $data = $this->data;
+        $data['attributes']['phone'] = preg_replace('/[^0-9]/', '', @$this->data['attributes']['phone']);
+
+        $this->getInputSource()->replace(['data' => $data]);
+    }
+
     /**
      * Get the validation rules for the resource.
      *
@@ -28,7 +38,7 @@ class CompanyRequest extends ResourceRequest
             'inn' => 'required|digits_between:10,12|' . $unique,
             'info' => 'nullable',
             'isBlock' => 'boolean',
-            'adminUserId' => 'required|exists:users,id',
+            'phone' => 'required|digits_between:3,15|'. $unique,
         ];
     }
 

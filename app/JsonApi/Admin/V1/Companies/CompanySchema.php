@@ -2,12 +2,14 @@
 
 namespace App\JsonApi\Admin\V1\Companies;
 
+use App\JsonApi\Admin\V1\Users\UserSchema;
 use App\Models\Company;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -35,9 +37,11 @@ class CompanySchema extends Schema
             ID::make(),
             Number::make('inn'),
             Str::make('info'),
+            Str::make('phone'),
             Boolean::make('isBlock'),
             Number::make('adminUserId'),
-            BelongsToMany::make('companyUsers')->fields(['test']),
+            BelongsTo::make('owner')->type('users'),
+            BelongsToMany::make('companyUsers'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

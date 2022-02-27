@@ -54,7 +54,7 @@ class CompanyController extends Controller
             $attributes['inn'],
             $attributes['info'] ?? null,
             $attributes['isBlock'] ?? 0,
-            $attributes['adminUserId']
+            $attributes['phone']
         );
 
         $company = $this->companyService->create($dto);
@@ -75,7 +75,7 @@ class CompanyController extends Controller
             $attributes['inn'],
             $attributes['info'] ?? null,
             $attributes['isBlock'] ?? 0,
-            $attributes['adminUserId']
+            $attributes['phone']
         );
 
         $company = $this->companyService->update($dto, $company->id);
