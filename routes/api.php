@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use \LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 use \App\Http\Controllers\Api\Admin\V1\AbilityController;
 use \App\Http\Controllers\Api\Admin\V1\RoleController;
 use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
@@ -83,4 +84,15 @@ JsonApiRoute::server('Customer\V1')
     ->resources(function ($server) {
         // company user routes
         $server->resource('company-user', CustomerCompanyUserController::class);
+    });
+
+
+
+// Routes for all users
+JsonApiRoute::server('Partner\V1')
+    ->prefix('partner/v1')
+    ->middleware('auth:sanctum')
+    ->resources(function ($server) {
+        // company user routes
+        $server->resource('companies', JsonApiController::class);
     });

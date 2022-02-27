@@ -23,7 +23,7 @@ class RoleService {
         if($role->save()) {
 
             $role->users()->sync($request->getUsersIds());
-            $role->abilities()->attach($request->getAbilitiesIds());
+            $role->abilities()->sync($request->getAbilitiesIds());
 
             return $role;
         }
@@ -48,7 +48,7 @@ class RoleService {
         if($role->save()) {
 
             $role->users()->sync($request->getUsersIds());
-            $role->abilities()->attach($request->getAbilitiesIds());
+            $role->abilities()->sync($request->getAbilitiesIds());
 
             return $role;
         }
