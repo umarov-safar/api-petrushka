@@ -4,9 +4,9 @@ namespace App\Dtos;
 class PartnerUserDto {
 
     /**
-     * @var int
+     * @var null|int
      */
-    protected int $partner_id;
+    protected ?int $partner_id;
 
     /**
      * @var string
@@ -30,24 +30,23 @@ class PartnerUserDto {
      * @param bool $status
      */
     public function __construct(
-        int $partner_id,
         string $phone,
         ?array $setting_info,
-        bool $status
+        bool $status,
+        ?int $partner_id,
     )
     {
-        $this->partner_id = $partner_id;
         $this->phone = $phone;
         $this->setting_info = $setting_info;
         $this->status = $status;
+        $this->partner_id = $partner_id;
     }
 
 
-
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPartnerId(): int
+    public function getPartnerId(): ?int
     {
         return $this->partner_id;
     }

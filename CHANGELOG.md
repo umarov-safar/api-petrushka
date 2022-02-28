@@ -5,6 +5,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 
 ## Удали последный комит!!
 
+## [1.9.0] 28.02.2022
+### Added:
+- Partner api
+- CRUD сотрудник
+
 ## [1.8.3] 28.02.2022
 ### Added:
 - JsonApi server для партнера

@@ -45,10 +45,10 @@ class PartnerUserController extends Controller
         $attributes = $request->data['attributes'];
 
         $dto = new PartnerUserDto(
-            $attributes['partnerId'],
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0
+            $attributes['status'] ?? 0,
+            $attributes['partnerId'],
         );
 
         $company_user = $this->partnerUserService->create($dto);
@@ -65,10 +65,10 @@ class PartnerUserController extends Controller
         $attributes = $request->data['attributes'];
 
         $dto = new PartnerUserDto(
-            $attributes['partnerId'],
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0
+            $attributes['status'] ?? 0,
+            $attributes['partnerId'] ?? 0,
         );
 
         $company_user = $this->partnerUserService->update($dto, $partnerUser->id);

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,5 +50,13 @@ class User extends Authenticatable
 
 
     //--------------------      Relationships     -----------------------//
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function partnerOwner() : HasOne
+    {
+        return $this->hasOne(Partner::class, 'admin_user_id', 'id');
+    }
 
 }

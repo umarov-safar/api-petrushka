@@ -18,4 +18,5 @@ class PartnerUser extends Model
         'setting_info' => 'array'
     ];
 
+
 }

@@ -65,7 +65,9 @@ class CompanyUserSchema extends Schema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make();
+        return PagePagination::make()
+            ->withPageKey('page')
+            ->withPerPageKey('limit');
     }
 
 }

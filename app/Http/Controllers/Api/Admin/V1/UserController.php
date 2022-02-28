@@ -51,12 +51,12 @@ class UserController extends Controller
         $abilities = $request->data['relationships']['abilities']['data'] ?? null;
 
         $roles = $roles ? pluckIds($roles) : $roles;
-        $abilities = $roles ? pluckIds($abilities) : $abilities;
+        $abilities = $abilities ? pluckIds($abilities) : $abilities;
 
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? null,
+            $attributes['isBlock'] ?? 0,
             $attributes['phone'],
             $attributes['code'] ?? null,
             $roles,
@@ -89,12 +89,12 @@ class UserController extends Controller
         $abilities = $request->data['relationships']['abilities']['data'] ?? null;
 
         $roles = $roles ? pluckIds($roles) : $roles;
-        $abilities = $roles ? pluckIds($abilities) : $abilities;
+        $abilities = $abilities ? pluckIds($abilities) : $abilities;
 
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? null,
+            $attributes['isBlock'] ?? 0,
             $attributes['phone'],
             $attributes['code'] ?? null,
             $roles,

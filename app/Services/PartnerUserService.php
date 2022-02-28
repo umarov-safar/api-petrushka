@@ -14,7 +14,7 @@ class PartnerUserService {
         $user = User::firstOrCreate(['phone' => $request->getPhone()]);
 
         $partner_user->user_id = $user->id;
-        $partner_user->partner_id = $request->getPartnerId();
+        $partner_user->partner_id = $request->getPartnerId() ?? auth()->user()->partnerOwner->id;
         $partner_user->phone = $request->getPhone();
         $partner_user->setting_info = $request->getSettingInfo();
         $partner_user->status = $request->isStatus();
@@ -29,7 +29,6 @@ class PartnerUserService {
     {
         $partner_user = PartnerUser::find($id);
 
-        $partner_user->partner_id = $request->getPartnerId();
         $partner_user->phone = $request->getPhone();
         $partner_user->setting_info = $request->getSettingInfo();
         $partner_user->status = $request->isStatus();

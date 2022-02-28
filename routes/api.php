@@ -16,6 +16,8 @@ use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
 
+//Partner Controllers
+use \App\Http\Controllers\Api\Partner\V1\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -95,4 +97,5 @@ JsonApiRoute::server('Partner\V1')
     ->resources(function ($server) {
         // company user routes
         $server->resource('companies', JsonApiController::class);
+        $server->resource('employees', EmployeeController::class);
     });
