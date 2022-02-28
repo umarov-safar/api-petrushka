@@ -4,10 +4,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use \LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 use \App\Http\Controllers\Api\Admin\V1\AbilityController;
 use \App\Http\Controllers\Api\Admin\V1\RoleController;
 use App\Http\Controllers\Api\Admin\V1\UserController as UserForAdminController;
-use App\Http\Controllers\Api\V1\CompanyController;
+use App\Http\Controllers\Api\Admin\V1\PartnerController;
+use App\Http\Controllers\Api\Admin\V1\CompanyController;
+use App\Http\Controllers\Api\Admin\V1\CompanyUserController;
+use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
+
+//Controller of customer
+use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
+
+//Partner Controllers
+use \App\Http\Controllers\Api\Partner\V1\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,7 +44,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-
+// routes for admin
 JsonApiRoute::server('Admin\V1')
     ->prefix('admin/v1')
     ->middleware('auth:sanctum')
@@ -50,12 +60,42 @@ JsonApiRoute::server('Admin\V1')
 
         //users routes
         $server->resource('users', UserForAdminController::class);
+
+        //companies
+        $server->resource('companies', CompanyController::class)
+            ->relationships(function($relationships) {
+               $relationships->hasMany('companyUsers');
+            });
+
+        //company users
+        $server->resource('company-users', CompanyUserController::class);
+
+        //partners routes
+        $server->resource('partners', PartnerController::class);
+
+        //partner users routes
+        $server->resource('partner-user', PartnerUserController::class);
+
     });
 
-JsonApiRoute::server('V1')
-    ->prefix('v1')
+
+// Routes for all users
+JsonApiRoute::server('Customer\V1')
+    ->prefix('customer/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-        //companies routes
-        $server->resource('companies', CompanyController::class);
+        // company user routes
+        $server->resource('company-user', CustomerCompanyUserController::class);
+    });
+
+
+
+// Routes for all users
+JsonApiRoute::server('Partner\V1')
+    ->prefix('partner/v1')
+    ->middleware('auth:sanctum')
+    ->resources(function ($server) {
+        // company user routes
+        $server->resource('companies', JsonApiController::class);
+        $server->resource('employees', EmployeeController::class);
     });

@@ -54,7 +54,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return  response(['message' => 'неверный код']);
+        return  response(['message' => 'неверный код'], 404);
 
     }
 

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Admin\V1;
 
-use App\Dtos\Admin\RoleDto;
+use App\Dtos\RoleDto;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Roles\RoleQuery;
 use App\JsonApi\Admin\V1\Roles\RoleRequest;
 use App\JsonApi\Admin\V1\Roles\RoleSchema;
-use App\Models\Admin\Role;
-use App\Services\Admin\RoleService;
+use App\Models\Role;
+use App\Services\RoleService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
@@ -43,7 +43,6 @@ class RoleController extends Controller
      */
     public function store(RoleSchema $schema, RoleRequest $request, RoleQuery $query): false|DataResponse
     {
-
         $attributes = $request->data['attributes'];
 
         $abilities = $request->data['relationships']['abilities']['data'] ?? null;

@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Dtos\CompanyDto;
 use App\Models\Company;
+use App\Models\User;
 
 class CompanyService {
 
@@ -15,10 +16,13 @@ class CompanyService {
     {
         $company = new Company();
 
+        $admin_user = User::firstOrCreate(['phone' => $request->getPhone()]);
+
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
         $company->is_block = $request->isBlock();
-        $company->admin_user_id = $request->getAdminUserId();
+        $company->phone = $request->getPhone();
+        $company->admin_user_id = $admin_user->id;
 
         if(!$company->save()) return false;
 
@@ -39,7 +43,7 @@ class CompanyService {
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
         $company->is_block = $request->isBlock();
-        $company->admin_user_id = $request->getAdminUserId();
+        $company->phone = $request->getPhone();
 
         if(!$company->save()) return false;
 

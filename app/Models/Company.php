@@ -10,9 +10,22 @@ class Company extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['inn', 'info', 'is_block', 'is_admin_user'];
+    protected $fillable = ['inn', 'info', 'is_block', 'admin_user_id'];
 
     protected $casts = [
         'info' => 'array',
     ];
+
+
+    public function companyUsers()
+    {
+        return $this->belongsToMany(User::class, 'company_user')->withPivot('phone', 'setting_info', 'status');
+    }
+
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'admin_user_id', 'id');
+    }
+
 }

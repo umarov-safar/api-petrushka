@@ -16,7 +16,8 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('inn');
-            $table->text('info')->nullable();
+            $table->string('phone')->unique()->nullable();
+            $table->jsonb('info')->nullable();
             $table->unsignedBigInteger('admin_user_id');
             $table->boolean('is_block');
             $table->softDeletes();

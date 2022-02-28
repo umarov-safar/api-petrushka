@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \Bouncer::useRoleModel(\App\Models\Admin\Role::class);
+        \Bouncer::useRoleModel(\App\Models\Role::class);
     }
 
     /**

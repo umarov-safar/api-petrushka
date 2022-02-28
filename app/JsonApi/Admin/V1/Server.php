@@ -3,6 +3,7 @@
 namespace App\JsonApi\Admin\V1;
 
 use App\JsonApi\Admin\V1\Abilities\AbilitySchema;
+use App\JsonApi\Admin\V1\Partners\PartnerSchema;
 use App\JsonApi\Admin\V1\Users\UserSchema;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
@@ -37,6 +38,10 @@ class Server extends BaseServer
             Roles\RoleSchema::class,
             AbilitySchema::class,
             UserSchema::class,
+            PartnerSchema::class,
+            PartnerUsers\PartnerUserSchema::class,
+            Companies\CompanySchema::class,
+            CompanyUsers\CompanyUserSchema::class,
         ];
     }
 }

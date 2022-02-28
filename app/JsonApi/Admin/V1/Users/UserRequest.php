@@ -10,9 +10,12 @@ class UserRequest extends ResourceRequest
 
     public function prepareForValidation()
     {
-        $this->merge([
-            'phone' => preg_replace('/[^0-9]/', '', $this->phone)
-        ]);
+        if($this->isMethod('DELETE')) return;
+
+        $data = $this->data;
+        $data['attributes']['phone'] = preg_replace('/[^0-9]/', '', $this->data['attributes']['phone']);
+
+        $this->getInputSource()->replace(['data' => $data]);
     }
 
     /**
@@ -36,6 +39,15 @@ class UserRequest extends ResourceRequest
             'email' => 'nullable|email|' . $unique,
             'isBlock' => 'boolean',
             'phone' => 'required|digits_between:3,15|'. $unique,
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+            'isBlock.boolean' => 'Блокировать дольжно быть 1 или 0',
+            'phone.required' => 'Поля телефон обязательный'
         ];
     }
 

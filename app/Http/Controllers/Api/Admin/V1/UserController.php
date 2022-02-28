@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Admin\V1;
 
-use App\Dtos\Admin\UserDto;
+use App\Dtos\UserDto;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Users\UserQuery;
 use App\JsonApi\Admin\V1\Users\UserRequest;
 use App\JsonApi\Admin\V1\Users\UserSchema;
 use App\Models\User;
-use App\Services\Admin\UserService;
+use App\Services\UserService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
@@ -47,12 +47,20 @@ class UserController extends Controller
     {
         $attributes = $request->data['attributes'];
 
+        $roles = $request->data['relationships']['roles']['data'] ?? null;
+        $abilities = $request->data['relationships']['abilities']['data'] ?? null;
+
+        $roles = $roles ? pluckIds($roles) : $roles;
+        $abilities = $abilities ? pluckIds($abilities) : $abilities;
+
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? null,
+            $attributes['isBlock'] ?? 0,
             $attributes['phone'],
             $attributes['code'] ?? null,
+            $roles,
+            $abilities
         );
 
         $user = $this->userService->create($dto);
@@ -61,6 +69,7 @@ class UserController extends Controller
             return false;
         }
 
+        $user = User::find($user->getKey());
         return new DataResponse($user);
     }
 
@@ -76,12 +85,20 @@ class UserController extends Controller
     {
         $attributes = $request->data['attributes'];
 
+        $roles = $request->data['relationships']['roles']['data'] ?? null;
+        $abilities = $request->data['relationships']['abilities']['data'] ?? null;
+
+        $roles = $roles ? pluckIds($roles) : $roles;
+        $abilities = $abilities ? pluckIds($abilities) : $abilities;
+
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? null,
+            $attributes['isBlock'] ?? 0,
             $attributes['phone'],
             $attributes['code'] ?? null,
+            $roles,
+            $abilities,
         );
 
         $user = $this->userService->update($dto, $user->id);
@@ -90,6 +107,7 @@ class UserController extends Controller
             return false;
         }
 
+        $user = User::find($user->getKey());
         return new DataResponse($user);
     }
 

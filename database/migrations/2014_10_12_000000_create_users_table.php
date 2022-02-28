@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->boolean('is_block')->default(0);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

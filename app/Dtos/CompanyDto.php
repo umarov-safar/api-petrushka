@@ -19,11 +19,9 @@ class CompanyDto {
     protected bool $isBlock;
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected int $adminUserId;
-
-
+    protected null|int|string $phone;
 
     /**
      * @param int $inn
@@ -31,12 +29,12 @@ class CompanyDto {
      * @param bool $isBlock
      * @param int $adminUserId
      */
-    public function __construct(int $inn, ?array $info, bool $isBlock, int $adminUserId)
+    public function __construct(int $inn, ?array $info, bool $isBlock, $phone)
     {
         $this->inn = $inn;
         $this->info = $info;
         $this->isBlock = $isBlock;
-        $this->adminUserId = $adminUserId;
+        $this->phone = $phone;
     }
 
     /**
@@ -64,14 +62,11 @@ class CompanyDto {
     }
 
     /**
-     * @return int
+     * @return int|string|null
      */
-    public function getAdminUserId(): int
+    public function getPhone(): int|string|null
     {
-        return $this->adminUserId;
+        return $this->phone;
     }
-
-
-
 
 }

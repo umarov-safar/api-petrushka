@@ -57,7 +57,7 @@ class CreateDto extends Command
         fwrite($dtoFilePath, $this->dataFile($name, $folder));
         fclose($dtoFilePath);
 
-        $this->line('<fg=green;bg=black>You create successfully dto class!</>');
+        $this->line('<fg=green;bg=black>Dto class created successfully!</>');
         return null;
 
     }

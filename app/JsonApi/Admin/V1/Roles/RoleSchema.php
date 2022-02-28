@@ -2,7 +2,7 @@
 
 namespace App\JsonApi\Admin\V1\Roles;
 
-use App\Models\Admin\Role;
+use App\Models\Role;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
