@@ -33,15 +33,33 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('auth/phone', [AuthController::class, 'login']);
-Route::post('auth/phone/{phone}', [AuthController::class, 'checkCode'])->whereNumber('phone');
+// Route::post('auth/phone', [AuthController::class, 'login']);
+// Route::post('auth/phone/{phone}', [AuthController::class, 'checkCode'])->whereNumber('phone');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('auth/logout', [AuthController::class, 'logout']); // logout
 
     // User routes
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class); // не json-api спецификация!
 });
+
+Route::prefix('admin/v1')
+    ->group(function(){
+    Route::post('auth/phone', [AuthController::class, 'loginAdmin']);
+    Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
+    });
+
+Route::prefix('partner/v1')
+    ->group(function(){
+        Route::post('auth/phone', [AuthController::class, 'loginPartner']);
+        Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodePartner'])->whereNumber('phone');
+    });
+
+Route::prefix('cutomer/v1')
+    ->group(function(){
+        Route::post('auth/phone', [AuthController::class, 'loginCustomer']);
+        Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeCustomer'])->whereNumber('phone');
+    });
 
 
 // routes for admin
@@ -74,7 +92,7 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('partners', PartnerController::class);
 
         //partner users routes
-        $server->resource('partner-user', PartnerUserController::class);
+        $server->resource('partner-user', PartnerUserController::class); // переименовать в partner-users
 
     });
 
