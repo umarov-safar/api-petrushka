@@ -17,7 +17,7 @@ class CompanyUserSchema extends Schema
 {
     public static function type(): string
     {
-        return 'company-user';
+        return 'company-users';
     }
 
     /**

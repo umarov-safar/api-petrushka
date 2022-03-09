@@ -77,8 +77,10 @@ class AuthController extends Controller
         //return response($user); // нельзя так делать, т.к. ты сразу возвращаешь в объекте код для смс для любого номера телефона
         if (!$return){
             return  response(['message' => 'Пользователь не найден'], 404);
+            //return  response($return, 404);
         }
-        return response($return);
+        // отправка смс с кодом
+        return response($return, 200);
 
     }
 
@@ -160,8 +162,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->user()->tokens()->delete();
-
+        //auth()->user()->tokens()->delete(); // данный код удаляет все токены со всех устройств
+        auth()->user()->currentAccessToken()->delete();
+        //var_dump(auth()->user()->currentAccessToken());
         return response(['message' => 'Вы вышли из системы']);
     }
 

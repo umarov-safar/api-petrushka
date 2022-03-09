@@ -45,8 +45,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::prefix('admin/v1')
     ->group(function(){
-    Route::post('auth/phone', [AuthController::class, 'loginAdmin']);
-    Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
+    //Route::post('auth/phone', [AuthController::class, 'loginAdmin']);
+    Route::post('/auth', [AuthController::class, 'loginAdmin']);
+    //Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
+    Route::post('/auth/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
     });
 
 Route::prefix('partner/v1')
@@ -67,6 +69,8 @@ JsonApiRoute::server('Admin\V1')
     ->prefix('admin/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
+        Route::post('auth/logout', [AuthController::class, 'logout']); // logout
+
         //roles routes
         $server->resource('roles', RoleController::class)
             ->relationships(function ($relationships) {
@@ -77,7 +81,12 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('abilities', AbilityController::class);
 
         //users routes
-        $server->resource('users', UserForAdminController::class);
+        $server->resource('users', UserForAdminController::class)
+            ->actions('-actions', function ($actions) {
+                $actions->get('me', 'showMe');
+                $actions->post('me', 'updateMe');
+                // $actions->post('auth/logout','logout');
+        });
 
         //companies
         $server->resource('companies', CompanyController::class)
@@ -92,8 +101,7 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('partners', PartnerController::class);
 
         //partner users routes
-        $server->resource('partner-user', PartnerUserController::class); // переименовать в partner-users
-
+        $server->resource('partner-users', PartnerUserController::class); // переименовать в partner-users
     });
 
 
@@ -103,7 +111,7 @@ JsonApiRoute::server('Customer\V1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
         // company user routes
-        $server->resource('company-user', CustomerCompanyUserController::class);
+        $server->resource('company-users', CustomerCompanyUserController::class);
     });
 
 

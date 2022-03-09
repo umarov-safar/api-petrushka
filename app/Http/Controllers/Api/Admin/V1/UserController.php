@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Api\Admin\V1;
 
 use App\Dtos\UserDto;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Users\UserQuery;
 use App\JsonApi\Admin\V1\Users\UserRequest;
+use App\JsonApi\Admin\V1\Users\UserMeRequest;
 use App\JsonApi\Admin\V1\Users\UserSchema;
 use App\Models\User;
 use App\Services\UserService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
+use LaravelJsonApi\Contracts\Routing\Route;
+use LaravelJsonApi\Contracts\Store\Store as StoreContract;
+use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 
 class UserController extends Controller
 {
@@ -95,8 +100,8 @@ class UserController extends Controller
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
             $attributes['isBlock'] ?? 0,
-            $attributes['phone'],
-            $attributes['code'] ?? null,
+            $user->phone, //$attributes['phone'],  Запрещено менять номер телефона
+            $user->code,//$attributes['code'] ?? null,
             $roles,
             $abilities,
         );
@@ -110,5 +115,60 @@ class UserController extends Controller
         $user = User::find($user->getKey());
         return new DataResponse($user);
     }
+
+    /**
+     * Показать профиль текущего пользователя.
+     *
+     * @param UserSchema $schema
+     * @param UserQuery $request
+     * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
+     */
+
+    public function showMe(UserSchema $schema, UserQuery $request)
+    {
+        $user = auth()->user();
+        if(!$user) return response(['message' => 'Неверный код'], 204);
+        //var_dump($user->id);
+        //exit;
+
+        $model = $schema
+            ->repository()
+            ->queryOne($user)
+            ->withRequest($request)
+            ->first();
+
+        // do something custom...
+
+        return new DataResponse($model);
+    }
+
+    /**
+     * Изменить профиль текущего пользователя.
+     *
+     * @param UserSchema $schema
+     * @param UserRequest $request
+     * @param UserQuery $query
+     * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
+     */
+    public function updateMe(
+        UserSchema $schema,
+        UserMeRequest $request,
+        UserQuery $query
+    ) {
+        $user = auth()->user();
+        if(!$user) return response(['message' => 'Неверный код'], 204);
+        return $this->update($schema, $request,$query, $user);
+    }
+
+    /*
+    public function logout(){
+        $user = auth()->user();
+        if($user){
+            $authController = new AuthController();
+            return $authController->logout();
+        }
+        return response(['message' => 'Проблема'], 204);
+
+    }*/
 
 }

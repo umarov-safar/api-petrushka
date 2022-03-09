@@ -41,8 +41,8 @@ class UserSchema extends Schema
             ID::make(),
             Str::make('name'),
             Str::make('email'),
-            Str::make('phone'),
-            Number::make('code')->hidden(),
+            Str::make('phone')->readOnly(), // запрещено менять номер телефона!
+            Number::make('code')->hidden()->readOnly(),
             Boolean::make('isBlock'),
             BelongsToMany::make('roles'),
             BelongsToMany::make('abilities'),
