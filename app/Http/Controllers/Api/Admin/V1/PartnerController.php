@@ -47,6 +47,8 @@ class PartnerController extends Controller
     public function store(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query)
     {
         $attributes = $request->data['attributes'];
+        // Сафар, где проверка?!!!!!!!!
+        // Почему сразу не проверенные данные посылаешь в DTO?
 
         $dto = new PartnerDto(
             $attributes['name'],
@@ -78,7 +80,7 @@ class PartnerController extends Controller
 
         $dto = new PartnerDto(
             $attributes['name'],
-            $attributes['phone'],
+            $partner->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $attributes['info'] ?? $partner->info,
             $attributes['isBlock'] ?? 0,
         );

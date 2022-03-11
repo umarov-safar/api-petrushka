@@ -13,11 +13,14 @@ class CompanyUser extends Model
 
     protected $table = 'company_user';
 
-    protected $fillable = ['user_id', 'company_id', 'setting_info', 'phone', 'status'];
+    protected $fillable = ['user_id', 'company_id', 'setting_info', 'phone', 'status', 'is_admin'];
 
     protected $casts = [
         'setting_info' => 'array'
     ];
+
+    const IS_ADMIN_YES = 1; //
+    const IS_ADMIN_NO = 0; //
 
 
     public function company() : BelongsTo
@@ -30,6 +33,5 @@ class CompanyUser extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 
 }

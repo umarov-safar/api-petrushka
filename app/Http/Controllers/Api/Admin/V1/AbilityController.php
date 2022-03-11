@@ -19,7 +19,7 @@ class AbilityController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -45,7 +45,7 @@ class AbilityController extends Controller
      * @param AbilityQuery $query
      * @return false|DataResponse
      */
-    public function store(AbilitySchema $schema, AbilityRequest $request, AbilityQuery $query)
+    public function storeStop(AbilitySchema $schema, AbilityRequest $request, AbilityQuery $query)
     {
         $attributes = $request->data['attributes'];
 
@@ -74,7 +74,7 @@ class AbilityController extends Controller
      * @param Ability $ability
      * @return false|DataResponse
      */
-    public function update(AbilitySchema $schema, AbilityRequest $request, AbilityQuery $query, Ability $ability)
+    public function updateStop(AbilitySchema $schema, AbilityRequest $request, AbilityQuery $query, Ability $ability)
     {
         $attributes = $request->data['attributes'];
 

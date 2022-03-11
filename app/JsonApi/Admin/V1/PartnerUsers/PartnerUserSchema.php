@@ -18,7 +18,7 @@ class PartnerUserSchema extends Schema
 
     public static function type(): string
     {
-        return "partner-user";
+        return "partner-users";
     }
 
     /**
@@ -42,6 +42,7 @@ class PartnerUserSchema extends Schema
             Str::make('phone'),
             Str::make('settingInfo'),
             Boolean::make('status'),
+            Boolean::make('isAdmin')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

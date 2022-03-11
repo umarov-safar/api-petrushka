@@ -47,6 +47,9 @@ class User extends Authenticatable
         'created_at' => 'datetime:Y-m-d',
     ];
 
+    const BLOCK_YES = 1; // Заблокирован
+    const BLOCK_NO = 0; // Незаблокирован
+
 
 
     //--------------------      Relationships     -----------------------//

@@ -34,7 +34,7 @@ class PartnerDto {
         string $name,
         int $phone,
         ?array $info,
-        bool $isBlock,
+        bool $isBlock
     )
     {
         $this->name = $name;

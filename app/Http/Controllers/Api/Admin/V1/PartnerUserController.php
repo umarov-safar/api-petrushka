@@ -48,6 +48,7 @@ class PartnerUserController extends Controller
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
             $attributes['status'] ?? 0,
+            0,
             $attributes['partnerId'],
         );
 
@@ -65,9 +66,10 @@ class PartnerUserController extends Controller
         $attributes = $request->data['attributes'];
 
         $dto = new PartnerUserDto(
-            $attributes['phone'],
+            $partnerUser->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $attributes['settingInfo'] ?? null,
             $attributes['status'] ?? 0,
+            $partnerUser->is_admin,
             $attributes['partnerId'] ?? 0,
         );
 

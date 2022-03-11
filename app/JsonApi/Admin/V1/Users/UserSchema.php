@@ -10,9 +10,12 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Has;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -41,10 +44,14 @@ class UserSchema extends Schema
             ID::make(),
             Str::make('name'),
             Str::make('email'),
-            Str::make('phone'),
-            Number::make('code')->hidden(),
+            Str::make('phone')->readOnly(), // запрещено менять номер телефона!
+            Number::make('code')->hidden()->readOnly(),
             Boolean::make('isBlock'),
-            BelongsToMany::make('roles'),
+            //BelongsToMany::make('roles'),
+            HasMany::make('roles'),
+            /*HasMany::make('roles')->withFilters(
+                Where::make('role_name','name')
+            ),*/
             BelongsToMany::make('abilities'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -59,9 +66,10 @@ class UserSchema extends Schema
     public function filters(): array
     {
         return [
-            WhereIdIn::make($this),
-            Has::make($this, 'roles'),
-            Like::make('name'),
+            WhereIdIn::make($this)->delimiter(','), // filter[id]=x,y
+            //Has::make($this, 'roles'),
+            WhereHas::make($this, 'roles'), // filter[roles][name]=value
+            Like::make('name'), // filter[name]=value
         ];
     }
 

@@ -22,7 +22,8 @@ class CompanyUserService {
         $company_user->company_id = $request->getCompanyId();
         $company_user->phone = $request->getPhone();
         $company_user->setting_info = $request->getSettingInfo();
-        $company_user->status = $request->isStatus();
+        $company_user->status = $request->getStatus();
+        $company_user->is_admin = $request->getIsAdmin();
 
         if(!$company_user->save()) return false;
 
@@ -42,7 +43,8 @@ class CompanyUserService {
         $company_user->company_id = $request->getCompanyId();
         $company_user->phone = $request->getPhone();
         $company_user->setting_info = $request->getSettingInfo();
-        $company_user->status = $request->isStatus();
+        $company_user->status = $request->getStatus();
+        $company_user->is_admin = $request->getIsAdmin();
 
         if(!$company_user->save()) return false;
 

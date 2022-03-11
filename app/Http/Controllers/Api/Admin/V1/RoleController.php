@@ -19,7 +19,7 @@ class RoleController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -41,7 +41,7 @@ class RoleController extends Controller
      * @param RoleQuery $query
      * @return false|DataResponse
      */
-    public function store(RoleSchema $schema, RoleRequest $request, RoleQuery $query): false|DataResponse
+    public function storeStop(RoleSchema $schema, RoleRequest $request, RoleQuery $query): false|DataResponse
     {
         $attributes = $request->data['attributes'];
 
@@ -85,7 +85,7 @@ class RoleController extends Controller
      * @param Role $role
      * @return DataResponse
      */
-    public function update(RoleSchema $schema, RoleRequest $request, RoleQuery $query, Role $role)
+    public function updateStop(RoleSchema $schema, RoleRequest $request, RoleQuery $query, Role $role)
     {
         $attributes = $request->data['attributes'];
 
