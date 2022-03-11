@@ -62,6 +62,7 @@ class AuthController extends Controller
                 {
                     $return = TRUE;
                     $user->code = random_int(100000, 999999);
+                    $user->save();
                 }
 
                 break;
@@ -72,6 +73,8 @@ class AuthController extends Controller
                 {
                     $return = TRUE;
                     $user->code = random_int(100000, 999999);
+                    if($user->phone <> '79999999999')
+                        $user->save();
                 }
                 break;
         }
