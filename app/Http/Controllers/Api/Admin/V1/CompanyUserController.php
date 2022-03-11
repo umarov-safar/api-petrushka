@@ -48,7 +48,8 @@ class CompanyUserController extends Controller
             $attributes['companyId'],
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0
+            $attributes['status'] ?? 0,
+            0
         );
 
         $company_user = $this->companyUserService->create($dto);
@@ -66,9 +67,10 @@ class CompanyUserController extends Controller
 
         $dto = new CompanyUserDto(
             $attributes['companyId'],
-            $attributes['phone'],
+            $companyUser->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0
+            $attributes['status'] ?? 0,
+            0
         );
 
         $company_user = $this->companyUserService->update($dto, $companyUser->id);

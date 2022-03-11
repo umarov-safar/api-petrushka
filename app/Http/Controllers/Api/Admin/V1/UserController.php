@@ -24,7 +24,7 @@ class UserController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -50,6 +50,12 @@ class UserController extends Controller
      */
     public function store(UserSchema $userSchema, UserRequest $request, UserQuery $query)
     {
+        /*
+         * Заметки
+         * 1. Роль Партнер
+         *  создать партнер и партнер юзер
+         * 2. Роль покупатель
+         * */
         $attributes = $request->data['attributes'];
 
         $roles = $request->data['relationships']['roles']['data'] ?? null;
@@ -61,7 +67,7 @@ class UserController extends Controller
         $dto = new UserDto(
             $attributes['name'] ?? null,
             $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? 0,
+            $attributes['isBlock'] ?? User::BLOCK_NO,
             $attributes['phone'],
             $attributes['code'] ?? null,
             $roles,
@@ -97,13 +103,44 @@ class UserController extends Controller
         $abilities = $abilities ? pluckIds($abilities) : $abilities;
 
         $dto = new UserDto(
-            $attributes['name'] ?? null,
-            $attributes['email'] ?? null,
-            $attributes['isBlock'] ?? 0,
+            $attributes['name'] ?? $user->name ?? null,
+            $attributes['email'] ?? $user->email ?? null,
+            $attributes['isBlock'] ?? $user->is_block ?? User::BLOCK_NO,
             $user->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $user->code,//$attributes['code'] ?? null,
             $roles,
             $abilities,
+        );
+
+        $user = $this->userService->update($dto, $user->id);
+
+        if(!$user) {
+            return false;
+        }
+
+        $user = User::find($user->getKey());
+        return new DataResponse($user);
+    }
+
+    /**
+     * Удаление существующего ресурса. Замена на блокирвку пользователя.
+     *
+     * @param UserRequest $request
+     * @param User $user
+     * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
+     */
+    public function destroy(UserRequest $request, User $user)
+    {
+        //var_dump($user->roles());
+        //exit;
+        $dto = new UserDto(
+            $user->name,
+            $user->email,
+            User::BLOCK_YES,
+            $user->phone, //$attributes['phone'],  Запрещено менять номер телефона
+            $user->code,//$attributes['code'] ?? null,
+            NULL,
+            NULL,
         );
 
         $user = $this->userService->update($dto, $user->id);

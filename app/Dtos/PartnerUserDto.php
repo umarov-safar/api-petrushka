@@ -24,21 +24,30 @@ class PartnerUserDto {
     protected bool $status;
 
     /**
+     * @var bool
+     */
+    protected bool $isAdmin;
+
+    /**
      * @param int $partner_id
      * @param string $phone
      * @param array|null $setting_info
      * @param bool $status
+     * @param bool $isAdmin
+     * @param bool $partner_id
      */
     public function __construct(
         string $phone,
         ?array $setting_info,
         bool $status,
-        ?int $partner_id,
+        bool $isAdmin,
+        ?int $partner_id
     )
     {
         $this->phone = $phone;
         $this->setting_info = $setting_info;
         $this->status = $status;
+        $this->isAdmin = $isAdmin;
         $this->partner_id = $partner_id;
     }
 
@@ -70,9 +79,17 @@ class PartnerUserDto {
     /**
      * @return bool
      */
-    public function isStatus(): bool
+    public function getStatus(): bool
     {
         return $this->status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsAdmin(): bool
+    {
+        return $this->isAdmin;
     }
 
 

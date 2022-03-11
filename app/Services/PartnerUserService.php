@@ -17,7 +17,8 @@ class PartnerUserService {
         $partner_user->partner_id = $request->getPartnerId() ?? auth()->user()->partnerOwner->id;
         $partner_user->phone = $request->getPhone();
         $partner_user->setting_info = $request->getSettingInfo();
-        $partner_user->status = $request->isStatus();
+        $partner_user->status = $request->getStatus();
+        $partner_user->is_admin = $request->getIsAdmin();
 
         if(!$partner_user->save()) return false;
 
@@ -31,7 +32,8 @@ class PartnerUserService {
 
         $partner_user->phone = $request->getPhone();
         $partner_user->setting_info = $request->getSettingInfo();
-        $partner_user->status = $request->isStatus();
+        $partner_user->status = $request->getStatus();
+        $partner_user->is_admin = $request->getIsAdmin();
 
         if(!$partner_user->save()) return false;
 

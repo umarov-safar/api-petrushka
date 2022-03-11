@@ -75,7 +75,8 @@ class CompanyController extends Controller
             $attributes['inn'],
             $attributes['info'] ?? null,
             $attributes['isBlock'] ?? 0,
-            $attributes['phone']
+            //$attributes['phone']
+            $company->phone, //$attributes['phone'],  Запрещено менять номер телефона
         );
 
         $company = $this->companyService->update($dto, $company->id);

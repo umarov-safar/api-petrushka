@@ -50,6 +50,7 @@ class AuthController extends Controller
                     ['phone' => $request->phone],
                     ['code' => random_int(100000, 999999) ] // generate code for message
                 );
+                //var_dump($type);
                 $user->assign('customer'); // привязать пользователя к роли "Покупатель"
 
                 $return = TRUE;
@@ -58,13 +59,20 @@ class AuthController extends Controller
                 $user = User::firstWhere('phone', $request->phone);
                 $return = FALSE;
                 if($user && Bouncer::is($user)->a('partner'))
+                {
                     $return = TRUE;
+                    $user->code = random_int(100000, 999999);
+                }
+
                 break;
             case 'admin':
                 $user = User::firstWhere('phone', $request->phone);
                 $return = FALSE;
                 if($user && Bouncer::is($user)->a('superadmin', 'admin'))
+                {
                     $return = TRUE;
+                    $user->code = random_int(100000, 999999);
+                }
                 break;
         }
 

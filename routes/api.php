@@ -53,14 +53,14 @@ Route::prefix('admin/v1')
 
 Route::prefix('partner/v1')
     ->group(function(){
-        Route::post('auth/phone', [AuthController::class, 'loginPartner']);
-        Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodePartner'])->whereNumber('phone');
+        Route::post('auth', [AuthController::class, 'loginPartner']);
+        Route::post('auth\/{phone}', [AuthController::class, 'checkCodePartner'])->whereNumber('phone');
     });
 
-Route::prefix('cutomer/v1')
+Route::prefix('customer/v1')
     ->group(function(){
-        Route::post('auth/phone', [AuthController::class, 'loginCustomer']);
-        Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeCustomer'])->whereNumber('phone');
+        Route::post('auth', [AuthController::class, 'loginCustomer']);
+        Route::post('auth/{phone}', [AuthController::class, 'checkCodeCustomer'])->whereNumber('phone');
     });
 
 
@@ -73,12 +73,14 @@ JsonApiRoute::server('Admin\V1')
 
         //roles routes
         $server->resource('roles', RoleController::class)
+            ->only('index', 'show')
             ->relationships(function ($relationships) {
             $relationships->hasMany('abilities');
             $relationships->hasMany('users');
         });
         //abilities routes
-        $server->resource('abilities', AbilityController::class);
+        $server->resource('abilities', AbilityController::class)
+            ->only('index', 'show');
 
         //users routes
         $server->resource('users', UserForAdminController::class)
@@ -91,14 +93,19 @@ JsonApiRoute::server('Admin\V1')
         //companies
         $server->resource('companies', CompanyController::class)
             ->relationships(function($relationships) {
-               $relationships->hasMany('companyUsers');
+               $relationships->hasMany('companyUsers'); // только просмотр
+               $relationships->hasOne('owner')->only('related', 'show');;
             });
 
         //company users
-        $server->resource('company-users', CompanyUserController::class);
+        $server->resource('company-users', CompanyUserController::class); // Зачем этот метод? Это дубликат /api/admin/v1/companies/{company_id}/company-users ?
 
         //partners routes
-        $server->resource('partners', PartnerController::class);
+        $server->resource('partners', PartnerController::class)
+            ->relationships(function($relationships) {
+                $relationships->hasMany('partnerUsers'); // только просмотр
+                $relationships->hasOne('owner')->only('related', 'show');;
+            });
 
         //partner users routes
         $server->resource('partner-users', PartnerUserController::class); // переименовать в partner-users
@@ -110,6 +117,7 @@ JsonApiRoute::server('Customer\V1')
     ->prefix('customer/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
+        Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
         $server->resource('company-users', CustomerCompanyUserController::class);
     });
@@ -121,6 +129,7 @@ JsonApiRoute::server('Partner\V1')
     ->prefix('partner/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
+        Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
         $server->resource('companies', JsonApiController::class);
         $server->resource('employees', EmployeeController::class);

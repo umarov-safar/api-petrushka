@@ -15,4 +15,15 @@ class Partner extends Model
     protected $casts = [
         'info' => 'array'
     ];
+
+    public function partnerUsers()
+    {
+        return $this->belongsToMany(User::class, 'partner_user')->withPivot('phone', 'setting_info', 'status');
+    }
+
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'admin_user_id', 'id');
+    }
 }
