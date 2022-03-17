@@ -59,8 +59,11 @@ class CompanyService {
                 null
             );
             $userService = new UserService();
-            if(!$adminUser = $userService->create($dto));
+            if(!$adminUser = $userService->create($dto)){
+                \Log::debug($adminUser);
                 return false;
+            }
+            $adminUser->assign('customer'); // привязать роль
         }
 
         $company = new Company();
@@ -82,6 +85,7 @@ class CompanyService {
         );
         $companyUserService = new CompanyUserService();
         $companyUser = $companyUserService->create($dto);
+        $adminUser->assign('customerAdmin'); // привязать роль
 
         return $company;
     }

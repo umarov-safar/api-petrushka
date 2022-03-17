@@ -55,7 +55,7 @@ class CompanyController extends Controller
         $dto = new CompanyDto(
             $attributes['inn'],
             $attributes['info'] ?? null,
-            $attributes['isBlock'] ?? 0,
+            $attributes['isBlock'] ?? Company::BLOCK_NO,
             $attributes['phone']
         );
 
@@ -82,7 +82,7 @@ class CompanyController extends Controller
         $dto = new CompanyDto(
             $attributes['inn'],
             $attributes['info'] ?? null,
-            $attributes['isBlock'] ?? 0,
+            $attributes['isBlock'] ?? $company->is_block,
             //$attributes['phone']
             $company->phone, //$attributes['phone'],  Запрещено менять номер телефона
         );

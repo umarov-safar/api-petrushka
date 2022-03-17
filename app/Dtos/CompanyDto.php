@@ -27,7 +27,7 @@ class CompanyDto {
      * @param int $inn
      * @param array|null $info
      * @param bool $isBlock
-     * @param int $adminUserId
+     * @param int $phone
      */
     public function __construct(int $inn, ?array $info, bool $isBlock, $phone)
     {

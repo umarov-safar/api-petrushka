@@ -7,6 +7,15 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.13.1] - 2022.03.17
+### Added:
+- добавлен метод DELETE /admin/v1/partners , реализована вся логика;
+- добавлен метод DELETE /admin/v1/partner-users/{partner_user_id} , реализована вся логика;
+
+### Changed:
+- изменен метод POST /admin/v1/partners , реализована вся логика;
+- изменен метод PATCH /admin/v1/partner-users/{partner_user_id} , реализована вся логика;
+
 ## [1.13.0] - 2022.03.12
 ### Added:
 - добавлен фильтр /admin/v1/roles/?filter[allow_manual]=true||false ;

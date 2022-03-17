@@ -36,7 +36,7 @@ class CompanyUserService {
                 $employeeUser->assign('customer'); // привязать пользователя к роли "customer"
                 $employeeUser->assign('customerEmployee'); // привязать пользователя к роли "customerEmployee"
             } else{
-                // запретить создавать компанию, т.к. пользователь уже является админом в другой компании или является сотрудником
+                // запретить создавать компанию, т.к. пользователь уже является сотрудником в другой компании или является сотрудником
                 return false;
             }
         } else {
@@ -52,13 +52,13 @@ class CompanyUserService {
                 null
             );
             $userService = new UserService();
-            if(!$employeeUser = $userService->create($dto));
-            return false;
+            if(!$employeeUser = $userService->create($dto))
+                return false;
+            $employeeUser->assign('customer'); // привязать пользователя к роли "customer"
+            $employeeUser->assign('customerEmployee'); // привязать пользователя к роли "customerEmployee"
         }
 
         $companyUser = new CompanyUser();
-
-
         $companyUser->user_id = $employeeUser->id;
         $companyUser->company_id = $request->getCompanyId();
         $companyUser->phone = $request->getPhone();
@@ -75,7 +75,7 @@ class CompanyUserService {
      * Update user company
      * @param CompanyUserDto $request
      * @param int $id
-     * @return false
+     * @return CompanyUser|false
      */
     public function update(CompanyUserDto $request, int $id)
     {

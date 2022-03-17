@@ -95,7 +95,7 @@ class CompanyUserController extends Controller
     }
 
     /**
-     * Удаление существующего ресурса. Замена на блокирвку пользователя.
+     * Удаление существующего ресурса. Замена на блокировку пользователя.
      *
      * @param CompanyUserRequest $request
      * @param CompanyUser $user
@@ -114,8 +114,6 @@ class CompanyUserController extends Controller
             CompanyUser::BLOCK_YES,
             $companyUser->is_admin
         );
-
-
 
         $companyUser = $this->companyUserService->update($dto, $companyUser->id);
 

@@ -83,9 +83,9 @@ class UserService {
     private function createPartner(User $user){
         $dto = new PartnerDto(
             $user->phone,
-            $user->phone,
             null,
-            0,
+            null,
+            $user->phone,
         );
         $partnerService = new PartnerService();
 

@@ -2,11 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class PartnerUser
+ *
+ * Модель "Сотрудник партнера"
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $partner_id
+ * @property string $phone
+ * @property bool $status
+ * @property bool $is_admin
+ * @property string $setting_info
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder create(array $attributes = [])
+ * @method public Builder update(array $values)
+ * @method static Builder find($value)
+ *
+ * @package App/Models
+ */
 class PartnerUser extends Model
 {
     use HasFactory, SoftDeletes;
@@ -31,7 +51,7 @@ class PartnerUser extends Model
     }
 
 
-    public function users() : BelongsTo
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
