@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+// use Actions\Destroy; Бл, Сафар. Мы же обсуждали, что удаления нет, просто меняется статус на "заблокирован"
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -44,6 +44,12 @@ class EmployeeController extends Controller
         $attributes = $request->data['attributes'];
 
         \Log::info($request->all());
+        /**
+         * проверка:
+         * 1. Пользователь с номером существует
+         *      1.1. нет роли partnerEmployee
+         * 2. Пользователь с номером не существует
+         */
 
         $dto = new PartnerUserDto(
             $attributes['phone'],

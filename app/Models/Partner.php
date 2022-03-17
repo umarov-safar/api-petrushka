@@ -16,6 +16,9 @@ class Partner extends Model
         'info' => 'array'
     ];
 
+    const BLOCK_YES = 1; // Заблокирован
+    const BLOCK_NO = 0; // Не заблокирован
+
     public function partnerUsers()
     {
         return $this->belongsToMany(User::class, 'partner_user')->withPivot('phone', 'setting_info', 'status');

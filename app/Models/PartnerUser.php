@@ -22,6 +22,9 @@ class PartnerUser extends Model
     const IS_ADMIN_YES = 1; //
     const IS_ADMIN_NO = 0; //
 
+    const BLOCK_YES = 1; // Заблокирован
+    const BLOCK_NO = 0; // Не заблокирован
+
     public function partner() : BelongsTo
     {
         return $this->belongsTo(Company::class);

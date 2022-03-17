@@ -48,7 +48,7 @@ class User extends Authenticatable
     ];
 
     const BLOCK_YES = 1; // Заблокирован
-    const BLOCK_NO = 0; // Незаблокирован
+    const BLOCK_NO = 0; // Не заблокирован
 
 
 

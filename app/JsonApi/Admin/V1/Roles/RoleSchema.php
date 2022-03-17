@@ -11,6 +11,7 @@ use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\Where;
+use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -62,6 +63,8 @@ class RoleSchema extends Schema
         return [
             WhereIdIn::make($this),
             Where::make('name'), // filter[name]=value
+            // фильтр на получения ролей, которые можно назначать вручную или нельзя
+            Scope::make('allow_manual', 'AllowManuallySet')->asBoolean(), // filter[allow_manual]=true || false
         ];
     }
 

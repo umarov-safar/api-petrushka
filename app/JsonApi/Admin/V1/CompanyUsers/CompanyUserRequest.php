@@ -12,6 +12,7 @@ class CompanyUserRequest extends ResourceRequest
     {
 
         if($this->isMethod("DELETE")) return;
+        if($this->isMethod('PATCH')) return;
 
         $data = $this->data;
         $data['attributes']['phone'] = preg_replace('/[^0-9]/', '', $this->data['attributes']['phone']);
@@ -33,11 +34,17 @@ class CompanyUserRequest extends ResourceRequest
             $unique = $unique->ignore($company_user);
         }
 
-        return [
+        $rules = [
             'companyId' => 'required|exists:companies,id',
             'phone' => 'required|digits_between:3,15|' . $unique,
-            "status" => 'boolean'
+            'status' => 'boolean'
         ];
+
+        if($this->isMethod('PATCH')){
+            unset($rules['phone']); // убрать проверку на номер телефона при редактировании пользователя
+            unset($rules['companyId']); // убрать проверку на companyId, т.к. компанию после назначения уже поменять нельзя
+        }
+        return $rules;
     }
 
 }

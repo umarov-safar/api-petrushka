@@ -53,14 +53,14 @@ Route::prefix('admin/v1')
 
 Route::prefix('partner/v1')
     ->group(function(){
-        Route::post('auth', [AuthController::class, 'loginPartner']);
-        Route::post('auth\/{phone}', [AuthController::class, 'checkCodePartner'])->whereNumber('phone');
+        Route::post('/auth', [AuthController::class, 'loginPartner']);
+        Route::post('/auth/{phone}', [AuthController::class, 'checkCodePartner'])->whereNumber('phone');
     });
 
 Route::prefix('customer/v1')
     ->group(function(){
-        Route::post('auth', [AuthController::class, 'loginCustomer']);
-        Route::post('auth/{phone}', [AuthController::class, 'checkCodeCustomer'])->whereNumber('phone');
+        Route::post('/auth', [AuthController::class, 'loginCustomer']);
+        Route::post('/auth/{phone}', [AuthController::class, 'checkCodeCustomer'])->whereNumber('phone');
     });
 
 
@@ -133,4 +133,5 @@ JsonApiRoute::server('Partner\V1')
         // company user routes
         $server->resource('companies', JsonApiController::class);
         $server->resource('employees', EmployeeController::class);
+        // $server->resource('customers', EmployeeController::class); // Покупатели, реализовать в следующих релизах
     });

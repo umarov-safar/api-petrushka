@@ -9,9 +9,11 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 
 // DTOs
 use App\Dtos\CompanyUserDto;
+use App\Dtos\UserDto;
 
 // Services
 use App\Services\CompanyUserService;
+use App\Services\UserService;
 
 class CompanyService {
 
@@ -22,28 +24,60 @@ class CompanyService {
      */
     public function create(CompanyDto $request)
     {
-        $company = new Company();
+        /**
+         * Компанию может создать только тот у кого есть разрешение на создании компаний
+         *
+         * Админом компании может быть только пользователь, которые еще не является админом компании или сотрудником
+         *
+         * Алгоритм:
+         * 1. проверяем по номеру телефона существование пользователя;
+         * 2. пользователеь существует. Проверяем его роли.
+         * 3. Пользователь не существует.
+         */
 
-        $admin_user = User::firstOrCreate(['phone' => $request->getPhone()]);
-        if(Bouncer::is($admin_user)->notAn('customerAdmin', 'customerEmployee')){
-            $admin_user->assign('customer'); // привязать пользователя к роли "partnerAdmin"
-            $admin_user->assign('customerAdmin'); // привязать пользователя к роли "partnerAdmin"
+
+        //$admin_user = User::firstOrCreate(['phone' => $request->getPhone()]); // тут не правильно совсем, идет обращение к модели, а не к методу сервиса
+        $adminUser = User::where('phone', $request->getPhone())->first();
+        // получить пользователя по номер телефона
+        if($adminUser){
+            if(Bouncer::is($adminUser)->notAn('customerAdmin', 'customerEmployee')){
+                $adminUser->assign('customer'); // привязать пользователя к роли "customer"
+                $adminUser->assign('customerAdmin'); // привязать пользователя к роли "customerAdmin"
+            } else{
+                // запретить создавать компанию, т.к. пользователь уже является админом в другой компании или является сотрудником
+                return false;
+            }
+        } else {
+            // создать пользователя и выставить ему роль customerAdmin
+            $dto = new UserDto(
+                null,
+                null,
+                User::BLOCK_NO,
+                $request->getPhone(),
+                null,
+                null,
+                null
+            );
+            $userService = new UserService();
+            if(!$adminUser = $userService->create($dto));
+                return false;
         }
 
+        $company = new Company();
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
         $company->is_block = $request->isBlock();
         $company->phone = $request->getPhone();
-        $company->admin_user_id = $admin_user->id;
+        $company->admin_user_id = $adminUser->id;
 
         if(!$company->save()) return false;
 
-        // создание записи в partner_user с пометкой, что user админ
+        // создание записи в customer_user с пометкой, что user админ
         $dto = new CompanyUserDto(
             $company->id,
-            $admin_user->phone,
+            $adminUser->phone,
             [],
-            0,
+            CompanyUser::BLOCK_NO,
             CompanyUser::IS_ADMIN_YES
         );
         $companyUserService = new CompanyUserService();
@@ -65,7 +99,7 @@ class CompanyService {
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
         $company->is_block = $request->isBlock();
-        $company->phone = $request->getPhone();
+        //$company->phone = $request->getPhone(); // Запрещено менять телефон
 
         if(!$company->save()) return false;
 

@@ -48,11 +48,11 @@ class UserSchema extends Schema
             Number::make('code')->hidden()->readOnly(),
             Boolean::make('isBlock'),
             //BelongsToMany::make('roles'),
-            HasMany::make('roles'),
+            HasMany::make('roles')->type('roles'),
             /*HasMany::make('roles')->withFilters(
                 Where::make('role_name','name')
             ),*/
-            BelongsToMany::make('abilities'),
+            BelongsToMany::make('abilities')->type('abilities'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

@@ -64,7 +64,6 @@ class AuthController extends Controller
                     $user->code = random_int(100000, 999999);
                     $user->save();
                 }
-
                 break;
             case 'admin':
                 $user = User::firstWhere('phone', $request->phone);

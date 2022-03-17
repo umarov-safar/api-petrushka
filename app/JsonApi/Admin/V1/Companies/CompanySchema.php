@@ -39,7 +39,7 @@ class CompanySchema extends Schema
             Str::make('info'),
             Str::make('phone'),
             Boolean::make('isBlock'),
-            Number::make('adminUserId'),
+            Number::make('adminUserId')->readOnly(),
             BelongsTo::make('owner')->type('users'),
             BelongsToMany::make('companyUsers'),
             DateTime::make('createdAt')->sortable()->readOnly(),

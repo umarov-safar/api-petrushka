@@ -41,6 +41,10 @@ class UserRequest extends ResourceRequest
             'isBlock' => 'boolean',
             'phone' => 'required|digits_between:3,15|'. $unique,
         ];
+        // роли (roles). роль должна быть  с id 1-4;
+
+        // возможности (abilities) пока без проверок
+
         if($this->isMethod('PATCH')) unset($rules['phone']); // убрать проверку на номер телефона при редактировании пользователя
 
         return $rules;

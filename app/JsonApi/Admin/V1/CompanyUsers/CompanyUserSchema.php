@@ -40,9 +40,10 @@ class CompanyUserSchema extends Schema
         return [
             ID::make(),
             Number::make('companyId'),
-            Number::make('userId'),
+            Number::make('userId')->readOnly(),
             Str::make('phone'),
             Boolean::make('status'),
+            Boolean::make('isAdmin')->readOnly(),
             Str::make('settingInfo'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
