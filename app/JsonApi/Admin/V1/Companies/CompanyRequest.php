@@ -12,6 +12,7 @@ class CompanyRequest extends ResourceRequest
     protected function prepareForValidation()
     {
         if($this->isMethod('DELETE')) return;
+        if($this->isMethod('PATCH')) return;
 
         $data = $this->data;
         $data['attributes']['phone'] = preg_replace('/[^0-9]/', '', @$this->data['attributes']['phone']);
@@ -34,12 +35,14 @@ class CompanyRequest extends ResourceRequest
             $unique = $unique->ignore($company);
         }
 
-        return [
+        $rules = [
             'inn' => 'required|digits_between:10,12|' . $unique,
             'info' => 'nullable',
             'isBlock' => 'boolean',
             'phone' => 'required|digits_between:3,15|'. $unique,
         ];
+        if($this->isMethod('PATCH')) unset($rules['phone']); // убрать проверку на номер телефона при редактировании пользователя
+        return $rules;
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\JsonApi\Partner\V1\Employees;
 
-use App\Models\PartnerUser;
+use App\JsonApi\Proxies\PartnerUserPartner as PartnerUser; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -13,9 +13,10 @@ use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+//use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class EmployeeSchema extends Schema
+class EmployeeSchema extends ProxySchema
 {
 
     /**
@@ -38,6 +39,7 @@ class EmployeeSchema extends Schema
             Number::make('userId'),
             Str::make('phone'),
             Boolean::make('status'),
+            Boolean::make('isAdmin'),
             Str::make('settingInfo'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

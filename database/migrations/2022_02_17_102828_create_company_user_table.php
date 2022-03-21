@@ -18,7 +18,7 @@ class CreateCompanyUserTable extends Migration
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Company::class);
             $table->string('phone')->unique();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(0); // Какие могут быть варианты статусов????? Непонятно
             $table->jsonb('setting_info')->nullable();
             $table->softDeletes();
             $table->timestamps();

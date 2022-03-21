@@ -10,7 +10,9 @@ use App\JsonApi\Admin\V1\PartnerUsers\PartnerUserSchema;
 use App\Models\PartnerUser;
 use App\Models\User;
 use App\Services\PartnerUserService;
+use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\DataResponse;
+use LaravelJsonApi\Core\Responses\ErrorResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class PartnerUserController extends Controller
@@ -47,14 +49,19 @@ class PartnerUserController extends Controller
         $dto = new PartnerUserDto(
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0,
-            0,
+            $attributes['status'] ?? PartnerUser::BLOCK_NO,
+            PartnerUser::IS_ADMIN_NO,
             $attributes['partnerId'],
         );
 
         $company_user = $this->partnerUserService->create($dto);
 
-        if(!$company_user) return false;
+        if(!$company_user){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
 
         $company_user = PartnerUser::find($company_user->getKey());
         return new DataResponse($company_user);
@@ -68,17 +75,56 @@ class PartnerUserController extends Controller
         $dto = new PartnerUserDto(
             $partnerUser->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? 0,
+            $attributes['status'] ?? PartnerUser::BLOCK_NO,
             $partnerUser->is_admin,
-            $attributes['partnerId'] ?? 0,
+            $partnerUser->partner_id,
         );
 
         $company_user = $this->partnerUserService->update($dto, $partnerUser->id);
 
-        if(!$company_user) return false;
+        if(!$company_user){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
 
         $company_user = PartnerUser::find($company_user->getKey());
         return new DataResponse($company_user);
+    }
+
+    /**
+     * Удаление существующего ресурса. Замена на блокировку пользователя.
+     *
+     * @param PartnerUserRequest $request
+     * @param PartnerUser $user
+     * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
+     */
+    public function destroy(PartnerUserRequest $request, PartnerUser $partnerUser)
+    {
+        //var_dump($user->roles());
+        //exit;
+
+        $dto = new PartnerUserDto(
+        //$attributes['companyId'],
+            $partnerUser->phone, //  Запрещено менять номер телефона
+            $partnerUser->setting_info,
+            PartnerUser::BLOCK_YES,
+            $partnerUser->is_admin,
+            $partnerUser->partner_id,
+        );
+
+        $partnerUser = $this->partnerUserService->update($dto, $partnerUser->id);
+
+        if(!$partnerUser) {
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
+
+        $companyUser = PartnerUser::find($partnerUser->getKey());
+        return new DataResponse($partnerUser);
     }
 
 }

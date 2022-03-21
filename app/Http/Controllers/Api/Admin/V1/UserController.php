@@ -11,7 +11,9 @@ use App\JsonApi\Admin\V1\Users\UserMeRequest;
 use App\JsonApi\Admin\V1\Users\UserSchema;
 use App\Models\User;
 use App\Services\UserService;
+use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\DataResponse;
+use LaravelJsonApi\Core\Responses\ErrorResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Contracts\Routing\Route;
 use LaravelJsonApi\Contracts\Store\Store as StoreContract;
@@ -115,7 +117,10 @@ class UserController extends Controller
         $user = $this->userService->update($dto, $user->id);
 
         if(!$user) {
-            return false;
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
         }
 
         $user = User::find($user->getKey());
@@ -143,10 +148,15 @@ class UserController extends Controller
             NULL,
         );
 
+
+
         $user = $this->userService->update($dto, $user->id);
 
         if(!$user) {
-            return false;
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
         }
 
         $user = User::find($user->getKey());
@@ -164,7 +174,12 @@ class UserController extends Controller
     public function showMe(UserSchema $schema, UserQuery $request)
     {
         $user = auth()->user();
-        if(!$user) return response(['message' => 'Неверный код'], 204);
+        if(!$user){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
         //var_dump($user->id);
         //exit;
 
@@ -182,6 +197,8 @@ class UserController extends Controller
     /**
      * Изменить профиль текущего пользователя.
      *
+     * @todo Проверка на разблокировку, т.к. сейчас каждый пользователь может сам себя заблокировать и разблокировать.
+     *
      * @param UserSchema $schema
      * @param UserRequest $request
      * @param UserQuery $query
@@ -193,8 +210,18 @@ class UserController extends Controller
         UserQuery $query
     ) {
         $user = auth()->user();
-        if(!$user) return response(['message' => 'Неверный код'], 204);
-        return $this->update($schema, $request,$query, $user);
+        if(!$user){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
+        return $this->update($schema, $request, $query, $user);
+    }
+
+    public function checkCode(\Request $request){
+        echo "test\n";
+        var_dump($request);
     }
 
     /*

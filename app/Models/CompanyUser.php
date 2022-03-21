@@ -6,7 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class CompanyUser
+ *
+ * Модель "Сотрудник компании"
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $company_id
+ * @property string $phone
+ * @property bool $status
+ * @property bool $is_admin
+ * @property string $setting_info
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder create(array $attributes = [])
+ * @method public Builder update(array $values)
+ * @method static Builder find($value)
+ *
+ * @package App/Models
+ */
 class CompanyUser extends Model
 {
     use HasFactory, SoftDeletes;
@@ -22,6 +42,9 @@ class CompanyUser extends Model
     const IS_ADMIN_YES = 1; //
     const IS_ADMIN_NO = 0; //
 
+    const BLOCK_YES = 1; // Заблокирован
+    const BLOCK_NO = 0; // Не заблокирован
+
 
     public function company() : BelongsTo
     {
@@ -29,7 +52,7 @@ class CompanyUser extends Model
     }
 
 
-    public function users() : BelongsTo
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

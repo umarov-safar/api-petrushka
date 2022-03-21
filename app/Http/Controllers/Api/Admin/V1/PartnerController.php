@@ -9,7 +9,9 @@ use App\JsonApi\Admin\V1\Partners\PartnerRequest;
 use App\JsonApi\Admin\V1\Partners\PartnerSchema;
 use App\Models\Partner;
 use App\Services\PartnerService;
+use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\DataResponse;
+use LaravelJsonApi\Core\Responses\ErrorResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class PartnerController extends Controller
@@ -47,19 +49,22 @@ class PartnerController extends Controller
     public function store(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query)
     {
         $attributes = $request->data['attributes'];
-        // Сафар, где проверка?!!!!!!!!
-        // Почему сразу не проверенные данные посылаешь в DTO?
 
         $dto = new PartnerDto(
-            $attributes['name'],
-            $attributes['phone'],
+            $attributes['name'] ?? '',
             $attributes['info'] ?? null,
-            $attributes['isBlock'] ?? 0,
+            $attributes['isBlock'] ?? Partner::BLOCK_NO,
+            $attributes['phone'],
         );
 
         $partner = $this->partnerService->create($dto);
 
-        if(!$partner) return false;
+        if(!$partner){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
 
         $partner = Partner::find($partner->getKey());
         return new DataResponse($partner);
@@ -79,15 +84,51 @@ class PartnerController extends Controller
         $attributes = $request->data['attributes'];
 
         $dto = new PartnerDto(
-            $attributes['name'],
-            $partner->phone, //$attributes['phone'],  Запрещено менять номер телефона
+            $attributes['name'] ?? $partner->name,
             $attributes['info'] ?? $partner->info,
-            $attributes['isBlock'] ?? 0,
+            $attributes['isBlock'] ?? $partner->is_block,
+            $partner->phone, //$attributes['phone'],  Запрещено менять номер телефона
         );
 
         $partner = $this->partnerService->update($dto, $partner->id);
 
-        if(!$partner) return false;
+        if(!$partner){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
+
+        $partner = Partner::find($partner->getKey());
+        return new DataResponse($partner);
+    }
+
+    /**
+     * Удаление существующего ресурса. Замена на блокировку партнера.
+     *
+     * @param PartnerRequest $request
+     * @param Partner $user
+     * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
+     */
+    public function destroy(PartnerRequest $request, Partner $partner)
+    {
+        //var_dump($user->roles());
+        //exit;
+        $dto = new PartnerDto(
+            $partner->name,
+            $partner->info,
+            Partner::BLOCK_YES,
+            $partner->phone,
+        );
+
+        $partner = $this->partnerService->update($dto, $partner->id);
+
+        if(!$partner){
+            $error = Error::make()
+                ->setStatus(400)
+                ->setDetail('Something was wrong with your request.');
+            return ErrorResponse::make($error);
+        }
 
         $partner = Partner::find($partner->getKey());
         return new DataResponse($partner);

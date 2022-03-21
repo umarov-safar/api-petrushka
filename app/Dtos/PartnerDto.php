@@ -25,16 +25,16 @@ class PartnerDto {
 
 
     /**
-     * @param int $inn
+     * @param string $name
      * @param array|null $info
      * @param bool $isBlock
-     * @param int $adminUserId
+     * @param int $phone
      */
     public function __construct(
         string $name,
-        int $phone,
         ?array $info,
-        bool $isBlock
+        bool $isBlock,
+        int $phone
     )
     {
         $this->name = $name;

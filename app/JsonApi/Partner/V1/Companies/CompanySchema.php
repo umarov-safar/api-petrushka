@@ -2,7 +2,7 @@
 
 namespace App\JsonApi\Partner\V1\Companies;
 
-use App\Models\Company;
+use App\JsonApi\Proxies\CompanyPartner as Company; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
@@ -10,9 +10,9 @@ use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class CompanySchema extends Schema
+class CompanySchema extends ProxySchema
 {
 
     /**
@@ -31,9 +31,9 @@ class CompanySchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('inn'),
-            Str::make('info'),
-            Str::make('phone'),
+            Number::make('inn')->readOnly(),
+            Str::make('info')->readOnly(),
+            Str::make('phone')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
