@@ -17,7 +17,8 @@ use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
 
 //Partner Controllers
-use \App\Http\Controllers\Api\Partner\V1\EmployeeController;
+use \App\Http\Controllers\Api\Partner\V1\EmployeeController as PartnerEmployeeController;
+use \App\Http\Controllers\Api\Partner\V1\CompanyController as PartnerCompanyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +50,10 @@ Route::prefix('admin/v1')
     Route::post('/auth', [AuthController::class, 'loginAdmin']);
     //Route::post('auth/phone/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
     Route::post('/auth/{phone}', [AuthController::class, 'checkCodeAdmin'])->whereNumber('phone');
+    Route::group(['namespace'=>'Api/Admin/V1'], function (){
+        Route::post('/auth2/{phone}', [UserForAdminController::class, 'checkCode'])->whereNumber('phone');
+    });
+
     });
 
 Route::prefix('partner/v1')
@@ -98,7 +103,7 @@ JsonApiRoute::server('Admin\V1')
             });
 
         //company users
-        $server->resource('company-users', CompanyUserController::class); // Зачем этот метод? Это дубликат /api/admin/v1/companies/{company_id}/company-users ?
+        $server->resource('company-users', CompanyUserController::class);
 
         //partners routes
         $server->resource('partners', PartnerController::class)
@@ -131,7 +136,8 @@ JsonApiRoute::server('Partner\V1')
     ->resources(function ($server) {
         Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
-        $server->resource('companies', JsonApiController::class);
-        $server->resource('employees', EmployeeController::class);
+        //$server->resource('companies', JsonApiController::class);
+        $server->resource('companies', PartnerCompanyController::class);
+        $server->resource('employees', PartnerEmployeeController::class);
         // $server->resource('customers', EmployeeController::class); // Покупатели, реализовать в следующих релизах
     });

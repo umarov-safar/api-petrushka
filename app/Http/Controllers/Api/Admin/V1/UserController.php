@@ -219,6 +219,11 @@ class UserController extends Controller
         return $this->update($schema, $request, $query, $user);
     }
 
+    public function checkCode(\Request $request){
+        echo "test\n";
+        var_dump($request);
+    }
+
     /*
     public function logout(){
         $user = auth()->user();

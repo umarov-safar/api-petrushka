@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\hasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,5 +63,53 @@ class User extends Authenticatable
     {
         return $this->hasOne(Partner::class, 'admin_user_id', 'id');
     }
+
+
+
+    // partner через partner_user где status=0 (не заблокирован)
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function partners() : BelongsToMany
+    {
+        return $this->belongsToMany(Partner::class)
+            ->using(PartnerUser::class)
+            ->withPivot('status', 'setting_info', 'is_admin');
+    }
+
+    /**
+     * @url https://stackoverflow.com/a/66969048/12562591
+     * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
+     */
+    public function partner() : hasOneThrough
+    {
+        //return $this->hasOne(PartnerUser::class)->ofMany();
+        return $this->hasOneThrough(Partner::class, PartnerUser::class, 'user_id', 'id', 'id', 'partner_id')
+            ->where('status', false); // не заблокированный сотрудник
+    }
+
+    // company через company_user где status=0 (не заблокирован)
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function companies() : BelongsToMany
+    {
+        return $this->belongsToMany(Company::class)
+            ->using(CompanyUser::class)
+            ->withPivot('status', 'setting_info', 'is_admin');
+    }
+
+    /**
+     * @url https://stackoverflow.com/a/66969048/12562591
+     * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
+     */
+    public function company() : hasOneThrough
+    {
+        //return $this->hasOne(PartnerUser::class)->ofMany();
+        return $this->hasOneThrough(Company::class, CompanyUser::class, 'user_id', 'id', 'id', 'company_id')
+            ->where('status', false); // не заблокированный сотрудник
+    }
+
 
 }

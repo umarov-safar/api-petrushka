@@ -18,6 +18,7 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasOneThrough;
 
 class UserSchema extends Schema
 {
@@ -52,6 +53,8 @@ class UserSchema extends Schema
             /*HasMany::make('roles')->withFilters(
                 Where::make('role_name','name')
             ),*/
+            HasOneThrough::make('partner')->type('partners'),
+            HasOneThrough::make('company')->type('companies'),
             BelongsToMany::make('abilities')->type('abilities'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
