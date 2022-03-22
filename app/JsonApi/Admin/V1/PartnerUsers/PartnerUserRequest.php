@@ -28,11 +28,17 @@ class PartnerUserRequest extends ResourceRequest
     public function rules(): array
     {
         $partner_user = $this->model();
+        //\Log::debug($partner_user);
+        //\Log::info(print_r($partner_user, true));
 
         $unique = Rule::unique('partner_user');
+        \Log::debug($unique);
+        \Log::debug("\n");
 
         if($partner_user) {
             $unique = $unique->ignore($partner_user);
+            \Log::debug($unique);
+            \Log::debug("\n");
         }
 
         $rules =  [

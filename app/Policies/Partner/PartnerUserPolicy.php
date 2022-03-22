@@ -18,7 +18,7 @@ class PartnerUserPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isA('partnerAdmin');
        // return $user->isA('partner');
     }
 
@@ -29,21 +29,10 @@ class PartnerUserPolicy
      * @param  PartnerUser $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, PartnerUser $partner)
+    public function view(User $user, PartnerUser $partnerUser)
     {
-        return $user->isA('partner');
+        return $user->isA('partnerAdmin');
     }
-
-    /**
-     * @param  User $user
-     * @param  PartnerUser $partner
-     * @return bool
-     */
-    public function viewCompanyUsers(User $user, PartnerUser $partner)
-    {
-        return true;
-    }
-
 
     /**
      * @param  User $user
@@ -51,9 +40,9 @@ class PartnerUserPolicy
      *
      * @return bool
      */
-    public function updatePartnerUsers(User $user, PartnerUser $partner)
+    public function updatePartnerUsers(User $user, PartnerUser $partnerUser)
     {
-        return true;
+        return $user->isA('partnerAdmin');
     }
     /**
      * Determine whether the user can create models.
@@ -63,7 +52,7 @@ class PartnerUserPolicy
      */
     public function create(User $user)
     {
-        return false;
+        return $user->isA('partnerAdmin');
         // return !$user->isBlock;
     }
 
@@ -74,9 +63,9 @@ class PartnerUserPolicy
      * @param  PartnerUser $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, PartnerUser $partner)
+    public function update(User $user, PartnerUser $partnerUser)
     {
-        return false;
+        return $user->isA('partnerAdmin');
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
@@ -87,9 +76,10 @@ class PartnerUserPolicy
      * @param  PartnerUser $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, PartnerUser $partner)
+    public function delete(User $user, PartnerUser $partnerUser)
     {
-        return false;
+        return $user->id != $partnerUser->is_admin || $user->isA('partnerAdmin');
+        //return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
@@ -102,7 +92,7 @@ class PartnerUserPolicy
      */
     public function restore(User $user, PartnerUser $partner)
     {
-        return $user->id == $partner->admin_user_id || $user->isA('superadmin', "admin");
+        return false;
     }
 
     /**
@@ -114,6 +104,6 @@ class PartnerUserPolicy
      */
     public function forceDelete(User $user, PartnerUser $partner)
     {
-        //
+        return false;
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\JsonApi\Admin\V1\Companies\CompanyRequest;
 use App\JsonApi\Admin\V1\Companies\CompanySchema;
 use App\JsonApi\Admin\V1\CompanyUsers\CompanyUserCollectionQuery;*/
-use App\Models\Partner\Company;
+//use App\Models\Partner\Company;
 use App\Services\CompanyService;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;

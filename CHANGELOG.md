@@ -7,6 +7,14 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.15.0] - 2022.03.22
+### Added:
+- добавлен метод GET /partner/v1/employees , реализована вся логика, т.е. отображаются только сотрудники авторизованного партнёра. Модель реализована черерз [Proxie]( https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html );
+- добавлен метод POST /partner/v1/employees ;
+- добавлен метод PATCH /partner/v1/employees/{employee_id} ;
+- добавлен метод GET /partner/v1/employees/{employee_id} ;
+- добавлен метод DELETE /partner/v1/employees/{employee_id} ;
+
 ## [1.14.0] - 2022.03.18
 ### Added:
 - добавлен метод GET /partner/v1/companies , реализована вся логика. Модель реализована черерз [Proxie]( https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html );

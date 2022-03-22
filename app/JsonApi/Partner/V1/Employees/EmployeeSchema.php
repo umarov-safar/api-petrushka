@@ -35,11 +35,11 @@ class EmployeeSchema extends ProxySchema
     {
         return [
             ID::make(),
-            Number::make('partnerId'),
-            Number::make('userId'),
+            Number::make('partnerId')->readOnly(),
+            Number::make('userId')->readOnly(),
             Str::make('phone'),
             Boolean::make('status'),
-            Boolean::make('isAdmin'),
+            Boolean::make('isAdmin')->readOnly(),
             Str::make('settingInfo'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
