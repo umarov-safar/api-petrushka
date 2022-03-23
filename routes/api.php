@@ -124,7 +124,9 @@ JsonApiRoute::server('Customer\V1')
     ->resources(function ($server) {
         Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
-        $server->resource('company-users', CustomerCompanyUserController::class);
+        $server->resource('company-users', CustomerCompanyUserController::class); // => employees
+        // partners
+        // companies
     });
 
 
@@ -137,7 +139,9 @@ JsonApiRoute::server('Partner\V1')
         Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
         //$server->resource('companies', JsonApiController::class);
-        $server->resource('companies', PartnerCompanyController::class);
+        $server->resource('companies', PartnerCompanyController::class); // => customer-companies
+        // customers
+        // my-companies , т.е. это partners
         $server->resource('employees', PartnerEmployeeController::class);
         // $server->resource('customers', EmployeeController::class); // Покупатели, реализовать в следующих релизах
     });

@@ -27,6 +27,7 @@ class PartnerUserRequest extends ResourceRequest
      */
     public function rules(): array
     {
+        /*
         $partner_user = $this->model();
         //\Log::debug($partner_user);
         //\Log::info(print_r($partner_user, true));
@@ -40,10 +41,12 @@ class PartnerUserRequest extends ResourceRequest
             \Log::debug($unique);
             \Log::debug("\n");
         }
+        */
 
         $rules =  [
             'partnerId' => 'required|exists:partners,id',
-            'phone' => 'required|digits_between:3,15|' . $unique,
+            //'phone' => 'required|digits_between:3,15|' . $unique,
+            'phone' => 'required|digits_between:3,15',
             'status' => 'boolean'
         ];
         if($this->isMethod('PATCH')){

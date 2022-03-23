@@ -27,19 +27,21 @@ class CompanyRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $company = $this->model();
+        //$company = $this->model();
 
-        $unique = Rule::unique('companies');
+        /*$unique = Rule::unique('companies');
 
         if($company) {
             $unique = $unique->ignore($company);
-        }
+        }*/
 
         $rules = [
-            'inn' => 'required|digits_between:10,12|' . $unique,
+            //'inn' => 'required|digits_between:10,12|' . $unique,
+            'inn' => 'required|digits_between:10,12',
             'info' => 'nullable',
             'isBlock' => 'boolean',
-            'phone' => 'required|digits_between:3,15|'. $unique,
+            //'phone' => 'required|digits_between:3,15|'. $unique,
+            'phone' => 'required|digits_between:3,15',
         ];
         if($this->isMethod('PATCH')) unset($rules['phone']); // убрать проверку на номер телефона при редактировании пользователя
         return $rules;

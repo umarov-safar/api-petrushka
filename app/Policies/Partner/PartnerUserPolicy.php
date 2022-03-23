@@ -40,10 +40,11 @@ class PartnerUserPolicy
      *
      * @return bool
      */
+    /*
     public function updatePartnerUsers(User $user, PartnerUser $partnerUser)
     {
         return $user->isA('partnerAdmin');
-    }
+    }*/
     /**
      * Determine whether the user can create models.
      *
@@ -52,6 +53,13 @@ class PartnerUserPolicy
      */
     public function create(User $user)
     {
+        /**
+         * проверка на то что можно создавать сотрудника с привязкой к этому партнеру
+         *
+         * получить partnerId
+         * получить partner
+         */
+
         return $user->isA('partnerAdmin');
         // return !$user->isBlock;
     }
@@ -78,7 +86,7 @@ class PartnerUserPolicy
      */
     public function delete(User $user, PartnerUser $partnerUser)
     {
-        return $user->id != $partnerUser->is_admin || $user->isA('partnerAdmin');
+        return $user->id != $partnerUser->is_admin && $user->isA('partnerAdmin');
         //return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }

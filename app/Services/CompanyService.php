@@ -25,13 +25,14 @@ class CompanyService {
     public function create(CompanyDto $request)
     {
         /**
-         * Компанию может создать только тот у кого есть разрешение на создании компаний
-         *
-         * Админом компании может быть только пользователь, которые еще не является админом компании или сотрудником
+         * -- Бизнес правила --
+         * 1. Пользователь-Покупатель(role=customer) может быть админом в нескольких компаниях;
+         * 2. Пользователь-Покупатель(role=customer) может быть сотрудником в нескольких компаниях;
+         * 3. Пользователь-Покупатель(role=customer) может быть одновременно и админом в нескольких компаниях и сотрудником в нескольких компаниях;
          *
          * Алгоритм:
          * 1. проверяем по номеру телефона существование пользователя;
-         * 2. пользователеь существует. Проверяем его роли.
+         * 2. пользователь существует. Проверяем его роли.
          * 3. Пользователь не существует.
          */
 
@@ -40,12 +41,9 @@ class CompanyService {
         $adminUser = User::where('phone', $request->getPhone())->first();
         // получить пользователя по номер телефона
         if($adminUser){
-            if(Bouncer::is($adminUser)->notAn('customerAdmin', 'customerEmployee')){
+            if(Bouncer::is($adminUser)->notAn('customer')){
                 $adminUser->assign('customer'); // привязать пользователя к роли "customer"
-                $adminUser->assign('customerAdmin'); // привязать пользователя к роли "customerAdmin"
-            } else{
-                // запретить создавать компанию, т.к. пользователь уже является админом в другой компании или является сотрудником
-                return false;
+                //$adminUser->assign('customerAdmin'); // привязать пользователя к роли "customerAdmin"
             }
         } else {
             // создать пользователя и выставить ему роль customerAdmin
@@ -60,12 +58,13 @@ class CompanyService {
             );
             $userService = new UserService();
             if(!$adminUser = $userService->create($dto)){
-                \Log::debug($adminUser);
+                //\Log::debug($adminUser);
                 return false;
             }
             $adminUser->assign('customer'); // привязать роль
         }
 
+        // Создаём компанию
         $company = new Company();
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
@@ -103,7 +102,8 @@ class CompanyService {
         $company->inn = $request->getInn();
         $company->info = $request->getInfo();
         $company->is_block = $request->isBlock();
-        //$company->phone = $request->getPhone(); // Запрещено менять телефон
+        // $company->phone = $request->getPhone(); // Запрещено менять телефон
+        // запрещено менять admin_user_id параметр
 
         if(!$company->save()) return false;
 

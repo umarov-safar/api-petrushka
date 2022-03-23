@@ -50,7 +50,7 @@ class EmployeeController extends Controller
     {
         $attributes = $request->data['attributes'];
         $this->getUser();
-        $partnerId = $this->user->partner->id;
+        //$partnerId = $this->user->partner->id;
         // нужно делать проверку на существование $partnerId ?
 
         //\Log::info($request->all());
@@ -60,7 +60,7 @@ class EmployeeController extends Controller
             $attributes['settingInfo'] ?? null,
             $attributes['status'] ?? PartnerUser::BLOCK_NO,
             PartnerUser::IS_ADMIN_NO,
-            $partnerId,
+            $attributes['partnerId'], //$partnerId,
         );
 
         $partnerUser = $this->partnerUserService->create($dto);

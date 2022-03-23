@@ -26,6 +26,8 @@ class EmployeeRequest extends PartnerUserRequest
      */
     public function rules(): array
     {
+        return parent::rules();
+        /*
         $partner_user = $this->model()->toBase();
 
         $unique = Rule::unique('partner_user');
@@ -44,6 +46,7 @@ class EmployeeRequest extends PartnerUserRequest
             //unset($rules['partnerId']); // убрать проверку на companyId, т.к. компанию после назначения уже поменять нельзя
         }
         return $rules;
+        */
     }
 
 }

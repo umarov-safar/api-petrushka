@@ -7,6 +7,13 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.16.0] - 2022.03.23
+### Added:
+- Отмена уникальных полей phone в таблицах companies и partners;
+
+### Changed:
+- Изменён механизм создания сотрудников;
+
 ## [1.15.0] - 2022.03.22
 ### Added:
 - добавлен метод GET /partner/v1/employees , реализована вся логика, т.е. отображаются только сотрудники авторизованного партнёра. Модель реализована черерз [Proxie]( https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html );

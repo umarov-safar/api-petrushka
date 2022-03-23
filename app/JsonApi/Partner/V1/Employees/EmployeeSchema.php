@@ -35,7 +35,7 @@ class EmployeeSchema extends ProxySchema
     {
         return [
             ID::make(),
-            Number::make('partnerId')->readOnly(),
+            Number::make('partnerId'),
             Number::make('userId')->readOnly(),
             Str::make('phone'),
             Boolean::make('status'),
