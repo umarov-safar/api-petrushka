@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +13,24 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
+/**
+ * Class User
+ *
+ * модель "Пользователь"
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property int $code
+ * @property bool $is_block
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder create(array $attributes = [])
+ * @method public Builder update(array $values)
+ * @method static Builder find($value)
+ *
+ * @package App/Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRolesAndAbilities, SoftDeletes;
@@ -64,30 +83,30 @@ class User extends Authenticatable
         return $this->hasOne(Partner::class, 'admin_user_id', 'id');
     }
 
-
-
-    // partner через partner_user где status=0 (не заблокирован)
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function partners() : BelongsToMany
     {
-        return $this->belongsToMany(Partner::class)
+        /*return $this->belongsToMany(Partner::class)
             ->using(PartnerUser::class)
-            ->withPivot('status', 'setting_info', 'is_admin');
+            ->withPivot('status', 'setting_info', 'is_admin');*/
+        return $this->belongsToMany(Partner::class)
+            ->using(PartnerUser::class);
     }
 
     /**
      * @url https://stackoverflow.com/a/66969048/12562591
      * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
      */
+    /*
     public function partner() : hasOneThrough
     {
         //return $this->hasOne(PartnerUser::class)->ofMany();
         return $this->hasOneThrough(Partner::class, PartnerUser::class, 'user_id', 'id', 'id', 'partner_id')
             ->where('status', false); // не заблокированный сотрудник
     }
+    */
 
     // company через company_user где status=0 (не заблокирован)
     /**
@@ -104,12 +123,13 @@ class User extends Authenticatable
      * @url https://stackoverflow.com/a/66969048/12562591
      * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
      */
+    /*
     public function company() : hasOneThrough
     {
         //return $this->hasOne(PartnerUser::class)->ofMany();
         return $this->hasOneThrough(Company::class, CompanyUser::class, 'user_id', 'id', 'id', 'company_id')
             ->where('status', false); // не заблокированный сотрудник
-    }
+    }*/
 
 
 }

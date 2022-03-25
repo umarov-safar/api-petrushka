@@ -34,6 +34,8 @@ class Server extends BaseServer
         return [
             // @TODO
             CompanyUsers\CompanyUserSchema::class,
+            Companies\CompanySchema::class,
+            Account\AccountSchema::class,
         ];
     }
 }

@@ -7,6 +7,27 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.17.0] - 2022.03.25
+### Added:
+- добавлен метод GET /partner/v1/account для получения информации по авторизованному пользователю;
+- добавлен метод POST /partner/v1/account для изменения информации по авторизованному пользователю;
+- добавлен метод DELETE /partner/v1/account для выхода из системы;
+- добавлен метод GET /partner/v1/partners для получения списка объектов "Партнер" по авторизованному пользователю;
+- добавлен метод GET /customer/v1/account для получения информации по авторизованному пользователю;
+- добавлен метод POST /customer/v1/account для изменения информации по авторизованному пользователю;
+- добавлен метод DELETE /customer/v1/account для выхода из системы;
+
+### Changed:
+- убран метод POST /partner/v1/auth/logout ;
+- изменен метод POST /partner/v1/auth , теперь метод в json формате;
+- изменен метод POST /partner/v1/auth/{phone} , теперь метод в json формате;
+- убран метод POST /admin/v1/auth/logout ;
+- изменен метод POST /admin/v1/auth , теперь метод в json формате;
+- изменен метод POST /admin/v1/auth/{phone} , теперь метод в json формате;
+- убран метод POST /customer/v1/auth/logout ;
+- изменен метод POST /customer/v1/auth , теперь метод в json формате;
+- изменен метод POST /customer/v1/auth/{phone} , теперь метод в json формате;
+
 ## [1.16.0] - 2022.03.23
 ### Added:
 - Отмена уникальных полей phone в таблицах companies и partners;

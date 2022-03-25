@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PhoneRequest;
+use App\Http\Requests\CodeRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use LaravelJsonApi\Core\Document\Error;
+use LaravelJsonApi\Core\Responses\DataResponse;
+use LaravelJsonApi\Core\Responses\ErrorResponse;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use LaravelJsonApi\Core\Responses\MetaResponse;
+use App\JsonApi\Proxies\Account; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 
 class AuthController extends Controller
 {
@@ -72,7 +78,7 @@ class AuthController extends Controller
                 {
                     $return = TRUE;
                     $user->code = random_int(100000, 999999);
-                    if($user->phone <> '79999999999')
+                    if($user->phone <> '79999999999') // superadmin
                         $user->save();
                 }
                 break;
@@ -86,11 +92,22 @@ class AuthController extends Controller
 
         //return response($user); // нельзя так делать, т.к. ты сразу возвращаешь в объекте код для смс для любого номера телефона
         if (!$return){
-            return  response(['message' => 'Пользователь не найден'], 404);
-            //return  response($return, 404);
+            //return  response(['message' => 'Пользователь не найден'], 404);
+
+            $error = Error::make()
+                ->setStatus(404)
+                ->setDetail('Пользователь не найден.');
+            return ErrorResponse::make($error);
         }
+
+
+
         // отправка смс с кодом
-        return response($return, 200);
+        //return response($return, 200);
+        return new MetaResponse([
+            'auth' => 'sending code',
+            'phone' => $request->phone
+        ]);
 
     }
 
@@ -98,28 +115,28 @@ class AuthController extends Controller
     /**
      * Check if code exist create token
      */
-    public function checkCodeAdmin(Request $request){
+    public function checkCodeAdmin(CodeRequest $request){
         return $this->checkCode($request, 'admin');
     }
 
     /**
      * Check if code exist create token
      */
-    public function checkCodePartner(Request $request){
+    public function checkCodePartner(CodeRequest $request){
         return $this->checkCode($request, 'partner');
     }
 
     /**
      * Check if code exist create token
      */
-    public function checkCodeCustomer(Request $request){
+    public function checkCodeCustomer(CodeRequest $request){
         return $this->checkCode($request, 'customer');
     }
 
     /**
      * Check if code exist create token
      */
-    private function checkCode(Request $request, $type)
+    private function checkCode(CodeRequest $request, $type)
     {
         /*
          * проверки:
@@ -127,9 +144,13 @@ class AuthController extends Controller
          *  проверить роль пользователя;
          *
          * */
-        $request->validate([
+        /*
+        var_dump($request->phone);
+        var_dump($request->code);
+        exit;*/
+        /*$request->validate([
             'code' => 'required|digits:6',
-        ]);
+        ]);*/
         $user = User::wherePhone($request->phone)
             ->whereCode($request->code)
             ->get()
@@ -137,33 +158,52 @@ class AuthController extends Controller
 
         if($user) {
             $token = NULL;
+            $account = NULL;
+            $jsonApiServer = NULL;
             switch ($type){
                 case 'customer':
                     if(Bouncer::is($user)->a('customer')){
                         $token = $user->createToken("auth"); // create token
+                        // вернуть объект account + токен через meta
+                        //$account = new AccountPartner($user);
+                        $account = new Account($user);
+                        $jsonApiServer = 'Customer\V1';
                     }
                     break;
                 case 'partner':
                     if(Bouncer::is($user)->a('partner')){
                         $token = $user->createToken("auth"); // create token
+                        // вернуть объект account + токен через meta
+                        $account = new Account($user);
+                        $jsonApiServer = 'Partner\V1';
                     }
                     break;
                 case 'admin':
                     if(Bouncer::is($user)->a('superadmin', 'admin')){
                         $token = $user->createToken("auth"); // create token
+                        // вернуть объект account + токен через meta
+                        $account = new Account($user);
+                        $jsonApiServer = 'Admin\V1';
                     }
                     break;
             }
-            if($token){
+            if($token && $account){
+                return DataResponse::make($account)
+                    ->withServer($jsonApiServer)
+                    ->withHeader('token', $token->plainTextToken)
+                    ->withMeta(['token' => $token->plainTextToken]);
+                /*
                 return response([
                     'user' => $user,
                     'token' => $token->plainTextToken
-                ]);
+                ]);*/
             }
         }
 
-        return  response(['message' => 'Неверный код'], 404);
-
+        $error = Error::make()
+            ->setStatus(404)
+            ->setDetail('Неверный код.');
+        return ErrorResponse::make($error);
     }
 
     /**
@@ -174,8 +214,6 @@ class AuthController extends Controller
     {
         //auth()->user()->tokens()->delete(); // данный код удаляет все токены со всех устройств
         auth()->user()->currentAccessToken()->delete();
-        //var_dump(auth()->user()->currentAccessToken());
-        return response(['message' => 'Вы вышли из системы']);
     }
 
 }

@@ -10,7 +10,7 @@ use LaravelJsonApi\Validation\Rule as JsonApiRule;
 class PartnerRequest extends ResourceRequest
 {
 
-    public function prepareForValidation()
+    protected function prepareForValidation()
     {
         if($this->isMethod('DELETE')) return;
         if($this->isMethod('PATCH')) return;

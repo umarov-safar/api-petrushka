@@ -49,7 +49,7 @@ class EmployeeController extends Controller
     public function store(EmployeeSchema $schema, EmployeeRequest $request, EmployeeQuery $query)
     {
         $attributes = $request->data['attributes'];
-        $this->getUser();
+        //$this->getUser();
         //$partnerId = $this->user->partner->id;
         // нужно делать проверку на существование $partnerId ?
 
