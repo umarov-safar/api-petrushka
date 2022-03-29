@@ -21,7 +21,7 @@ use \App\Http\Controllers\Api\Customer\V1\AccountController as CustomerAccountCo
 //Partner Controllers
 use \App\Http\Controllers\Api\Partner\V1\EmployeeController as PartnerEmployeeController;
 use \App\Http\Controllers\Api\Partner\V1\CompanyController as PartnerCompanyController;
-use \App\Http\Controllers\Api\Partner\V1\PartnerController as PartnerPartnerController;
+use \App\Http\Controllers\Api\Partner\V1\MyCompanyController as MyCompanyController;
 use \App\Http\Controllers\Api\Partner\V1\AccountController as PartnerAccountController;
 /*
 |--------------------------------------------------------------------------
@@ -150,13 +150,11 @@ JsonApiRoute::server('Partner\V1')
     ->prefix('partner/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-        //Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
-        //$server->resource('companies', JsonApiController::class);
+        $server->resource('my-companies', MyCompanyController::class);
         $server->resource('companies', PartnerCompanyController::class);
         $server->resource('account', PartnerAccountController::class);
         Route::delete('account', [PartnerAccountController::class, 'logout']); // logout
-        $server->resource('partners', PartnerPartnerController::class);
         // customers
         // my-companies , т.е. это partners
         $server->resource('employees', PartnerEmployeeController::class);

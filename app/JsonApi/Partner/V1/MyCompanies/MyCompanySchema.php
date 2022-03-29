@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Partners;
+namespace App\JsonApi\Partner\V1\MyCompanies;
 
-use App\JsonApi\Proxies\PartnerPartner as Partner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
+use App\JsonApi\Proxies\MyCompany; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -17,7 +17,7 @@ use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 //use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerSchema extends ProxySchema
+class MyCompanySchema extends ProxySchema
 {
 
     /**
@@ -25,7 +25,24 @@ class PartnerSchema extends ProxySchema
      *
      * @var string
      */
-    public static string $model = Partner::class;
+    public static string $model = MyCompany::class;
+
+    /**
+     * The resource type as it appears in URIs.
+     *
+     * @var string|null
+     */
+    //protected ?string $uriType = 'my_companies';
+
+    /**
+     * Get the JSON:API resource type.
+     *
+     * @return string
+     */
+    /*public static function type(): string
+    {
+        return 'my_companies';
+    }*/
 
     /**
      * Get the resource fields.

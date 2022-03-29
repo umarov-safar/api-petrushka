@@ -3,11 +3,11 @@
 namespace App\Policies\Partner;
 
 //use App\Models\Partner;
-use App\JsonApi\Proxies\PartnerPartner as Partner;
+use App\JsonApi\Proxies\MyCompany as Partner;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PartnerPolicy
+class MyCompanyPolicy
 {
     use HandlesAuthorization;
 

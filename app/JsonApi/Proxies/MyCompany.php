@@ -12,7 +12,7 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class PartnerPartner
+ * Class MyCompany
  *
  * Прокси-модель "Партнер"
  * Используется для работы с моделью Partner партнером.
@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @package App/JsonApi/Proxies
  */
 
-class PartnerPartner extends Proxy
+class MyCompany extends Proxy
 {
     use HasFactory, SoftDeletes;
 
@@ -57,6 +57,8 @@ class PartnerPartner extends Proxy
     protected static function bootModel(Partner &$partner)
     {
         $user = Auth::user();
+        //var_dump($user);
+        //exit;
 
         $partner::addGlobalScope('myPartners', function (Builder $builder) use ($user) {
             $builder->concretePartnerUser($user->id);

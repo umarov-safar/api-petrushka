@@ -1,11 +1,11 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Partners;
+namespace App\JsonApi\Partner\V1\MyCompanies;
 
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class PartnerCollectionQuery extends ResourceQuery
+class MyCompanyCollectionQuery extends ResourceQuery
 {
 
     /**
