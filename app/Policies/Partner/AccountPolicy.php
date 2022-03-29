@@ -3,7 +3,7 @@
 namespace App\Policies\Partner;
 
 //use App\Models\Partner;
-use App\JsonApi\Proxies\AccountPartner as Account;
+//use App\JsonApi\Proxies\AccountPartner as Account;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

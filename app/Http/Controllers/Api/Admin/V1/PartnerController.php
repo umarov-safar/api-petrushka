@@ -21,7 +21,7 @@ class PartnerController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -107,7 +107,7 @@ class PartnerController extends Controller
      * Удаление существующего ресурса. Замена на блокировку партнера.
      *
      * @param PartnerRequest $request
-     * @param Partner $user
+     * @param Partner $partner
      * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
      */
     public function destroy(PartnerRequest $request, Partner $partner)

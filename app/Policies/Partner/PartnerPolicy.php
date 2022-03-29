@@ -56,6 +56,8 @@ class PartnerPolicy
     {
         // и если есть право
         // и если является админом
+        //dd($partner);
+        //exit;
         return  $user->id == $partner->admin_user_id && $user->isA('partner', 'partnerAdmin');
     }
 
@@ -68,7 +70,7 @@ class PartnerPolicy
      */
     public function delete(User $user, Partner $partner)
     {
-        return $user->isA('superadmin', 'admin');
+        return  $user->id == $partner->admin_user_id && $user->isA('partner', 'partnerAdmin');
     }
 
     /**
@@ -80,7 +82,7 @@ class PartnerPolicy
      */
     public function restore(User $user, Partner $partner)
     {
-        //
+        return false;
     }
 
     /**
@@ -92,6 +94,6 @@ class PartnerPolicy
      */
     public function forceDelete(User $user, Partner $partner)
     {
-        //
+        return false;
     }
 }

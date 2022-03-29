@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\EPartners;
+namespace App\JsonApi\Partner\V1\Partners;
 
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;

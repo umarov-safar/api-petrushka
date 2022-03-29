@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api\Partner\V1;
 
 use App\Dtos\PartnerDto;
 use App\Http\Controllers\Controller;
-use App\JsonApi\Admin\V1\Partners\PartnerQuery;
-use App\JsonApi\Admin\V1\Partners\PartnerRequest;
-use App\JsonApi\Admin\V1\Partners\PartnerSchema;
+use App\JsonApi\Partner\V1\Partners\PartnerQuery;
+use App\JsonApi\Partner\V1\Partners\PartnerRequest;
+use App\JsonApi\Partner\V1\Partners\PartnerSchema;
 use App\Models\Partner;
 use App\JsonApi\Proxies\PartnerPartner as PartnerPartner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use App\Services\PartnerService;
@@ -47,6 +47,7 @@ class PartnerController extends Controller
      * @param PartnerQuery $query
      * @return false|DataResponse
      */
+    /*
     public function store(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query)
     {
         $attributes = $request->data['attributes'];
@@ -71,6 +72,7 @@ class PartnerController extends Controller
         $partner = new PartnerPartner($partner);
         return new DataResponse($partner);
     }
+    */
 
     /**
      * Update partner
@@ -81,14 +83,19 @@ class PartnerController extends Controller
      * @return false|DataResponse
      */
 
+    //public function update(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query, PartnerPartner $partner)
     public function update(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query, PartnerPartner $partner)
+    //public function update()
     {
+        //dd($partner);
+        print 'test';
+        exit;
         $attributes = $request->data['attributes'];
 
         $dto = new PartnerDto(
             $attributes['name'] ?? $partner->name,
             $attributes['info'] ?? $partner->info,
-            $attributes['isBlock'] ?? $partner->is_block,
+            $partner->is_block, // пользователь-партнер не может менять состояние блокировки
             $partner->phone, //$attributes['phone'],  Запрещено менять номер телефона
         );
 
@@ -110,10 +117,10 @@ class PartnerController extends Controller
      * Удаление существующего ресурса. Замена на блокировку партнера.
      *
      * @param PartnerRequest $request
-     * @param Partner $user
+     * @param PartnerPartner $partner
      * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
      */
-    public function destroy(PartnerRequest $request, Partner $partner)
+    public function destroy(PartnerRequest $request, PartnerPartner $partner)
     {
         //var_dump($user->roles());
         //exit;
@@ -134,6 +141,7 @@ class PartnerController extends Controller
         }
 
         $partner = Partner::find($partner->getKey());
+        $partner = new PartnerPartner($partner);
         return new DataResponse($partner);
     }
 }

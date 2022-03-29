@@ -44,7 +44,6 @@ class PartnerPartner extends Proxy
     {
         $partner = ($partner ? $partner : new Partner());
         self::bootModel($partner);
-
         parent::__construct($partner ?: new Partner());
     }
 

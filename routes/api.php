@@ -110,8 +110,8 @@ JsonApiRoute::server('Admin\V1')
         //companies
         $server->resource('companies', CompanyController::class)
             ->relationships(function($relationships) {
-               $relationships->hasMany('companyUsers'); // только просмотр
-               $relationships->hasOne('owner')->only('related', 'show');;
+               $relationships->hasMany('companyUsers'); // только просмотр // ?
+               $relationships->hasOne('owner')->only('related', 'show'); // ?
             });
 
         //company users
@@ -120,8 +120,8 @@ JsonApiRoute::server('Admin\V1')
         //partners routes
         $server->resource('partners', PartnerController::class)
             ->relationships(function($relationships) {
-                $relationships->hasMany('partnerUsers'); // только просмотр
-                $relationships->hasOne('owner')->only('related', 'show');;
+                $relationships->hasMany('partnerUsers'); // только просмотр  // ?
+                $relationships->hasOne('owner')->only('related', 'show'); // ?
             });
 
         //partner users routes
