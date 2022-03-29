@@ -10,7 +10,7 @@ use LaravelJsonApi\Validation\Rule as JsonApiRule;
 class PartnerRequest extends ResourceRequest
 {
 
-    public function prepareForValidation()
+    protected function prepareForValidation()
     {
         if($this->isMethod('DELETE')) return;
         if($this->isMethod('PATCH')) return;
@@ -30,18 +30,19 @@ class PartnerRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $partner = $this->model();
+        //$partner = $this->model();
 
-        $unique = Rule::unique('partners');
+        /*$unique = Rule::unique('partners');
 
         if($partner) {
             $unique = $unique->ignore($partner);
-        }
+        }*/
 
         $rules = [
             // @TODO
             'name' => 'required|string',
-            'phone' => 'required|digits_between:3,15|'. $unique,
+            //'phone' => 'required|digits_between:3,15|'. $unique,
+            'phone' => 'required|digits_between:3,15',
             'isBlock' => JsonApiRule::boolean(),
         ];
         if($this->isMethod('PATCH')) unset($rules['phone']); // убрать проверку на номер телефона при редактировании пользователя

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Partners;
+namespace App\JsonApi\Partner\V1\Partners;
 
-use App\Models\Partner;
+use App\JsonApi\Proxies\PartnerPartner as Partner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -11,11 +11,13 @@ use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+//use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerSchema extends Schema
+class PartnerSchema extends ProxySchema
 {
 
     /**
@@ -36,11 +38,11 @@ class PartnerSchema extends Schema
             ID::make(),
             Str::make('name'),
             Str::make('info'),
-            Str::make('phone'),
-            Number::make('adminUserId'),
-            Boolean::make('isBlock'),
-            BelongsTo::make('owner')->type('users'),
-            BelongsToMany::make('partnerUsers'),
+            Str::make('phone')->readOnly(),
+            Number::make('adminUserId')->readOnly(),
+            Boolean::make('isBlock')->readOnly(),
+            //BelongsTo::make('owner')->type('users'),
+            //BelongsToMany::make('partnerUsers'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

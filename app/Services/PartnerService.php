@@ -21,24 +21,21 @@ class PartnerService {
     public function create(PartnerDto $request)
     {
         /**
-         *  Алгоритм:
-         * 1. Создать или получить пользователя по номеру телефона;
-         * 2. Проверить ,что у пользователя нет роли partnerAdmin или partnerEmployee
-         * 3. Установить ему роль partner и partnerAdmin
-         * 4. Создать партнер
-         * 5. создать partner_user с указанием админа пользователя
+         * -- Бизнес правила --
+         * 4. Пользователь-Партнёр(role=partner) может быть админом в нескольких объектах Партнёр;
+         * 5. Пользователь-Партнёр(role=partner) может быть сотрудником в нескольких объектах Партнёр;
+         * 6. Пользователь-Партнёр(role=partner) может быть одновременно и админом в нескольких объектах
+         * Партнёр и сотрудником в нескольких объектах Партнёр;
+         *
          */
 
         //get user by phone or create new to save id to user_admin_id field in partner table
         //$user = User::firstOrCreate(['phone' => $request->getPhone()]);
         $adminUser = User::where('phone', $request->getPhone())->first();
         if($adminUser){
-            if(Bouncer::is($adminUser)->notAn('partnerAdmin', 'partnerEmployee')){
+            if(Bouncer::is($adminUser)->notAn('partner')){
                 $adminUser->assign('partner'); // привязать пользователя к роли "partnerAdmin"
-                $adminUser->assign('partnerAdmin'); // привязать пользователя к роли "partnerAdmin"
-            } else {
-                // запретить создавать партнера, т.к. пользователь уже является админом в другой компании или является сотрудником
-                return false;
+                //$adminUser->assign('partnerAdmin'); // привязать пользователя к роли "partnerAdmin"
             }
         } else {
             // создаем пользователя и назначаем роль "partner"
@@ -75,7 +72,7 @@ class PartnerService {
         $dto = new PartnerUserDto(
             $adminUser->phone,
             [],
-            0,
+            PartnerUser::BLOCK_NO,
             PartnerUser::IS_ADMIN_YES,
             $partner->id
         );

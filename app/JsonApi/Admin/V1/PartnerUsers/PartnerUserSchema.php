@@ -37,7 +37,7 @@ class PartnerUserSchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('userId'),
+            Number::make('userId')->readOnly(),
             Number::make('partnerId'),
             Str::make('phone'),
             Str::make('settingInfo'),

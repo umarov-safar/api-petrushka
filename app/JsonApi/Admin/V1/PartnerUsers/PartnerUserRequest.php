@@ -27,17 +27,26 @@ class PartnerUserRequest extends ResourceRequest
      */
     public function rules(): array
     {
+        /*
         $partner_user = $this->model();
+        //\Log::debug($partner_user);
+        //\Log::info(print_r($partner_user, true));
 
         $unique = Rule::unique('partner_user');
+        \Log::debug($unique);
+        \Log::debug("\n");
 
         if($partner_user) {
             $unique = $unique->ignore($partner_user);
+            \Log::debug($unique);
+            \Log::debug("\n");
         }
+        */
 
         $rules =  [
             'partnerId' => 'required|exists:partners,id',
-            'phone' => 'required|digits_between:3,15|' . $unique,
+            //'phone' => 'required|digits_between:3,15|' . $unique,
+            'phone' => 'required|digits_between:3,15',
             'status' => 'boolean'
         ];
         if($this->isMethod('PATCH')){

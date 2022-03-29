@@ -7,6 +7,49 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.18.0] - 2022.03.29
+### Added:
+- добавлен метод GET /partner/v1/partners для получения информации  партнеров по авторизованному пользователю;
+- добавлен метод GET /partner/v1/partners/{partner_id};
+### Changed:
+- исправлена выборка по умолчанию прокси сотрудников партнера;
+
+## [1.17.0] - 2022.03.25
+### Added:
+- добавлен метод GET /partner/v1/account для получения информации по авторизованному пользователю;
+- добавлен метод POST /partner/v1/account для изменения информации по авторизованному пользователю;
+- добавлен метод DELETE /partner/v1/account для выхода из системы;
+- добавлен метод GET /partner/v1/partners для получения списка объектов "Партнер" по авторизованному пользователю;
+- добавлен метод GET /customer/v1/account для получения информации по авторизованному пользователю;
+- добавлен метод POST /customer/v1/account для изменения информации по авторизованному пользователю;
+- добавлен метод DELETE /customer/v1/account для выхода из системы;
+
+### Changed:
+- убран метод POST /partner/v1/auth/logout ;
+- изменен метод POST /partner/v1/auth , теперь метод в json формате;
+- изменен метод POST /partner/v1/auth/{phone} , теперь метод в json формате;
+- убран метод POST /admin/v1/auth/logout ;
+- изменен метод POST /admin/v1/auth , теперь метод в json формате;
+- изменен метод POST /admin/v1/auth/{phone} , теперь метод в json формате;
+- убран метод POST /customer/v1/auth/logout ;
+- изменен метод POST /customer/v1/auth , теперь метод в json формате;
+- изменен метод POST /customer/v1/auth/{phone} , теперь метод в json формате;
+
+## [1.16.0] - 2022.03.23
+### Added:
+- Отмена уникальных полей phone в таблицах companies и partners;
+
+### Changed:
+- Изменён механизм создания сотрудников;
+
+## [1.15.0] - 2022.03.22
+### Added:
+- добавлен метод GET /partner/v1/employees , реализована вся логика, т.е. отображаются только сотрудники авторизованного партнёра. Модель реализована черерз [Proxie]( https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html );
+- добавлен метод POST /partner/v1/employees ;
+- добавлен метод PATCH /partner/v1/employees/{employee_id} ;
+- добавлен метод GET /partner/v1/employees/{employee_id} ;
+- добавлен метод DELETE /partner/v1/employees/{employee_id} ;
+
 ## [1.14.0] - 2022.03.18
 ### Added:
 - добавлен метод GET /partner/v1/companies , реализована вся логика. Модель реализована черерз [Proxie]( https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html );

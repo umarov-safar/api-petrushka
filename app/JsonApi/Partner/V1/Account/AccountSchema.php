@@ -1,9 +1,10 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Users;
+namespace App\JsonApi\Partner\V1\Account;
 
 use App\JsonApi\Filters\Like;
 use App\Models\User;
+use App\JsonApi\Proxies\Account; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -17,10 +18,11 @@ use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+//use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasOneThrough;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class UserSchema extends Schema
+class AccountSchema extends ProxySchema
 {
     /**
      * Default pagination
@@ -32,7 +34,17 @@ class UserSchema extends Schema
      *
      * @var string
      */
-    public static string $model = User::class;
+    public static string $model = Account::class;
+
+    /**
+     * Get the JSON:API resource type.
+     *
+     * @return string
+     */
+    public static function type(): string
+    {
+        return 'account';
+    }
 
     /**
      * Get the resource fields.
@@ -46,18 +58,18 @@ class UserSchema extends Schema
             Str::make('name'),
             Str::make('email'),
             Str::make('phone')->readOnly(), // запрещено менять номер телефона!
-            Number::make('code')->hidden()->readOnly(),
-            Boolean::make('isBlock'),
+            //Number::make('code')->hidden()->readOnly(),
+            Boolean::make('isBlock')->readOnly(),
             //BelongsToMany::make('roles'),
-            HasMany::make('partners')->type('partners'),
-            HasMany::make('companies')->type('companies'),
+            HasMany::make('partners')->type('partners')->readOnly(),
+            //HasMany::make('companies')->type('companies')->readOnly(),
             //HasOneThrough::make('partner')->type('partners'),
             //HasOneThrough::make('company')->type('companies'),
-            HasMany::make('roles')->type('roles'),
+            HasMany::make('roles')->type('roles')->readOnly(),
             /*HasMany::make('roles')->withFilters(
                 Where::make('role_name','name')
             ),*/
-            BelongsToMany::make('abilities')->type('abilities'),
+            BelongsToMany::make('abilities')->type('abilities')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -70,12 +82,7 @@ class UserSchema extends Schema
      */
     public function filters(): array
     {
-        return [
-            WhereIdIn::make($this)->delimiter(','), // filter[id]=x,y
-            //Has::make($this, 'roles'),
-            WhereHas::make($this, 'roles'), // filter[roles][name]=value
-            Like::make('name'), // filter[name]=value
-        ];
+        return [];
     }
 
     /**

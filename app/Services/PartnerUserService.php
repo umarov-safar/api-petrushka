@@ -26,12 +26,8 @@ class PartnerUserService {
         $employeeUser = User::where('phone', $request->getPhone())->first();
 
         if($employeeUser) {
-            if(Bouncer::is($employeeUser)->notAn('partnerEmployee')){
+            if(Bouncer::is($employeeUser)->notAn('partner')){
                 $employeeUser->assign('partner'); // привязать пользователя к роли "partner"
-                $employeeUser->assign('partnerEmployee'); // привязать пользователя к роли "partnerEmployee"
-            } else{
-                // запретить создавать компанию, т.к. пользователь уже является сотрудником в другой компании или является сотрудником
-                return false;
             }
         } else {
             // создать пользователя
@@ -49,7 +45,7 @@ class PartnerUserService {
             if(!$employeeUser = $userService->create($dto))
                 return false;
             $employeeUser->assign('partner'); // привязать пользователя к роли "partner"
-            $employeeUser->assign('partnerEmployee'); // привязать пользователя к роли "partnerEmployee"
+
         }
 
         $partner_user = new PartnerUser();
@@ -61,6 +57,7 @@ class PartnerUserService {
         $partner_user->is_admin = $request->getIsAdmin();
 
         if(!$partner_user->save()) return false;
+        $employeeUser->assign('partnerEmployee'); // привязать пользователя к роли "partnerEmployee"
 
         return $partner_user;
     }
@@ -78,6 +75,7 @@ class PartnerUserService {
         // $partner_user->phone = $request->getPhone();
         $partnerUser->setting_info = $request->getSettingInfo();
 
+        /*
         $unsetRole = false;
         $setRole = false;
 
@@ -101,20 +99,21 @@ class PartnerUserService {
             $request->getStatus() == PartnerUser::BLOCK_YES){
             $partnerUser->status = $request->getStatus();
             $unsetRole = true;
-        }
+        }*/
 
         $partnerUser->status = $request->getStatus();
         // $partner_user->is_admin = $request->getIsAdmin();
 
         if(!$partnerUser->save()) return false;
 
+        /*
         if($unsetRole){
             $partnerUser->user->retract('partnerEmployee'); // отвязать роль
         }
 
         if($setRole){
             $partnerUser->user->assign('partnerEmployee'); // привязать роль роль
-        }
+        }*/
 
         return $partnerUser;
     }

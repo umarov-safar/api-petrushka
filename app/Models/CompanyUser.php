@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * Class CompanyUser
@@ -27,7 +28,7 @@ use \Illuminate\Database\Eloquent\Builder;
  *
  * @package App/Models
  */
-class CompanyUser extends Model
+class CompanyUser extends Pivot
 {
     use HasFactory, SoftDeletes;
 

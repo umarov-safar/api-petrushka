@@ -26,17 +26,18 @@ class CompanyUserRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $company_user = $this->model();
+        /*$company_user = $this->model();
 
         $unique = Rule::unique('company_user');
 
         if($company_user) {
             $unique = $unique->ignore($company_user);
-        }
+        }*/
 
         $rules = [
             'companyId' => 'required|exists:companies,id',
-            'phone' => 'required|digits_between:3,15|' . $unique,
+            //'phone' => 'required|digits_between:3,15|' . $unique,
+            'phone' => 'required|digits_between:3,15',
             'status' => 'boolean'
         ];
 

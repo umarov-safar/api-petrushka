@@ -42,6 +42,7 @@ class Server extends BaseServer
             PartnerUsers\PartnerUserSchema::class,
             Companies\CompanySchema::class,
             CompanyUsers\CompanyUserSchema::class,
+            Account\AccountSchema::class,
         ];
     }
 }

@@ -1,19 +1,18 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Employees;
+namespace App\JsonApi\Partner\V1\Partners;
 
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
-use App\JsonApi\Admin\V1\PartnerUsers\PartnerUserRequest;
+use App\JsonApi\Admin\V1\Partners\PartnerRequest as AdminPartnerRequest;
 
 
-class EmployeeRequest extends PartnerUserRequest
+class PartnerRequest extends AdminPartnerRequest
 {
 
     protected function prepareForValidation()
     {
-
         parent::prepareForValidation();
     }
 

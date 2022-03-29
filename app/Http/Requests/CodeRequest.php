@@ -4,7 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PhoneRequest extends FormRequest
+//class CodeRequest extends PhoneRequest
+class CodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,8 @@ class PhoneRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if($this->phone){
-            $this->getInputSource()->replace(['phone' => preg_replace('/[^0-9]/', '', $this->phone)]);
+        if($this->code){
+            $this->getInputSource()->replace(['code' => preg_replace('/[^0-9]/', '', $this->code)]);
         }
     }
 
@@ -37,7 +38,7 @@ class PhoneRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|digits_between:3,12',
+            'code' => 'required|digits:6',
         ];
     }
 
@@ -49,8 +50,8 @@ class PhoneRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.required' => 'Заполните поля телефона',
-            'phone.digits_between' => 'Неверный телефон',
+            'code.required' => 'Заполните поля кода',
+            'code.digits' => 'Неверный код',
         ];
     }
 }

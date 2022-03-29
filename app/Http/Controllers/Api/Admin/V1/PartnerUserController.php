@@ -22,7 +22,7 @@ class PartnerUserController extends Controller
     use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -54,17 +54,17 @@ class PartnerUserController extends Controller
             $attributes['partnerId'],
         );
 
-        $company_user = $this->partnerUserService->create($dto);
+        $partner_user = $this->partnerUserService->create($dto);
 
-        if(!$company_user){
+        if(!$partner_user){
             $error = Error::make()
                 ->setStatus(400)
                 ->setDetail('Something was wrong with your request.');
             return ErrorResponse::make($error);
         }
 
-        $company_user = PartnerUser::find($company_user->getKey());
-        return new DataResponse($company_user);
+        $partner_user = PartnerUser::find($partner_user->getKey());
+        return new DataResponse($partner_user);
     }
 
 
@@ -80,24 +80,24 @@ class PartnerUserController extends Controller
             $partnerUser->partner_id,
         );
 
-        $company_user = $this->partnerUserService->update($dto, $partnerUser->id);
+        $partner_user = $this->partnerUserService->update($dto, $partnerUser->id);
 
-        if(!$company_user){
+        if(!$partner_user){
             $error = Error::make()
                 ->setStatus(400)
                 ->setDetail('Something was wrong with your request.');
             return ErrorResponse::make($error);
         }
 
-        $company_user = PartnerUser::find($company_user->getKey());
-        return new DataResponse($company_user);
+        $partner_user = PartnerUser::find($partner_user->getKey());
+        return new DataResponse($partner_user);
     }
 
     /**
      * Удаление существующего ресурса. Замена на блокировку пользователя.
      *
      * @param PartnerUserRequest $request
-     * @param PartnerUser $user
+     * @param PartnerUser $partnerUser
      * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
      */
     public function destroy(PartnerUserRequest $request, PartnerUser $partnerUser)

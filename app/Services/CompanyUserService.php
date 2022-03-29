@@ -32,12 +32,8 @@ class CompanyUserService {
         $employeeUser = User::where('phone', $request->getPhone())->first();
 
         if($employeeUser) {
-            if(Bouncer::is($employeeUser)->notAn('customerEmployee')){
+            if(Bouncer::is($employeeUser)->notAn('customer')){
                 $employeeUser->assign('customer'); // привязать пользователя к роли "customer"
-                $employeeUser->assign('customerEmployee'); // привязать пользователя к роли "customerEmployee"
-            } else{
-                // запретить создавать компанию, т.к. пользователь уже является сотрудником в другой компании или является сотрудником
-                return false;
             }
         } else {
             // создать пользователя
@@ -55,9 +51,10 @@ class CompanyUserService {
             if(!$employeeUser = $userService->create($dto))
                 return false;
             $employeeUser->assign('customer'); // привязать пользователя к роли "customer"
-            $employeeUser->assign('customerEmployee'); // привязать пользователя к роли "customerEmployee"
+
         }
 
+        // создаем сотрудника компании
         $companyUser = new CompanyUser();
         $companyUser->user_id = $employeeUser->id;
         $companyUser->company_id = $request->getCompanyId();
@@ -67,6 +64,8 @@ class CompanyUserService {
         $companyUser->is_admin = $request->getIsAdmin();
 
         if(!$companyUser->save()) return false;
+
+        $employeeUser->assign('customerEmployee'); // привязать пользователя к роли "customerEmployee"
 
         return $companyUser;
     }
@@ -85,16 +84,12 @@ class CompanyUserService {
          * если сотрудник уже где-то привязан и там активен, то разблокировать его уже нельзя
          */
         $companyUser = CompanyUser::find($id);
-
-        //$company_user->company_id = $request->getCompanyId();
-        //$companyUser->company_id = $request->getCompanyId();
-        //$companyUser->phone = $request->getPhone();
         $companyUser->setting_info = $request->getSettingInfo();
 
-        $unsetRole = false;
-        $setRole = false;
+        //$unsetRole = false;
+        //$setRole = false;
         // Попытка разблокировки пользователя
-        if($companyUser->status == CompanyUser::BLOCK_YES &&
+        /*if($companyUser->status == CompanyUser::BLOCK_YES &&
             $request->getStatus() == CompanyUser::BLOCK_NO){
           // проверяем, есть ли у него роль customerEmployee, что означает, что этот сотрудник еще где является
           // активным сотрудником в другой компании
@@ -105,15 +100,15 @@ class CompanyUserService {
                 // значит сотрудник уже привязан и активен в другой компании
                 return false;
             }
-        }
+        }*/
         //var_dump($setRole);
 
         // при блокировке пользователя
-        if($companyUser->status == CompanyUser::BLOCK_NO &&
+        /*if($companyUser->status == CompanyUser::BLOCK_NO &&
             $request->getStatus() == CompanyUser::BLOCK_YES){
             $companyUser->status = $request->getStatus();
             $unsetRole = true;
-        }
+        }*/
 
         //var_dump($unsetRole);
         //exit;
@@ -123,13 +118,13 @@ class CompanyUserService {
 
         if(!$companyUser->save()) return false;
 
-        if($unsetRole){
+        /*if($unsetRole){
             $companyUser->user->retract('customerEmployee'); // отвязать роль
         }
 
         if($setRole){
             $companyUser->user->assign('customerEmployee'); // привязать роль роль
-        }
+        }*/
 
         return $companyUser;
     }
