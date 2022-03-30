@@ -24,4 +24,7 @@ class Attribute extends Model
       'number' => 'Число',
       'select' => 'Список'
     ];
+
+
+
 }

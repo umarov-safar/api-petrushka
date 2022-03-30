@@ -7,6 +7,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.21.0] - 2022.03.30
+Added:
+- Model factories to make fake data;
+
+
 ## [1.20.0] - 2022.03.30
 ### Added:
 - CRUD attribute_values (Атрибут значения)
