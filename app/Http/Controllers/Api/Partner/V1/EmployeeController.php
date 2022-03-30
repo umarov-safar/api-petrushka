@@ -58,7 +58,7 @@ class EmployeeController extends Controller
         $dto = new PartnerUserDto(
             $attributes['phone'],
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? PartnerUser::BLOCK_NO,
+            PartnerUser::BLOCK_NO,
             PartnerUser::IS_ADMIN_NO,
             $attributes['partnerId'], //$partnerId,
         );
@@ -71,7 +71,6 @@ class EmployeeController extends Controller
                 ->setDetail('Something was wrong with your request.');
             return ErrorResponse::make($error);
         }
-
         $partnerUser = PartnerUser::find($partnerUser->getKey());
         $employee = new Employee($partnerUser);
         return new DataResponse($employee);
@@ -86,7 +85,7 @@ class EmployeeController extends Controller
         $dto = new PartnerUserDto(
             $partnerUser->phone, //$attributes['phone'],  Запрещено менять номер телефона
             $attributes['settingInfo'] ?? null,
-            $attributes['status'] ?? PartnerUser::BLOCK_NO,
+            $partnerUser->status,
             $partnerUser->is_admin,
             $partnerUser->partner_id,
         );

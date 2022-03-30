@@ -34,6 +34,13 @@ class PartnerUser extends Pivot
 
     protected $table = 'partner_user';
 
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
     protected $fillable = ['user_id', 'partner_id', 'setting_info', 'phone', 'status', 'is_admin'];
 
     protected $casts = [

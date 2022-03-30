@@ -7,6 +7,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.20.0] - 2022.03.30
+### Changed:
+- исправлен метод POST /partner/v1/employees ;
+- исправлен метод PATCH /partner/v1/employees/{employee_id} ;
+
 ## [1.19.0] - 2022.03.29
 ### Added:
 - добавлен метод GET /partner/v1/my-companies для получения информации  партнеров по авторизованному пользователю;

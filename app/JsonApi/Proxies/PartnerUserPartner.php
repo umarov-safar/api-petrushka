@@ -67,7 +67,8 @@ class PartnerUserPartner extends Proxy
         //\Log::debug('$user');
         if (Auth::check() && Bouncer::is($user)->a('partner')) {
             //\Log::debug($user->partner->id);
-            $partners = $user->partners;
+            //$partners = $user->partners()->where('admin_user_id', $user->id)->get();
+            $partners = $user->partners()->forAdminUser($user->id)->get();
             if($partners){
                 $partnersIds = $partners->pluck('id')->all() ?? [];
                 $partnerUser::addGlobalScope('partner_id', function (Builder $builder) use ($partnersIds) {

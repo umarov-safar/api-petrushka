@@ -50,7 +50,8 @@ class PartnerUserService {
 
         $partner_user = new PartnerUser();
         $partner_user->user_id = $employeeUser->id;
-        $partner_user->partner_id = $request->getPartnerId() ?? auth()->user()->partnerOwner->id;
+        //$partner_user->partner_id = $request->getPartnerId() ?? auth()->user()->partnerOwner->id;
+        $partner_user->partner_id = $request->getPartnerId();
         $partner_user->phone = $request->getPhone();
         $partner_user->setting_info = $request->getSettingInfo();
         $partner_user->status = $request->getStatus();

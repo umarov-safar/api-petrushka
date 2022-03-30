@@ -6,6 +6,7 @@ use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 use App\JsonApi\Admin\V1\PartnerUsers\PartnerUserRequest;
+use Auth;
 
 
 class EmployeeRequest extends PartnerUserRequest
@@ -26,7 +27,27 @@ class EmployeeRequest extends PartnerUserRequest
      */
     public function rules(): array
     {
-        return parent::rules();
+        $rules = parent::rules();
+
+        // проверка на то, что partnerId связан с текущим пользователем и в ней он является админом (или есть разрешение)
+        //unset($rules['partnerId']);
+        $rules['partnerId'] = ['required', 'integer'];
+
+        $user = Auth::user();
+        $partners = $user->partners()->forAdminUser($user->id)->get();
+        if($partners) {
+            $partnersIds = $partners->pluck('id')->all() ?? [];
+            if(count($partnersIds) > 0){
+                $rules['partnerId'] = ['required', 'integer', 'in:'.implode(',',$partnersIds)];
+            }
+        }
+        // dd($partners);
+        // exit;
+        if($this->isMethod('PATCH')){
+            unset($rules['partnerId']); // убрать проверку на companyId, т.к. компанию после назначения уже поменять нельзя
+        }
+        return $rules;
+
         /*
         $partner_user = $this->model()->toBase();
 

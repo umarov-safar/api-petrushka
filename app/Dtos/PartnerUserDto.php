@@ -41,7 +41,7 @@ class PartnerUserDto {
         ?array $setting_info,
         bool $status,
         bool $isAdmin,
-        ?int $partner_id
+        int $partner_id
     )
     {
         $this->phone = $phone;
@@ -55,7 +55,7 @@ class PartnerUserDto {
     /**
      * @return int|null
      */
-    public function getPartnerId(): ?int
+    public function getPartnerId(): int
     {
         return $this->partner_id;
     }
