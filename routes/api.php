@@ -23,6 +23,7 @@ use \App\Http\Controllers\Api\Partner\V1\EmployeeController as PartnerEmployeeCo
 use \App\Http\Controllers\Api\Partner\V1\CompanyController as PartnerCompanyController;
 use \App\Http\Controllers\Api\Partner\V1\MyCompanyController as MyCompanyController;
 use \App\Http\Controllers\Api\Partner\V1\AccountController as PartnerAccountController;
+use \App\Http\Controllers\Api\Partner\V1\CustomerController as PartnerCustomerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -158,5 +159,6 @@ JsonApiRoute::server('Partner\V1')
         // customers
         // my-companies , т.е. это partners
         $server->resource('employees', PartnerEmployeeController::class);
+        $server->resource('customers', PartnerCustomerController::class);
         // $server->resource('customers', EmployeeController::class); // Покупатели, реализовать в следующих релизах
     });

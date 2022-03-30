@@ -19,7 +19,7 @@ class CompanyController extends Controller
 {
 
     use Actions\FetchMany;
-//    use Actions\FetchOne;
+    use Actions\FetchOne;
 //    use Actions\Store;
 //    use Actions\Update;
 //    use Actions\Destroy;
@@ -50,7 +50,7 @@ class CompanyController extends Controller
      * @param CompanyPartner $partner
      * @return \Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
      */
-    public function show(CompanySchema $schema, CompanyQuery $request, CompanyPartner $partner)
+    public function showTest(CompanySchema $schema, CompanyQuery $request, CompanyPartner $partner)
     {
         //dd($partner);
 
