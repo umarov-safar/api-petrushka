@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Admin\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\CompanyUserController;
 use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 use \App\Http\Controllers\Api\Admin\V1\AccountController;
+use \App\Http\Controllers\Api\Admin\V1\AttributeController;
 
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
@@ -126,6 +127,9 @@ JsonApiRoute::server('Admin\V1')
 
         //partner users routes
         $server->resource('partner-users', PartnerUserController::class); // переименовать в partner-users
+
+        // PRODUCTS ROUTES
+        $server->resource('attributes', JsonApiController::class);
     });
 
 

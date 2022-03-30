@@ -43,6 +43,7 @@ class Server extends BaseServer
             Companies\CompanySchema::class,
             CompanyUsers\CompanyUserSchema::class,
             Account\AccountSchema::class,
+            Attributes\AttributeSchema::class
         ];
     }
 }
