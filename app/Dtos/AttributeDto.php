@@ -29,20 +29,28 @@ class AttributeDto {
     protected ?int $partner_id;
 
     /**
+     * @var bool
+     */
+    protected bool $is_global;
+
+    /**
      * @param string $name
      * @param string $type
      * @param string $slug
      * @param int $position
      * @param int|null $partner_id
+     * @param bool $is_global
      */
-    public function __construct(string $name, string $type, string $slug, int $position, ?int $partner_id)
+    public function __construct(string $name, string $type, string $slug, int $position, ?int $partner_id, bool $is_global)
     {
         $this->name = $name;
         $this->type = $type;
         $this->slug = $slug;
         $this->position = $position;
         $this->partner_id = $partner_id;
+        $this->is_global = $is_global;
     }
+
 
     /**
      * @return string
@@ -84,5 +92,12 @@ class AttributeDto {
         return $this->partner_id;
     }
 
+    /**
+     * @return bool
+     */
+    public function getIsGlobal(): bool
+    {
+        return $this->is_global;
+    }
 
 }

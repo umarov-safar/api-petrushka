@@ -56,7 +56,8 @@ class AttributeController extends Controller
             $attributes['attribute_type'],
             $attributes['slug'],
             $attributes['position'] ?? 0,
-            $attributes['partnerId'] ?? NULL
+            $attributes['partnerId'] ?? NULL,
+            $attributes['isGlobal'] ?? 0
         );
 
         $attribute = $this->attributeService->create($dto);
@@ -85,10 +86,11 @@ class AttributeController extends Controller
 
         $dto = new AttributeDto(
             $attributes['name'],
-            $attributes['attribute_type'],
+            $attributes['attributeType'],
             $attributes['slug'],
             $attributes['position'] ?? $attribute->position,
             $attributes['partnerId'] ?? $attribute->partner_id,
+            $attributes['isGlobal'] ?? $attribute->is_global
         );
 
 

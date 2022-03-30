@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Attributes;
+namespace App\JsonApi\Admin\V1\AttributeValues;
 
-use App\Models\Attribute;
+use App\Models\AttributeValue;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -13,7 +13,8 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class AttributeSchema extends Schema
+
+class AttributeValueSchema extends Schema
 {
 
     /**
@@ -21,7 +22,7 @@ class AttributeSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Attribute::class;
+    public static string $model = AttributeValue::class;
 
     /**
      * Get the resource fields.
@@ -32,12 +33,11 @@ class AttributeSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name'),
-            Str::make('attributeType', 'type'), // type is not supported by  JSON:API. The 'attribute_type' is fake for 'type' column.
-            Str::make('slug'),
-            Number::make('position'),
-            Boolean::make('isGlobal'),
+            Str::make('value'),
+            Number::make('attributeId'),
             Number::make('partnerId'),
+            Boolean::make('isGlobal'),
+            Number::make('position'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

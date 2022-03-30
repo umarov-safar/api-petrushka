@@ -7,6 +7,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.20.0] - 2022.03.30
+### Added:
+- CRUD attribute_values (Атрибут значения)
+- поле is_global в таблице атрибуты
+
 ## [1.19.0] - 2022.03.30
 ### Added:
 - CRUD атрибут (attributes) товаров 

@@ -16,8 +16,11 @@ class CreateAttributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type');
+            $table->string('type')
+                ->comment('Тип это строка, число, список и.тд');
+
             $table->string('slug')->unique();
+            $table->boolean('is_global')->default(0);
             $table->integer('position')->default(0);
             $table->unsignedBigInteger('partner_id')->nullable();
             $table->timestamps();
@@ -26,6 +29,8 @@ class CreateAttributesTable extends Migration
                 ->references('id')
                 ->on('partners')
                 ->onDelete('SET NULL');
+
+            $table->softDeletes();
         });
     }
 

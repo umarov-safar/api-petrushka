@@ -36,9 +36,10 @@ class AttributeRequest extends ResourceRequest
         return [
             'name' => 'required|string|min:2',
             'slug' => 'required|string|' . $unique,
-            'attribute_type' => 'required|string|' . Rule::in($types),
-            'position' => 'nullable|int',
-            'partnerId' => 'nullable|int|exists:partners,id'
+            'isGlobal' => 'nullable|boolean',
+            'attributeType' => 'required|string|' . Rule::in($types),
+            'position' => 'nullable|integer',
+            'partnerId' => 'nullable|integer|exists:partners,id'
         ];
     }
 

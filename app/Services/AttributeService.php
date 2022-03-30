@@ -13,6 +13,7 @@ class AttributeService {
         $attribute->name = $request->getName();
         $attribute->type = $request->getType();
         $attribute->slug = $request->getSlug();
+        $attribute->is_global = $request->getIsGlobal();
         $attribute->position = $request->getPosition();
         $attribute->partner_id = $request->getPartnerId();
 
@@ -33,6 +34,7 @@ class AttributeService {
 
         $attribute->name = $request->getName();
         $attribute->type = $request->getType();
+        $attribute->is_global = $request->getIsGlobal();
         $attribute->slug = $request->getSlug();
         $attribute->position = $request->getPosition();
         $attribute->partner_id = $request->getPartnerId();
