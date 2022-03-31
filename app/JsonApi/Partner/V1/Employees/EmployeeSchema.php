@@ -41,6 +41,8 @@ class EmployeeSchema extends ProxySchema
             Boolean::make('status'),
             Boolean::make('isAdmin')->readOnly(),
             Str::make('settingInfo'),
+            BelongsTo::make('myCompany','partner')->type('my-companies')->readOnly(),
+            //BelongsTo::make('user')->type('users')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

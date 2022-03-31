@@ -1,10 +1,9 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Account;
+namespace App\JsonApi\Partner\V1\Customers;
 
 use App\JsonApi\Filters\Like;
-use App\Models\User;
-use App\JsonApi\Proxies\Account; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
+use App\JsonApi\Proxies\CustomerPartner as Customer; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -18,11 +17,10 @@ use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-//use LaravelJsonApi\Eloquent\Schema;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOneThrough;
 use LaravelJsonApi\Eloquent\ProxySchema;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasOneThrough;
 
-class AccountSchema extends ProxySchema
+class CustomerSchema extends ProxySchema
 {
     /**
      * Default pagination
@@ -34,17 +32,7 @@ class AccountSchema extends ProxySchema
      *
      * @var string
      */
-    public static string $model = Account::class;
-
-    /**
-     * Get the JSON:API resource type.
-     *
-     * @return string
-     */
-    public static function type(): string
-    {
-        return 'account';
-    }
+    public static string $model = Customer::class;
 
     /**
      * Get the resource fields.
@@ -55,23 +43,23 @@ class AccountSchema extends ProxySchema
     {
         return [
             ID::make(),
-            Str::make('name'),
-            Str::make('email'),
+            Str::make('name')->readOnly(),
+            Str::make('email')->readOnly(),
             Str::make('phone')->readOnly(), // запрещено менять номер телефона!
             //Number::make('code')->hidden()->readOnly(),
-            Boolean::make('isBlock')->readOnly(),
+            //Boolean::make('isBlock'),
             //BelongsToMany::make('roles'),
-            HasMany::make('myCompanies','partners')->type('my-companies')->readOnly(),
-            //HasMany::make('companies')->type('companies')->readOnly(),
+            //HasMany::make('partners')->type('partners'),
+            //HasMany::make('companies')->type('companies'),
             //HasOneThrough::make('partner')->type('partners'),
             //HasOneThrough::make('company')->type('companies'),
-            HasMany::make('roles')->type('roles')->readOnly(),
+            //HasMany::make('roles')->type('roles'),
             /*HasMany::make('roles')->withFilters(
                 Where::make('role_name','name')
             ),*/
-            BelongsToMany::make('abilities')->type('abilities')->readOnly(),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            //BelongsToMany::make('abilities')->type('abilities'),
+            //DateTime::make('createdAt')->sortable()->readOnly(),
+            //DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
 
@@ -82,7 +70,12 @@ class AccountSchema extends ProxySchema
      */
     public function filters(): array
     {
-        return [];
+        return [
+            WhereIdIn::make($this)->delimiter(','), // filter[id]=x,y
+            //Has::make($this, 'roles'),
+            //WhereHas::make($this, 'roles'), // filter[roles][name]=value
+            Like::make('name'), // filter[name]=value
+        ];
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\PartnerUsers;
+namespace App\JsonApi\Customer\V1\Employees;
 
-use App\Models\PartnerUser;
+use App\JsonApi\Proxies\CompanyUserCustomer as CompanyUser; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -12,22 +12,16 @@ use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerUserSchema extends Schema
+class EmployeeSchema extends ProxySchema
 {
-
-    public static function type(): string
-    {
-        return "partner-users";
-    }
-
     /**
      * The model the schema corresponds to.
      *
      * @var string
      */
-    public static string $model = PartnerUser::class;
+    public static string $model = CompanyUser::class;
 
     /**
      * Get the resource fields.
@@ -38,14 +32,13 @@ class PartnerUserSchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('userId')->readOnly(),
-            Number::make('partnerId'),
+            Number::make('companyId'),
+            Number::make('userId'),
             Str::make('phone'),
-            Str::make('settingInfo'),
             Boolean::make('status'),
             Boolean::make('isAdmin')->readOnly(),
-            BelongsTo::make('partner','partner')->type('partners')->readOnly(),
-            BelongsTo::make('user')->type('users')->readOnly(),
+            Str::make('settingInfo'),
+            BelongsTo::make('myCompany','companies')->type('my-companies')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

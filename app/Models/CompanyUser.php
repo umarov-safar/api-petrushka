@@ -34,6 +34,13 @@ class CompanyUser extends Pivot
 
     protected $table = 'company_user';
 
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
     protected $fillable = ['user_id', 'company_id', 'setting_info', 'phone', 'status', 'is_admin'];
 
     protected $casts = [

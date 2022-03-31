@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Policies\Partner;
+namespace App\Policies\Customer;
 
-use App\JsonApi\Proxies\PartnerUserPartner as PartnerUser;
+use App\JsonApi\Proxies\CompanyUserCustomer as CompanyUser;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PartnerUserPolicy
+class CompanyUserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,7 +18,7 @@ class PartnerUserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isA('partnerAdmin');
+        return $user->isA('customerAdmin');
        // return $user->isA('partner');
     }
 
@@ -26,12 +26,12 @@ class PartnerUserPolicy
      * Determine whether the user can view the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partnerUser
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, PartnerUser $partnerUser)
+    public function view(User $user, CompanyUser $customerUser)
     {
-        return $user->isA('partnerAdmin');
+        return $user->isA('customerAdmin');
     }
 
     /**
@@ -49,7 +49,7 @@ class PartnerUserPolicy
          * получить partner
          */
 
-        return $user->isA('partnerAdmin');
+        return $user->isA('customerAdmin');
         // return !$user->isBlock;
     }
 
@@ -57,12 +57,12 @@ class PartnerUserPolicy
      * Determine whether the user can update the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partnerUser
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, PartnerUser $partnerUser)
+    public function update(User $user, CompanyUser $customerUser)
     {
-        return $user->isA('partnerAdmin');
+        return $user->isA('customerAdmin');
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
@@ -70,12 +70,12 @@ class PartnerUserPolicy
      * Determine whether the user can delete the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partnerUser
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, PartnerUser $partnerUser)
+    public function delete(User $user, CompanyUser $customerUser)
     {
-        return $user->id != $partnerUser->is_admin && $user->isA('partnerAdmin');
+        return $user->id != $customerUser->is_admin && $user->isA('customerAdmin');
         //return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
@@ -84,10 +84,10 @@ class PartnerUserPolicy
      * Determine whether the user can restore the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partner
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, PartnerUser $partner)
+    public function restore(User $user, CompanyUser $customerUser)
     {
         return false;
     }
@@ -96,10 +96,10 @@ class PartnerUserPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partnerUser
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, PartnerUser $partnerUser)
+    public function forceDelete(User $user, CompanyUser $customerUser)
     {
         return false;
     }

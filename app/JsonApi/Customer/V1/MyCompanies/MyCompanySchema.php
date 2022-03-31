@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Customer\V1\Companies;
+namespace App\JsonApi\Customer\V1\MyCompanies;
 
-use App\Models\Company;
+use App\JsonApi\Proxies\MyCompanyCustomer as Company; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -11,9 +11,9 @@ use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class CompanySchema extends Schema
+class MyCompanySchema extends ProxySchema
 {
 
     /**

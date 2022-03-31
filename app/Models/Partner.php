@@ -97,6 +97,18 @@ class Partner extends Model
         });
     }
 
+    /**
+     * Заготовка запроса на получение списка партнеров, в которых указан конкретный админ
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeForAdminUser($query, $userId)
+    {
+        return $query->where('partners.admin_user_id', $userId);
+    }
+
 
     /*
     |--------------------------------------------------------------------------

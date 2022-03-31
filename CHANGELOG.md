@@ -7,6 +7,47 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.25.0] - 2022.03.31
+### Added:
+- добавлен метод GET /customer/v1/partners;
+- добавлен метод GET /customer/v1/partners/{partner_id};
+
+## [1.24.0] - 2022.03.31
+### Added:
+- добавлен метод GET /customer/v1/employees для получения информации о компаниях по авторизованному пользователю;
+- добавлен метод POST /customer/v1/employees;
+- добавлен метод GET /customer/v1/employees/{company_user_id};
+- добавлен метод PATCH /customer/v1/employees/{company_user_id};
+- добавлен метод DELETE /customer/v1/employees/{company_user_id};
+
+### Removed:
+- удален GET /customer/v1/company-users;
+- удален POST /customer/v1/company-users;
+- удален GET /customer/v1/company-users/{company_user_id};
+- удален PATCH /customer/v1/company-users/{company_user_id};
+
+## [1.23.0] - 2022.03.31
+### Added:
+- добавлен метод GET /customer/v1/my-companies для получения информации о компаниях по авторизованному пользователю;
+- добавлен метод POST /customer/v1/my-companies;
+- добавлен метод GET /customer/v1/my-companies/{company_id};
+- добавлен метод PATCH /customer/v1/my-companies/{company_id};
+
+## [1.22.1] - 2022.03.31
+### Added:
+- добавлены атрибуты для /admin/v1/partner-users;
+- добавлены атрибуты для /partner/v1/employees;
+
+## [1.21.0] - 2022.03.30
+### Added:
+- добавлен метод GET /partner/v1/customers для получения списка покупателей;
+- добавлен метод GET /partner/v1/customers/{customer_id};
+
+## [1.20.0] - 2022.03.30
+### Changed:
+- исправлен метод POST /partner/v1/employees ;
+- исправлен метод PATCH /partner/v1/employees/{employee_id} ;
+
 ## [1.19.0] - 2022.03.29
 ### Added:
 - добавлен метод GET /partner/v1/my-companies для получения информации  партнеров по авторизованному пользователю;
