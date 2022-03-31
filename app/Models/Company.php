@@ -56,7 +56,7 @@ class Company extends Model
     */
 
     /**
-     * Заготовка запроса на получение списка партнеров через таблицу сотрудников для определенного пользователя
+     * Заготовка запроса на получение списка компаний через таблицу сотрудников для определенного пользователя
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int $userId
@@ -67,6 +67,18 @@ class Company extends Model
         return $query->whereHas('companyUsers', function ($query) use ($userId) {
             $query->where('company_user.user_id', $userId);
         });
+    }
+
+    /**
+     * Заготовка запроса на получение списка компаний, в которых указан конкретный админ
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeForAdminUser($query, $userId)
+    {
+        return $query->where('companies.admin_user_id', $userId);
     }
 
     /*

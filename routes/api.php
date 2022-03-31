@@ -15,7 +15,7 @@ use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 use \App\Http\Controllers\Api\Admin\V1\AccountController;
 
 //Controller of customer
-use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
+use App\Http\Controllers\Api\Customer\V1\EmployeeController as CustomerEmployeeController;
 use \App\Http\Controllers\Api\Customer\V1\AccountController as CustomerAccountController;
 use \App\Http\Controllers\Api\Customer\V1\MyCompanyController as CustomerMyCompanyController;
 
@@ -141,7 +141,7 @@ JsonApiRoute::server('Customer\V1')
         Route::delete('account', [CustomerAccountController::class, 'logout']); // logout
         // company user routes
         $server->resource('my-companies', CustomerMyCompanyController::class);
-        $server->resource('company-users', CustomerCompanyUserController::class); // => employees
+        $server->resource('employees', CustomerEmployeeController::class); // => employees
         // partners
         // companies
     });

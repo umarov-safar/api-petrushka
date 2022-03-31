@@ -1,11 +1,11 @@
 <?php
 
-namespace App\JsonApi\Customer\V1\CompanyUsers;
+namespace App\JsonApi\Customer\V1\Employees;
 
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class CompanyUserQuery extends ResourceQuery
+class EmployeeQuery extends ResourceQuery
 {
 
     /**

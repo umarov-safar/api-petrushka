@@ -50,8 +50,6 @@ class MyCompanyController extends Controller
      * @param MyCompany $partner
      * @return false|DataResponse|\Illuminate\Contracts\Support\Responsable|\Illuminate\Http\Response
      */
-
-    //public function update(PartnerSchema $schema, PartnerRequest $request, PartnerQuery $query, PartnerPartner $partner)
     public function update(MyCompanySchema $schema, MyCompanyRequest $request, MyCompanyQuery $query, MyCompany $partner)
         //public function update()
     {

@@ -33,7 +33,7 @@ class Server extends BaseServer
     {
         return [
             // @TODO
-            CompanyUsers\CompanyUserSchema::class,
+            Employees\EmployeeSchema::class,
             MyCompanies\MyCompanySchema::class,
             Account\AccountSchema::class,
         ];

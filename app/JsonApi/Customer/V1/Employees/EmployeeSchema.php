@@ -1,25 +1,21 @@
 <?php
 
-namespace App\JsonApi\Customer\V1\CompanyUsers;
+namespace App\JsonApi\Customer\V1\Employees;
 
-use App\Models\CompanyUser;
+use App\JsonApi\Proxies\CompanyUserCustomer as CompanyUser; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class CompanyUserSchema extends Schema
+class EmployeeSchema extends ProxySchema
 {
-    public static function type(): string
-    {
-        return 'company-users';
-    }
-
     /**
      * The model the schema corresponds to.
      *
@@ -40,7 +36,9 @@ class CompanyUserSchema extends Schema
             Number::make('userId'),
             Str::make('phone'),
             Boolean::make('status'),
+            Boolean::make('isAdmin')->readOnly(),
             Str::make('settingInfo'),
+            BelongsTo::make('myCompany','companies')->type('my-companies')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
