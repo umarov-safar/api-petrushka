@@ -7,6 +7,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.25.0] - 2022.03.31
+### Added:
+- добавлен метод GET /customer/v1/partners;
+- добавлен метод GET /customer/v1/partners/{partner_id};
+
 ## [1.24.0] - 2022.03.31
 ### Added:
 - добавлен метод GET /customer/v1/employees для получения информации о компаниях по авторизованному пользователю;

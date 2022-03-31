@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api\Partner\V1;
+namespace App\Http\Controllers\Api\Customer\V1;
 
 use App\Dtos\CompanyDto;
 use App\Http\Controllers\Controller;
-use App\JsonApi\Partner\V1\Companies\CompanyQuery;
-use App\JsonApi\Partner\V1\Companies\CompanyRequest;
-use App\JsonApi\Partner\V1\Companies\CompanySchema;
-use App\Models\Company;
-use App\Services\CompanyService;
-use App\JsonApi\Proxies\CompanyPartner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
+use App\JsonApi\Customer\V1\Partners\PartnerQuery;
+use App\JsonApi\Customer\V1\Partners\PartnerRequest;
+use App\JsonApi\Customer\V1\Partners\PartnerSchema;
+use App\Models\Partner;
+use App\Services\PartnerService;
+use App\JsonApi\Proxies\PartnerCustomer; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\ErrorResponse;
 
-class CompanyController extends Controller
+class PartnerController extends Controller
 {
 
     use Actions\FetchMany;
@@ -32,13 +32,13 @@ class CompanyController extends Controller
 
     /**
      * Company service for creating and updating company
-     * @var CompanyService
+     * @var PartnerService
      */
-    protected CompanyService $companyService;
+    protected PartnerService $partnerService;
 
 
     public function __construct()
     {
-        $this->companyService = new CompanyService();
+        $this->partnerService = new PartnerService();
     }
 }

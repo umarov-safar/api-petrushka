@@ -36,6 +36,7 @@ class Server extends BaseServer
             Employees\EmployeeSchema::class,
             MyCompanies\MyCompanySchema::class,
             Account\AccountSchema::class,
+            Partners\PartnerSchema::class,
         ];
     }
 }

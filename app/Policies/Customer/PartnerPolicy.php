@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Policies\Partner;
+namespace App\Policies\Customer;
 
-use App\JsonApi\Proxies\CompanyPartner as Company;
+use App\JsonApi\Proxies\PartnerCustomer as Partner;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanyPolicy
+class PartnerPolicy
 {
     use HandlesAuthorization;
 
@@ -26,12 +26,12 @@ class CompanyPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  Partner $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
+    public function view(User $user, Partner $partner)
     {
-        return $user->isA('partner');
+        return $user->isA('customer');
     }
 
     /**
@@ -50,10 +50,10 @@ class CompanyPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  Partner $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
+    public function update(User $user, Partner $partner)
     {
         return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
@@ -63,10 +63,10 @@ class CompanyPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  Partner $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user, Partner $partner)
     {
         return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
@@ -76,12 +76,11 @@ class CompanyPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  Partner $partner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
+    public function restore(User $user, Partner $partner)
     {
-        //return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
         return false;
     }
 
@@ -92,7 +91,7 @@ class CompanyPolicy
      * @param  \App\JsonApi\Proxies\CompanyPartner  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
+    public function forceDelete(User $user, Partner $partner)
     {
         return false;
     }
