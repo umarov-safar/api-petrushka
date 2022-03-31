@@ -55,7 +55,7 @@ class PartnerUser extends Pivot
 
     public function partner() : BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Partner::class);
     }
 
 
