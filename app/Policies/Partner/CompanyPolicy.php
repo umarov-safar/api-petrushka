@@ -47,7 +47,7 @@ class CompanyPolicy
 
     /**
      * @param User $user
-     * @param Company $company h
+     * @param Company $company
      *
      * @return bool
      */

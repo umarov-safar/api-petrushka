@@ -31,13 +31,12 @@ class AttributeRequest extends ResourceRequest
 
         if($attribute) $unique = $unique->ignore($attribute);
 
-        $types = array_keys(Attribute::TYPES_OF_ATTRIBUTES);
-
         return [
             'name' => 'required|string|min:2',
-            'slug' => 'required|string|' . $unique,
+//            'slug' => 'required|string|' . $unique,
+            'slug' => 'required|string|',
             'isGlobal' => 'nullable|boolean',
-            'attributeType' => 'required|string|' . Rule::in($types),
+            'attributeType' => 'required|integer|' . Rule::in(Attribute::ATTRIBUTE_TYPES),
             'position' => 'nullable|integer',
             'partnerId' => 'nullable|integer|exists:partners,id'
         ];

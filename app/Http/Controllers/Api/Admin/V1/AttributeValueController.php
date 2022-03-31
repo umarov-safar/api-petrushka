@@ -20,8 +20,8 @@ class AttributeValueController extends Controller
     use Actions\FetchMany;
     use Actions\FetchOne;
 //    use Actions\Store;
-    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Update;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -46,9 +46,9 @@ class AttributeValueController extends Controller
         $dto = new AttributeValueDto(
             $attributes['value'],
             $attributes['attributeId'],
-            $attributes['position'] ?? NULL,
+            $attributes['position'] ?? AttributeValue::DEFAULT_POSITION,
             $attributes['partnerId'] ?? NULL,
-            $attributes['isGlobal'] ?? 0
+            $attributes['isGlobal'] ?? AttributeValue::IS_GLOBAL_NO
         );
 
         $attribute = $this->attributeValueService->create($dto);
@@ -91,6 +91,5 @@ class AttributeValueController extends Controller
         $attribute = AttributeValue::find($attribute->getKey());
 
         return DataResponse::make($attribute);
-
     }
 }

@@ -16,7 +16,7 @@ class AttributeValueFactory extends Factory
     public function definition()
     {
         return [
-            'attribute_id' => Attribute::all()->random()->id,
+            'attribute_id' => Attribute::inRandomOrder()->whereType(Attribute::TYPE_SELECT)->first()->id,
             'value' => $this->faker->word(),
             'position' => $this->faker->numberBetween(1, 20),
             'partner_id' => $this->faker->boolean(30) ? NULL : Partner::all()->random()->id,

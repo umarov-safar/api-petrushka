@@ -7,6 +7,11 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.21.1] - 2022.03.30
+Added:
+- Метод для получение значении атрибутов
+- Исправлены заметки: http://gitlab.bytwin.ru/petrushka/api/issues/17
+
 ## [1.21.0] - 2022.03.30
 Added:
 - Model factories to make fake data;

@@ -18,7 +18,7 @@ class AttributePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isA('partner') || $user->isA('admin', 'superadmin');
+        return $user->isA('admin', 'superadmin');
     }
 
     /**
@@ -30,7 +30,7 @@ class AttributePolicy
      */
     public function view(User $user, Attribute $attribute)
     {
-        return $user->isA('partner') || $user->isA('admin', 'superadmin');
+        return $user->isA('admin', 'superadmin');
     }
 
     /**
@@ -41,7 +41,7 @@ class AttributePolicy
      */
     public function create(User $user)
     {
-        return $user->isA('partner') || $user->isA('admin', 'superadmin');
+        return $user->isA('admin', 'superadmin');
     }
 
     /**
@@ -53,7 +53,7 @@ class AttributePolicy
      */
     public function update(User $user, Attribute $attribute)
     {
-        return ($user->isA('partner') && $user->partnerOwner->id === $attribute->partner_id) || $user->isA('admin', 'superadmin');
+        return $user->isA('admin', 'superadmin');
     }
 
     /**

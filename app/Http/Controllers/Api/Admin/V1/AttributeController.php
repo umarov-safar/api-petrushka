@@ -22,8 +22,8 @@ class AttributeController extends Controller
     use Actions\FetchMany;
     use Actions\FetchOne;
 //    use Actions\Store;
-    use Actions\Update;
-    use Actions\Destroy;
+//    use Actions\Update;
+//    use Actions\Destroy;
     use Actions\FetchRelated;
     use Actions\FetchRelationship;
     use Actions\UpdateRelationship;
@@ -55,9 +55,9 @@ class AttributeController extends Controller
             $attributes['name'],
             $attributes['attribute_type'],
             $attributes['slug'],
-            $attributes['position'] ?? 0,
+            $attributes['position'] ?? Attribute::DEFAULT_POSITION,
             $attributes['partnerId'] ?? NULL,
-            $attributes['isGlobal'] ?? 0
+            $attributes['isGlobal'] ?? Attribute::IS_GLOBAL_NO
         );
 
         $attribute = $this->attributeService->create($dto);

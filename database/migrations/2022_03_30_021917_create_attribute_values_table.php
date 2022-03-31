@@ -15,11 +15,24 @@ class CreateAttributeValuesTable extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Attribute::class);
-            $table->foreignIdFor(\App\Models\Partner::class)->nullable();
-            $table->string('value');
-            $table->boolean('is_global')->default(0);
-            $table->integer('position')->default(0);
+            $table->foreignIdFor(\App\Models\Attribute::class)
+                ->comment('Связь с атрибутами таблицы');
+
+            $table->foreignIdFor(\App\Models\Partner::class)
+                ->nullable()
+                ->comment('Связь с партнёр таблицы');
+
+            $table->string('value')
+                ->comment('Значения атрибута для тип список');
+
+            $table->boolean('is_global')
+                ->default(0)
+                ->comment('Глобалный атрибут значения');
+
+            $table->integer('position')
+                ->default(0)
+                ->comment('Поле для сортировки');
+
             $table->timestamps();
 
             $table->softDeletes();

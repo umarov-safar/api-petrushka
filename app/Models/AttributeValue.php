@@ -18,5 +18,9 @@ class AttributeValue extends Model
     ];
 
 
+    const IS_GLOBAL_YES = 1;
+    const IS_GLOBAL_NO = 0;
+
+    const DEFAULT_POSITION = 0;
 
 }

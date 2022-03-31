@@ -18,7 +18,7 @@ class AttributeFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'type' => \Arr::random(array_keys(Attribute::TYPES_OF_ATTRIBUTES)),
+            'type' => \Arr::random(Attribute::ATTRIBUTE_TYPES),
             'slug' => $this->faker->slug(),
             'position' => $this->faker->numberBetween(1, 20),
             'partner_id' => $this->faker->boolean(30) ? NULL : Partner::all()->random()->id,
