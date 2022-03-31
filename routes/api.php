@@ -17,11 +17,12 @@ use \App\Http\Controllers\Api\Admin\V1\AccountController;
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
 use \App\Http\Controllers\Api\Customer\V1\AccountController as CustomerAccountController;
+use \App\Http\Controllers\Api\Customer\V1\MyCompanyController as CustomerMyCompanyController;
 
 //Partner Controllers
 use \App\Http\Controllers\Api\Partner\V1\EmployeeController as PartnerEmployeeController;
 use \App\Http\Controllers\Api\Partner\V1\CompanyController as PartnerCompanyController;
-use \App\Http\Controllers\Api\Partner\V1\MyCompanyController as MyCompanyController;
+use \App\Http\Controllers\Api\Partner\V1\MyCompanyController as PartnerMyCompanyController;
 use \App\Http\Controllers\Api\Partner\V1\AccountController as PartnerAccountController;
 use \App\Http\Controllers\Api\Partner\V1\CustomerController as PartnerCustomerController;
 /*
@@ -139,6 +140,7 @@ JsonApiRoute::server('Customer\V1')
         $server->resource('account', CustomerAccountController::class);
         Route::delete('account', [CustomerAccountController::class, 'logout']); // logout
         // company user routes
+        $server->resource('my-companies', CustomerMyCompanyController::class);
         $server->resource('company-users', CustomerCompanyUserController::class); // => employees
         // partners
         // companies
@@ -152,7 +154,7 @@ JsonApiRoute::server('Partner\V1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
         // company user routes
-        $server->resource('my-companies', MyCompanyController::class);
+        $server->resource('my-companies', PartnerMyCompanyController::class);
         $server->resource('companies', PartnerCompanyController::class);
         $server->resource('account', PartnerAccountController::class);
         Route::delete('account', [PartnerAccountController::class, 'logout']); // logout

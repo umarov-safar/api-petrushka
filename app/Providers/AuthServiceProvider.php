@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\JsonApi\Proxies\MyCompany::class => \App\Policies\Partner\MyCompanyPolicy::class,
         \App\JsonApi\Proxies\Account::class => \App\Policies\AccountPolicy::class,
         \App\JsonApi\Proxies\CustomerPartner::class => \App\Policies\Partner\CustomerPolicy::class,
+        \App\JsonApi\Proxies\MyCompanyCustomer::class => \App\Policies\Customer\MyCompanyPolicy::class,
     ];
 
     /**

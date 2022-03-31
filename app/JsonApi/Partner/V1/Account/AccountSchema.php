@@ -61,7 +61,7 @@ class AccountSchema extends ProxySchema
             //Number::make('code')->hidden()->readOnly(),
             Boolean::make('isBlock')->readOnly(),
             //BelongsToMany::make('roles'),
-            HasMany::make('partners')->type('partners')->readOnly(),
+            HasMany::make('myCompanies','partners')->type('my-companies')->readOnly(),
             //HasMany::make('companies')->type('companies')->readOnly(),
             //HasOneThrough::make('partner')->type('partners'),
             //HasOneThrough::make('company')->type('companies'),
