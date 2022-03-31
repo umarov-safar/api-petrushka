@@ -7,6 +7,10 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.25.1] - 2022.03.31
+### Fixed:
+- исправлена проблема "Class "App\JsonApi\Partner\V1\Companies\PartnerSchema" not found";
+
 ## [1.25.0] - 2022.03.31
 ### Added:
 - добавлен метод GET /customer/v1/partners;
