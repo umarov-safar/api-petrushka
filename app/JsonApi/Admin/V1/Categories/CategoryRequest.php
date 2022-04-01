@@ -48,6 +48,7 @@ class CategoryRequest extends ResourceRequest
             'depth' => 'nullable|integer',
             'requirements' => 'nullable|array',
             'attributes' => 'nullable|array',
+            'attributes.*.id' => 'nullable|exists:attributes,id',
             'isAlcohol' => 'nullable|boolean'
         ];
     }

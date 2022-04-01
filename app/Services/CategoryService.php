@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Dtos\CategoryDto;
+use App\Models\Attribute;
 use App\Models\Category;
 
 class CategoryService {
@@ -58,8 +59,29 @@ class CategoryService {
         $category->canonical_url = $request->getCanonicalUrl();
         $category->depth = $request->getDepth();
         $category->requirements = $request->getRequirements();
-        $category->attributes = $request->getAttributes();
         $category->is_alcohol = $request->getIsAlcohol();
+
+        // если проверка не прйден то поле attribute будет NULL
+        if($attributes = $request->getAttributes()) {
+            $attributesIds = collect($attributes)->pluck('id')->toArray();
+
+            $attributeOriginal = Attribute::whereIn('id', $attributesIds)
+                ->get(['id', 'name', 'slug'])
+                ->toArray();
+
+            $attributesForSave = [];
+
+            foreach ($attributes as $key => $attr) {
+                foreach ($attributeOriginal as $keyOriginal => $attrOriginal)
+                {
+                    if($attr['id'] === $attrOriginal['id'])
+                    {
+                        $attributesForSave[] = array_merge($attrOriginal, $attr);
+                    }
+                }
+            }
+            $category->attributes = $attributesForSave;
+        }
 
         return $category;
     }
