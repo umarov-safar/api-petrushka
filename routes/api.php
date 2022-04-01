@@ -15,6 +15,7 @@ use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 use \App\Http\Controllers\Api\Admin\V1\AccountController;
 use \App\Http\Controllers\Api\Admin\V1\AttributeController;
 use \App\Http\Controllers\Api\Admin\V1\AttributeValueController;
+use \App\Http\Controllers\Api\Admin\V1\CategoryController;
 
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
@@ -130,9 +131,14 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('partner-users', PartnerUserController::class); // переименовать в partner-users
 
         // PRODUCTS ROUTES
-        $server->resource('attributes', AttributeController::class);
+        $server->resource('attributes', AttributeController::class)
+            ->relationships(function($relationships) {
+                $relationships->hasMany('values');
+            });
 
         $server->resource('attribute-values', AttributeValueController::class);
+
+        $server->resource('categories', CategoryController::class);
     });
 
 

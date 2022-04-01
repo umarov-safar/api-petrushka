@@ -15,6 +15,7 @@ class CreateAttributeValuesTable extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
+
             $table->foreignIdFor(\App\Models\Attribute::class)
                 ->comment('Связь с атрибутами таблицы');
 
@@ -34,8 +35,16 @@ class CreateAttributeValuesTable extends Migration
                 ->comment('Поле для сортировки');
 
             $table->timestamps();
-
             $table->softDeletes();
+
+            $table->foreign('partner_id')
+                ->references('id')
+                ->on('partners')
+                ->onDelete('SET NULL');
+
+            $table->foreign('attribute_id')
+                ->references('id')
+                ->on('attributes');
 
         });
     }

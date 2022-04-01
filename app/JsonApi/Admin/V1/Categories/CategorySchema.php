@@ -1,20 +1,19 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Attributes;
+namespace App\JsonApi\Admin\V1\Categories;
 
-use App\Models\Attribute;
+use App\Models\Category;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class AttributeSchema extends Schema
+class CategorySchema extends Schema
 {
 
     /**
@@ -22,7 +21,7 @@ class AttributeSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Attribute::class;
+    public static string $model = Category::class;
 
     /**
      * Get the resource fields.
@@ -34,12 +33,22 @@ class AttributeSchema extends Schema
         return [
             ID::make(),
             Str::make('name'),
-            Str::make('attributeType', 'type'), // type is not supported by  JSON:API. The 'attribute_type' is fake for 'type' column.
             Str::make('slug'),
+            Str::make('categoryType', 'type'),
             Number::make('position'),
-            Boolean::make('isGlobal'),
+            Boolean::make('active'),
+            Number::make('parentId'),
             Number::make('partnerId'),
-            HasMany::make('values')->type('attribute-values'),
+            Str::make('iconUrl'),
+            Str::make('altIcon'),
+            Str::make('canonicalUrl'),
+            Number::make('depth'),
+            Str::make('children'),
+            Str::make('requirements'),
+            Number::make('productCounts')->readOnly(),
+            Str::make('promoService'),
+            Str::make('attributes'),
+            Boolean::make('isAlcohol'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

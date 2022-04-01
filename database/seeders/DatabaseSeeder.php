@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
          \App\Models\PartnerUser::factory(8)->create();
          \App\Models\Attribute::factory(10)->create();
          \App\Models\AttributeValue::factory(10)->create();
-
+         \App\Models\Category::factory(10)->create();
     }
 }

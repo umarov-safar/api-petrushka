@@ -19,9 +19,9 @@ class Attribute extends Model
         'partner_id'
     ];
 
-    const TYPE_TEXT = 0;
-    const TYPE_NUMBER = 1;
-    const TYPE_SELECT = 2;
+    const TYPE_TEXT = 1;
+    const TYPE_NUMBER = 2;
+    const TYPE_SELECT = 3;
 
     // It will be used in request validation and in the frontend
     const ATTRIBUTE_TYPES = [

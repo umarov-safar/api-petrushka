@@ -14,18 +14,19 @@ class CreateAttributesTable extends Migration
     public function up()
     {
         Schema::create('attributes', function (Blueprint $table) {
+
             $table->id();
 
             $table->string('name')
                 ->comment('Названия атрибута');
             /**
              * type
-             * 0 - text,
-             * 1 - number
-             * 2 - select
+             * 1 - text,
+             * 2 - number
+             * 3 - select
              */
             $table->integer('type')
-                ->comment('Тип атрибута: 0 - text; 1 - number; 2 - select');
+                ->comment('Тип атрибута: 1 - text; 2 - number; 3 - select');
 
             $table->string('slug')
                 ->comment('Слаг - ссылка');
@@ -44,7 +45,7 @@ class CreateAttributesTable extends Migration
 
             $table->unsignedBigInteger('partner_id')
                 ->nullable()
-                ->comment('Идентификатор партнера, связанный с партнерской таблицей');
+                ->comment('Идентификатор партнера, если партнер создал категорию');
 
             $table->timestamps();
 
