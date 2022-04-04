@@ -16,6 +16,7 @@ use \App\Http\Controllers\Api\Admin\V1\AccountController;
 use \App\Http\Controllers\Api\Admin\V1\AttributeController;
 use \App\Http\Controllers\Api\Admin\V1\AttributeValueController;
 use \App\Http\Controllers\Api\Admin\V1\CategoryController;
+use \App\Http\Controllers\Api\Admin\V1\ManufacturerController;
 
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
@@ -139,6 +140,8 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('attribute-values', AttributeValueController::class);
 
         $server->resource('categories', CategoryController::class);
+
+        $server->resource('manufacturers', ManufacturerController::class);
     });
 
 

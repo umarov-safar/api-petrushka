@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
          \App\Models\Attribute::factory(10)->create();
          \App\Models\AttributeValue::factory(10)->create();
          \App\Models\Category::factory(10)->create();
+         \App\Models\Manufacturer::factory(10)->create();
     }
 }

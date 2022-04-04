@@ -46,6 +46,7 @@ class Server extends BaseServer
             Attributes\AttributeSchema::class,
             AttributeValues\AttributeValueSchema::class,
             Categories\CategorySchema::class,
+            Manufacturers\ManufacturerSchema::class,
         ];
     }
 }
