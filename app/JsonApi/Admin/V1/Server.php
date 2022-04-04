@@ -47,6 +47,7 @@ class Server extends BaseServer
             AttributeValues\AttributeValueSchema::class,
             Categories\CategorySchema::class,
             Manufacturers\ManufacturerSchema::class,
+            ManufacturingCountries\ManufacturingCountrySchema::class,
         ];
     }
 }
