@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Policies\Partner;
+namespace App\Policies;
 
-use App\JsonApi\Proxies\CompanyPartner as Company;
+use App\Models\AttributeValue;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanyPolicy
+class AttributeValuePolicy
 {
     use HandlesAuthorization;
 
@@ -18,20 +18,19 @@ class CompanyPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
-       // return $user->isA('partner');
+        return $user->isA('partner') || $user->isA('admin', 'superadmin');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
+    public function view(User $user, AttributeValue $attributeValue)
     {
-        return $user->isA('partner');
+        return $user->isA('partner') || $user->isA('admin', 'superadmin');
     }
 
     /**
@@ -42,58 +41,54 @@ class CompanyPolicy
      */
     public function create(User $user)
     {
-        return false;
-        // return !$user->isBlock;
+        return $user->isA('partner') || $user->isA('admin', 'superadmin');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
+    public function update(User $user, AttributeValue $attributeValue)
     {
-        return false;
-        // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
+        return ($user->isA('partner') && $user->partnerOwner->id === $attributeValue->partner_id) || $user->isA('admin', 'superadmin');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user, AttributeValue $attributeValue)
     {
         return false;
-        // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
+    public function restore(User $user, AttributeValue $attributeValue)
     {
-        //return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
+    public function forceDelete(User $user, AttributeValue $attributeValue)
     {
-        return false;
+        //
     }
 }

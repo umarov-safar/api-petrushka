@@ -43,6 +43,13 @@ class Server extends BaseServer
             Companies\CompanySchema::class,
             CompanyUsers\CompanyUserSchema::class,
             Account\AccountSchema::class,
+            Attributes\AttributeSchema::class,
+            AttributeValues\AttributeValueSchema::class,
+            Categories\CategorySchema::class,
+            Manufacturers\ManufacturerSchema::class,
+            ManufacturingCountries\ManufacturingCountrySchema::class,
+            Brands\BrandSchema::class,
+            Products\ProductSchema::class,
         ];
     }
 }

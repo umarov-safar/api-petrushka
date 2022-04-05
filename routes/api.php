@@ -13,6 +13,13 @@ use App\Http\Controllers\Api\Admin\V1\CompanyController;
 use App\Http\Controllers\Api\Admin\V1\CompanyUserController;
 use \App\Http\Controllers\Api\Admin\V1\PartnerUserController;
 use \App\Http\Controllers\Api\Admin\V1\AccountController;
+use \App\Http\Controllers\Api\Admin\V1\AttributeController;
+use \App\Http\Controllers\Api\Admin\V1\AttributeValueController;
+use \App\Http\Controllers\Api\Admin\V1\CategoryController;
+use \App\Http\Controllers\Api\Admin\V1\ManufacturerController;
+use \App\Http\Controllers\Api\Admin\V1\ManufacturingCountryController;
+use App\Http\Controllers\Api\Admin\V1\BrandController;
+use App\Http\Controllers\Api\Admin\V1\ProductController;
 
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\EmployeeController as CustomerEmployeeController;
@@ -129,6 +136,23 @@ JsonApiRoute::server('Admin\V1')
 
         //partner users routes
         $server->resource('partner-users', PartnerUserController::class); // переименовать в partner-users
+
+        // PRODUCTS ROUTES
+        $server->resource('attributes', AttributeController::class)
+            ->relationships(function($relationships) {
+                $relationships->hasMany('values');
+            });
+
+        $server->resource('attribute-values', AttributeValueController::class);
+
+        $server->resource('categories', CategoryController::class);
+
+        $server->resource('manufacturers', ManufacturerController::class);
+        $server->resource('manufacturing-countries', ManufacturingCountryController::class);
+
+        $server->resource('brands', BrandController::class);
+
+        $server->resource('products', ProductController::class);
     });
 
 

@@ -7,16 +7,36 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
-## [1.25.1] - 2022.03.31
+## [1.31.0] - 2022.04.05
+Added:
+- Товар (создание, редактирование) 
+- Атрибуты товаров со значениями 
+
+## [1.30.0] - 2022.04.04
+Added:
+- Бренд
+- Производиетль
+- Страна производитель
+
+## [1.29.1] - 2022.04.01
+Added:
+- Сохранение атрибутов
+
+## [1.29.0] - 2022.04.01
+Added:
+- CRUD категории
+- relationship route для атрибут значении
+
+## [1.28.1] - 2022.03.31
 ### Fixed:
 - исправлена проблема "Class "App\JsonApi\Partner\V1\Companies\PartnerSchema" not found";
 
-## [1.25.0] - 2022.03.31
+## [1.28.0] - 2022.03.31
 ### Added:
 - добавлен метод GET /customer/v1/partners;
 - добавлен метод GET /customer/v1/partners/{partner_id};
 
-## [1.24.0] - 2022.03.31
+## [1.27.0] - 2022.03.31
 ### Added:
 - добавлен метод GET /customer/v1/employees для получения информации о компаниях по авторизованному пользователю;
 - добавлен метод POST /customer/v1/employees;
@@ -30,17 +50,35 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 - удален GET /customer/v1/company-users/{company_user_id};
 - удален PATCH /customer/v1/company-users/{company_user_id};
 
-## [1.23.0] - 2022.03.31
+## [1.26.0] - 2022.03.31
 ### Added:
 - добавлен метод GET /customer/v1/my-companies для получения информации о компаниях по авторизованному пользователю;
 - добавлен метод POST /customer/v1/my-companies;
 - добавлен метод GET /customer/v1/my-companies/{company_id};
 - добавлен метод PATCH /customer/v1/my-companies/{company_id};
 
-## [1.22.1] - 2022.03.31
+## [1.25.0] - 2022.03.31
 ### Added:
 - добавлены атрибуты для /admin/v1/partner-users;
 - добавлены атрибуты для /partner/v1/employees;
+
+## [1.24.1] - 2022.03.30
+Added:
+- Метод для получение значении атрибутов
+- Исправлены заметки: http://gitlab.bytwin.ru/petrushka/api/issues/17
+
+## [1.24.0] - 2022.03.30
+Added:
+- Model factories to make fake data;
+
+## [1.23.0] - 2022.03.30
+### Added:
+- CRUD attribute_values (Атрибут значения)
+- поле is_global в таблице атрибуты
+
+## [1.22.0] - 2022.03.30
+### Added:
+- CRUD атрибут (attributes) товаров 
 
 ## [1.21.0] - 2022.03.30
 ### Added:
