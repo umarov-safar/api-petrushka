@@ -49,6 +49,7 @@ class Server extends BaseServer
             Manufacturers\ManufacturerSchema::class,
             ManufacturingCountries\ManufacturingCountrySchema::class,
             Brands\BrandSchema::class,
+            Products\ProductSchema::class,
         ];
     }
 }

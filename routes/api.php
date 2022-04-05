@@ -19,6 +19,7 @@ use \App\Http\Controllers\Api\Admin\V1\CategoryController;
 use \App\Http\Controllers\Api\Admin\V1\ManufacturerController;
 use \App\Http\Controllers\Api\Admin\V1\ManufacturingCountryController;
 use App\Http\Controllers\Api\Admin\V1\BrandController;
+use App\Http\Controllers\Api\Admin\V1\ProductController;
 
 //Controller of customer
 use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
@@ -147,6 +148,8 @@ JsonApiRoute::server('Admin\V1')
         $server->resource('manufacturing-countries', ManufacturingCountryController::class);
 
         $server->resource('brands', BrandController::class);
+
+        $server->resource('products', ProductController::class);
     });
 
 

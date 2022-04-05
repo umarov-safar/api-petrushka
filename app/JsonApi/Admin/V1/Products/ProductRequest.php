@@ -1,15 +1,15 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Categories;
+namespace App\JsonApi\Admin\V1\Products;
 
-use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class CategoryRequest extends ResourceRequest
+class ProductRequest extends ResourceRequest
 {
+
 
     protected function prepareForValidation()
     {
@@ -18,7 +18,6 @@ class CategoryRequest extends ResourceRequest
 
         $this->getInputSource()->replace(['data' => $data]);
     }
-
     /**
      * Get the validation rules for the resource.
      *
@@ -26,32 +25,31 @@ class CategoryRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        $category = $this->model();
+        $product = $this->model();
 
-        $unique = Rule::unique('categories');
+        $unique = Rule::unique('products');
 
-        if($category) {
-            $unique = $unique->ignore($category);
-        }
+        if($product) $unique = $unique->ignore($product);
 
         return [
-            'name' => 'required|string|min:2',
-            'categoryType' => 'required|integer|' . Rule::in(Category::TYPES),
+            'name' => 'required|string',
+            'sku' => 'required|integer',
+            'description' => 'required|string',
+            'descriptionOriginal' => 'required|string',
             'slug' => 'required|string|' . $unique,
-            'position' => 'nullable|integer',
-            'active' => 'nullable|boolean',
-            'parentId' => 'nullable|integer|exists:categories,id',
+            'humanVolume' => 'nullable|string',
+            'canonicalPermalink' => 'nullable|string',
+            'isAlcohol' => 'nullable|boolean',
+            'brandId' => 'nullable|integer|exists:brands,id',
+            'categoryId' => 'nullable|integer|exists:categories,id',
+            'manufacturerId' => 'nullable|integer|exists:manufacturers,id',
+            'manufacturingCountryId' => 'nullable|integer|exists:manufacturing_countries,id',
             'partnerId' => 'nullable|integer|exists:partners,id',
-            'iconUrl' => 'nullable|string',
-            'altIcon' => 'nullable|string',
-            'canonicalUrl' => 'nullable|string',
-            'depth' => 'nullable|integer',
-            'requirements' => 'nullable|array',
             'attributes' => 'nullable|array',
             'attributes.*.id' => 'nullable|exists:attributes,id',
             'attributes.*.position' => 'nullable|integer',
             'attributes.*.presentation' => 'nullable|string',
-            'isAlcohol' => 'nullable|boolean'
+            'attributes.*.value_id' => 'nullable|exists:attribute_values,id',
         ];
     }
 
