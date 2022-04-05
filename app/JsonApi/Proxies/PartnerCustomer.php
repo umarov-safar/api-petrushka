@@ -12,7 +12,7 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class PartnerPartner
+ * Class PartnerCustomer
  *
  * Прокси-модель "Партнер"
  * Используется для работы с моделью Partner партнером.
@@ -31,36 +31,19 @@ use Illuminate\Database\Eloquent\Builder;
  * @package App/JsonApi/Proxies
  */
 
-class PartnerPartner extends Proxy
+class PartnerCustomer extends Proxy
 {
     use HasFactory, SoftDeletes;
 
     /**
-     * CompanyPartner constructor.
+     * PartnerCustomer constructor.
      *
      * @param Partner|null $partner
      */
     public function __construct(Partner $partner = null)
     {
         $partner = ($partner ? $partner : new Partner());
-        self::bootModel($partner);
+        //self::bootModel($partner);
         parent::__construct($partner ?: new Partner());
     }
-
-    /**
-     * Установка глобальной выборки для модели "партнёр"
-     * Это нужно для того чтобы партнёру(админу) отобразить только его объекты Партнёр.
-     *
-     * @param Partner &$partner
-     * @return void
-     */
-    protected static function bootModel(Partner &$partner)
-    {
-        $user = Auth::user();
-
-        $partner::addGlobalScope('myPartners', function (Builder $builder) use ($user) {
-            $builder->concretePartnerUser($user->id);
-        });
-    }
-
 }

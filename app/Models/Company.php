@@ -39,7 +39,8 @@ class Company extends Model
 
     public function companyUsers()
     {
-        return $this->belongsToMany(User::class, 'company_user')->withPivot('phone', 'setting_info', 'status');
+        //return $this->belongsToMany(User::class, 'company_user')->withPivot('phone', 'setting_info', 'status');
+        return $this->hasMany(CompanyUser::class);
     }
 
 
@@ -54,6 +55,31 @@ class Company extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Заготовка запроса на получение списка компаний через таблицу сотрудников для определенного пользователя
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeConcreteCompanyUser($query, $userId)
+    {
+        return $query->whereHas('companyUsers', function ($query) use ($userId) {
+            $query->where('company_user.user_id', $userId);
+        });
+    }
+
+    /**
+     * Заготовка запроса на получение списка компаний, в которых указан конкретный админ
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeForAdminUser($query, $userId)
+    {
+        return $query->where('companies.admin_user_id', $userId);
+    }
 
     /*
     |--------------------------------------------------------------------------

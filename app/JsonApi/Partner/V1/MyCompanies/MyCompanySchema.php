@@ -1,33 +1,48 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\PartnerUsers;
+namespace App\JsonApi\Partner\V1\MyCompanies;
 
-use App\Models\PartnerUser;
+use App\JsonApi\Proxies\MyCompany; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+//use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerUserSchema extends Schema
+class MyCompanySchema extends ProxySchema
 {
-
-    public static function type(): string
-    {
-        return "partner-users";
-    }
 
     /**
      * The model the schema corresponds to.
      *
      * @var string
      */
-    public static string $model = PartnerUser::class;
+    public static string $model = MyCompany::class;
+
+    /**
+     * The resource type as it appears in URIs.
+     *
+     * @var string|null
+     */
+    //protected ?string $uriType = 'my_companies';
+
+    /**
+     * Get the JSON:API resource type.
+     *
+     * @return string
+     */
+    /*public static function type(): string
+    {
+        return 'my_companies';
+    }*/
 
     /**
      * Get the resource fields.
@@ -38,14 +53,13 @@ class PartnerUserSchema extends Schema
     {
         return [
             ID::make(),
-            Number::make('userId')->readOnly(),
-            Number::make('partnerId'),
-            Str::make('phone'),
-            Str::make('settingInfo'),
-            Boolean::make('status'),
-            Boolean::make('isAdmin')->readOnly(),
-            BelongsTo::make('partner','partner')->type('partners')->readOnly(),
-            BelongsTo::make('user')->type('users')->readOnly(),
+            Str::make('name'),
+            Str::make('info'),
+            Str::make('phone')->readOnly(),
+            Number::make('adminUserId')->readOnly(),
+            Boolean::make('isBlock')->readOnly(),
+            //BelongsTo::make('owner')->type('users'),
+            //BelongsToMany::make('partnerUsers'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

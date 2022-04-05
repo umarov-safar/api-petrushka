@@ -1,98 +1,105 @@
 <?php
 
-namespace App\Policies\Partner;
+namespace App\Policies\Customer;
 
-use App\JsonApi\Proxies\CompanyPartner as Company;
+use App\JsonApi\Proxies\CompanyUserCustomer as CompanyUser;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanyPolicy
+class CompanyUserPolicy
 {
     use HandlesAuthorization;
 
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isA('customerAdmin');
        // return $user->isA('partner');
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  User $user
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
+    public function view(User $user, CompanyUser $customerUser)
     {
-        return $user->isA('partner');
+        return $user->isA('customerAdmin');
     }
 
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
+     * @param  User $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user)
     {
-        return false;
+        /**
+         * проверка на то что можно создавать сотрудника с привязкой к этому партнеру
+         *
+         * получить partnerId
+         * получить partner
+         */
+
+        return $user->isA('customerAdmin');
         // return !$user->isBlock;
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  User $user
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
+    public function update(User $user, CompanyUser $customerUser)
     {
-        return false;
+        return $user->isA('customerAdmin');
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  User $user
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user, CompanyUser $customerUser)
     {
-        return false;
+        return $user->id != $customerUser->is_admin && $user->isA('customerAdmin');
+        //return false;
         // return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  User $user
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
+    public function restore(User $user, CompanyUser $customerUser)
     {
-        //return $user->id == $company->admin_user_id || $user->isA('superadmin', "admin");
         return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\JsonApi\Proxies\CompanyPartner  $company
+     * @param  User $user
+     * @param  CompanyUser $customerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
+    public function forceDelete(User $user, CompanyUser $customerUser)
     {
         return false;
     }

@@ -26,7 +26,7 @@ class PartnerUserPolicy
      * Determine whether the user can view the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partner
+     * @param  PartnerUser $partnerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user, PartnerUser $partnerUser)
@@ -34,17 +34,6 @@ class PartnerUserPolicy
         return $user->isA('partnerAdmin');
     }
 
-    /**
-     * @param  User $user
-     * @param  PartnerUser $partner
-     *
-     * @return bool
-     */
-    /*
-    public function updatePartnerUsers(User $user, PartnerUser $partnerUser)
-    {
-        return $user->isA('partnerAdmin');
-    }*/
     /**
      * Determine whether the user can create models.
      *
@@ -68,7 +57,7 @@ class PartnerUserPolicy
      * Determine whether the user can update the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partner
+     * @param  PartnerUser $partnerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, PartnerUser $partnerUser)
@@ -81,7 +70,7 @@ class PartnerUserPolicy
      * Determine whether the user can delete the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partner
+     * @param  PartnerUser $partnerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, PartnerUser $partnerUser)
@@ -107,10 +96,10 @@ class PartnerUserPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  User $user
-     * @param  PartnerUser $partner
+     * @param  PartnerUser $partnerUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, PartnerUser $partner)
+    public function forceDelete(User $user, PartnerUser $partnerUser)
     {
         return false;
     }

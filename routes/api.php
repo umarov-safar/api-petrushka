@@ -22,14 +22,17 @@ use App\Http\Controllers\Api\Admin\V1\BrandController;
 use App\Http\Controllers\Api\Admin\V1\ProductController;
 
 //Controller of customer
-use App\Http\Controllers\Api\Customer\V1\CompanyUserContorller as CustomerCompanyUserController;
+use App\Http\Controllers\Api\Customer\V1\EmployeeController as CustomerEmployeeController;
 use \App\Http\Controllers\Api\Customer\V1\AccountController as CustomerAccountController;
+use \App\Http\Controllers\Api\Customer\V1\MyCompanyController as CustomerMyCompanyController;
+use \App\Http\Controllers\Api\Customer\V1\PartnerController as CustomerPartnerController;
 
 //Partner Controllers
 use \App\Http\Controllers\Api\Partner\V1\EmployeeController as PartnerEmployeeController;
 use \App\Http\Controllers\Api\Partner\V1\CompanyController as PartnerCompanyController;
-use \App\Http\Controllers\Api\Partner\V1\PartnerController as PartnerPartnerController;
+use \App\Http\Controllers\Api\Partner\V1\MyCompanyController as PartnerMyCompanyController;
 use \App\Http\Controllers\Api\Partner\V1\AccountController as PartnerAccountController;
+use \App\Http\Controllers\Api\Partner\V1\CustomerController as PartnerCustomerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -162,7 +165,9 @@ JsonApiRoute::server('Customer\V1')
         $server->resource('account', CustomerAccountController::class);
         Route::delete('account', [CustomerAccountController::class, 'logout']); // logout
         // company user routes
-        $server->resource('company-users', CustomerCompanyUserController::class); // => employees
+        $server->resource('my-companies', CustomerMyCompanyController::class);
+        $server->resource('employees', CustomerEmployeeController::class); // => employees
+        $server->resource('partners', PartnerController::class); // => employees
         // partners
         // companies
     });
@@ -174,15 +179,14 @@ JsonApiRoute::server('Partner\V1')
     ->prefix('partner/v1')
     ->middleware('auth:sanctum')
     ->resources(function ($server) {
-        //Route::post('auth/logout', [AuthController::class, 'logout']); // logout
         // company user routes
-        //$server->resource('companies', JsonApiController::class);
+        $server->resource('my-companies', PartnerMyCompanyController::class);
         $server->resource('companies', PartnerCompanyController::class);
         $server->resource('account', PartnerAccountController::class);
         Route::delete('account', [PartnerAccountController::class, 'logout']); // logout
-        $server->resource('partners', PartnerPartnerController::class);
         // customers
         // my-companies , т.е. это partners
         $server->resource('employees', PartnerEmployeeController::class);
+        $server->resource('customers', PartnerCustomerController::class);
         // $server->resource('customers', EmployeeController::class); // Покупатели, реализовать в следующих релизах
     });

@@ -2,7 +2,7 @@
 
 namespace App\JsonApi\Proxies;
 
-use App\Models\PartnerUser;
+use App\Models\CompanyUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelJsonApi\Eloquent\Proxy;
@@ -12,14 +12,14 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class PartnerUserPartner
+ * Class CompanyUserCustomer
  *
- * Прокси-модель "Сотрудник партнера"
- * Используется для работы с моделья PartnerUser партнером.
+ * Прокси-модель "Сотрудник компании"
+ * Используется для работы с моделью CompanyUser покупателем.
  *
  * @property int $id
  * @property int $user_id
- * @property int $partner_id
+ * @property int $company_id
  * @property string $phone
  * @property bool $status
  * @property bool $is_admin
@@ -32,32 +32,32 @@ use Illuminate\Database\Eloquent\Builder;
  * @package App/JsonApi/Proxies
  */
 
-class PartnerUserPartner extends Proxy
+class CompanyUserCustomer extends Proxy
 {
     use HasFactory, SoftDeletes;
 
     /**
-     * CompanyPartner constructor.
+     * CompanyUserCustomer constructor.
      *
-     * @param PartnerUser|null $partnerUser
+     * @param CompanyUser|null $companyUser
      */
-    public function __construct(PartnerUser $partnerUser = null)
+    public function __construct(CompanyUser $companyUser = null)
     {
         //\Log::debug('_construct');
-        $partnerUser = ($partnerUser ? $partnerUser : new PartnerUser());
-        self::bootModel($partnerUser);
+        $companyUser = ($companyUser ? $companyUser : new CompanyUser());
+        self::bootModel($companyUser);
 
-        parent::__construct($partnerUser ?: new PartnerUser());
+        parent::__construct($companyUser ?: new CompanyUser());
     }
 
     /**
      * Установка глобальной выборки для модели "сотрудники партнера"
      * Это нужно для того чтобы партнёру(админу) отобразить только его сотрудников.
      *
-     * @param PartnerUser &$partnerUser
+     * @param CompanyUser &$companyUser
      * @return void
      */
-    protected static function bootModel(PartnerUser &$partnerUser)
+    protected static function bootModel(CompanyUser &$companyUser)
     {
         //\Log::debug('boot');
         //parent::boot();
@@ -65,14 +65,14 @@ class PartnerUserPartner extends Proxy
         // never let a company user see the users of other companies
         $user = Auth::user();
         //\Log::debug('$user');
-        if (Auth::check() && Bouncer::is($user)->a('partner')) {
+        if (Auth::check() && Bouncer::is($user)->a('customer')) {
             //\Log::debug($user->partner->id);
             //$partners = $user->partners()->where('admin_user_id', $user->id)->get();
-            $partners = $user->partners()->forAdminUser($user->id)->get();
-            if($partners){
-                $partnersIds = $partners->pluck('id')->all() ?? [];
-                $partnerUser::addGlobalScope('partner_id', function (Builder $builder) use ($partnersIds) {
-                    $builder->whereIn('partner_id', $partnersIds);
+            $companies = $user->companies()->forAdminUser($user->id)->get();
+            if($companies){
+                $companiesIds = $companies->pluck('id')->all() ?? [];
+                $companyUser::addGlobalScope('company_id', function (Builder $builder) use ($companiesIds) {
+                    $builder->whereIn('company_id', $companiesIds);
                 });
             }
         }

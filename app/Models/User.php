@@ -131,5 +131,16 @@ class User extends Authenticatable
             ->where('status', false); // не заблокированный сотрудник
     }*/
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $roleId
+     * @note https://github.com/JosephSilber/bouncer/issues/126#issuecomment-246983616
+     */
+    public function scopeWhereCanRole($query, $roleId)
+    {
+        $query->whereHas('roles', function ($query) use ($roleId) {
+            $query->where('roles.id', $roleId);
+        });
+    }
 
 }

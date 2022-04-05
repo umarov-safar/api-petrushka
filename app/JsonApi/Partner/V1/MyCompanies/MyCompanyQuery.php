@@ -1,11 +1,11 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Partners;
+namespace App\JsonApi\Partner\V1\MyCompanies;
 
 use LaravelJsonApi\Laravel\Http\Requests\ResourceQuery;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
-class PartnerCollectionQuery extends ResourceQuery
+class MyCompanyQuery extends ResourceQuery
 {
 
     /**
@@ -24,23 +24,15 @@ class PartnerCollectionQuery extends ResourceQuery
             'filter' => [
                 'nullable',
                 'array',
-                JsonApiRule::filter(),
+                JsonApiRule::filter()->forget('id'),
             ],
             'include' => [
                 'nullable',
                 'string',
                 JsonApiRule::includePaths(),
             ],
-            'page' => [
-                'nullable',
-                'array',
-                JsonApiRule::page(),
-            ],
-            'sort' => [
-                'nullable',
-                'string',
-                JsonApiRule::sort(),
-            ],
+            'page' => JsonApiRule::notSupported(),
+            'sort' => JsonApiRule::notSupported(),
             'withCount' => [
                 'nullable',
                 'string',
