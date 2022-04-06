@@ -95,6 +95,7 @@ class User extends Authenticatable
             ->using(PartnerUser::class);
     }
 
+
     /**
      * @url https://stackoverflow.com/a/66969048/12562591
      * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin\V1;
+namespace App\Http\Controllers\Api\Partner\V1;
 
+use App\JsonApi\Proxies\AttributePartner;
+use App\Models\Attribute;
 use App\Dtos\AttributeDto;
 use App\Http\Controllers\Controller;
-use App\JsonApi\Admin\V1\Attributes\AttributeQuery;
-use App\JsonApi\Admin\V1\Attributes\AttributeRequest;
-use App\JsonApi\Admin\V1\Attributes\AttributeSchema;
-use App\Models\Attribute;
+use App\JsonApi\Partner\V1\Attributes\AttributeQuery;
+use App\JsonApi\Partner\V1\Attributes\AttributeRequest;
+use App\JsonApi\Partner\V1\Attributes\AttributeSchema;
 use App\Services\AttributeService;
-use LaravelJsonApi\Contracts\Routing\Route;
-use LaravelJsonApi\Contracts\Store\Store as StoreContract;
 use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Core\Responses\ErrorResponse;
@@ -71,7 +70,9 @@ class AttributeController extends Controller
 
         $attribute = Attribute::find($attribute->getKey());
 
-        return DataResponse::make($attribute);
+        $attributePartner = new AttributePartner($attribute);
+
+        return DataResponse::make($attributePartner);
 
     }
 
@@ -79,7 +80,7 @@ class AttributeController extends Controller
         AttributeSchema $schema,
         AttributeRequest $request,
         AttributeQuery $query,
-        Attribute $attribute
+        AttributePartner $attributePartner
     )
     {
         $attributes = $request->data['attributes'];
@@ -88,13 +89,13 @@ class AttributeController extends Controller
             $attributes['name'],
             $attributes['attributeType'],
             $attributes['slug'],
-            $attributes['position'] ?? $attribute->position,
-            $attributes['partnerId'] ?? $attribute->partner_id,
-            $attributes['isGlobal'] ?? $attribute->is_global
+            $attributes['position'] ?? $attributePartner->position,
+            $attributes['partnerId'] ?? $attributePartner->partner_id,
+            $attributes['isGlobal'] ?? $attributePartner->is_global
         );
 
 
-        $attribute = $this->attributeService->update($dto, $attribute->id);
+        $attribute = $this->attributeService->update($dto, $attributePartner->id);
 
         if(!$attribute) {
             $error = Error::make()
@@ -104,8 +105,9 @@ class AttributeController extends Controller
         }
 
         $attribute = Attribute::find($attribute->getKey());
+        $attributePartner = new AttributePartner($attribute);
 
-        return DataResponse::make($attribute);
+        return DataResponse::make($attributePartner);
     }
 
 }
