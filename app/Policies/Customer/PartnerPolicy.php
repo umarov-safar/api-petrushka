@@ -14,7 +14,7 @@ class PartnerPolicy
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return bool
      */
     public function viewAny(User $user)
     {
@@ -27,13 +27,24 @@ class PartnerPolicy
      *
      * @param  \App\Models\User  $user
      * @param  Partner $partner
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return bool
      */
     public function view(User $user, Partner $partner)
     {
         return $user->isA('customer');
     }
 
+
+    public function viewCategories(User $user): bool
+    {
+        return true;
+    }
+
+
+    public function viewProducts(User $user)
+    {
+        return true;
+    }
     /**
      * Determine whether the user can create models.
      *
