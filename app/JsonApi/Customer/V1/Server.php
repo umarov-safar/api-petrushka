@@ -37,6 +37,8 @@ class Server extends BaseServer
             MyCompanies\MyCompanySchema::class,
             Account\AccountSchema::class,
             Partners\PartnerSchema::class,
+            Categories\CategorySchema::class,
+            Products\ProductSchema::class,
         ];
     }
 }

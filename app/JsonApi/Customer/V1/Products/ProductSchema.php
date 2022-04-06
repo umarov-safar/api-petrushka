@@ -1,19 +1,19 @@
 <?php
 
-namespace App\JsonApi\Customer\V1\Partners;
+namespace App\JsonApi\Customer\V1\Products;
 
-use App\JsonApi\Proxies\PartnerCustomer as Partner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
+use App\JsonApi\Proxies\ProductCustomer as Product;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerSchema extends ProxySchema
+class ProductSchema extends ProxySchema
 {
 
     /**
@@ -21,7 +21,7 @@ class PartnerSchema extends ProxySchema
      *
      * @var string
      */
-    public static string $model = Partner::class;
+    public static string $model = Product::class;
 
     /**
      * Get the resource fields.
@@ -32,9 +32,20 @@ class PartnerSchema extends ProxySchema
     {
         return [
             ID::make(),
-            Str::make('name')->readOnly(),
-            HasMany::make('categories'),
-            HasMany::make('products'),
+            Str::make('name'),
+            Number::make('sku'),
+            Str::make('description'),
+            Str::make('descriptionOriginal'),
+            Str::make('slug'),
+            Str::make('humanVolume'),
+            Str::make('canonicalPermalink'),
+            Boolean::make('isAlcohol'),
+            Number::make('brandId'),
+            Number::make('categoryId'),
+            Number::make('manufacturerId'),
+            Number::make('manufacturingCountryId'),
+            Number::make('partnerId'),
+            Str::make('attributes'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -59,9 +70,7 @@ class PartnerSchema extends ProxySchema
      */
     public function pagination(): ?Paginator
     {
-        return PagePagination::make()
-            ->withPageKey('page')
-            ->withPerPageKey('limit');
+        return PagePagination::make();
     }
 
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\JsonApi\Customer\V1\Partners;
+namespace App\JsonApi\Customer\V1\Categories;
 
-use App\JsonApi\Proxies\PartnerCustomer as Partner; // proxy model https://laraveljsonapi.io/docs/1.0/digging-deeper/proxies.html
+use App\JsonApi\Proxies\CategoryCustomer as Category;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\ProxySchema;
 
-class PartnerSchema extends ProxySchema
+class CategorySchema extends ProxySchema
 {
 
     /**
@@ -21,7 +21,7 @@ class PartnerSchema extends ProxySchema
      *
      * @var string
      */
-    public static string $model = Partner::class;
+    public static string $model = Category::class;
 
     /**
      * Get the resource fields.
@@ -32,9 +32,23 @@ class PartnerSchema extends ProxySchema
     {
         return [
             ID::make(),
-            Str::make('name')->readOnly(),
-            HasMany::make('categories'),
-            HasMany::make('products'),
+            Str::make('name'),
+            Str::make('slug'),
+            Str::make('categoryType', 'type'),
+            Number::make('position'),
+            Boolean::make('active'),
+            Number::make('parentId'),
+            Number::make('partnerId'),
+            Str::make('iconUrl'),
+            Str::make('altIcon'),
+            Str::make('canonicalUrl'),
+            Number::make('depth'),
+            Str::make('children'),
+            Str::make('requirements'),
+            Number::make('productCounts')->readOnly(),
+            Str::make('promoService'),
+            Str::make('attributes'),
+            Boolean::make('isAlcohol'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

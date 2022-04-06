@@ -17,17 +17,21 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Ability::class => AbilityPolicy::class,
+        \App\JsonApi\Proxies\Account::class => \App\Policies\AccountPolicy::class,
+
         \App\JsonApi\Proxies\CompanyPartner::class => \App\Policies\Partner\CompanyPolicy::class,
         \App\JsonApi\Proxies\PartnerUserPartner::class => \App\Policies\Partner\PartnerUserPolicy::class,
-        \App\JsonApi\Proxies\MyCompany::class => \App\Policies\Partner\MyCompanyPolicy::class,
-        \App\JsonApi\Proxies\Account::class => \App\Policies\AccountPolicy::class,
-        \App\Models\Attribute::class => \App\Policies\AttributePolicy::class
-
         \App\JsonApi\Proxies\CustomerPartner::class => \App\Policies\Partner\CustomerPolicy::class,
+        \App\JsonApi\Proxies\MyCompany::class => \App\Policies\Partner\MyCompanyPolicy::class,
+
+
         \App\JsonApi\Proxies\MyCompanyCustomer::class => \App\Policies\Customer\MyCompanyPolicy::class,
         \App\JsonApi\Proxies\CompanyUserCustomer::class => \App\Policies\Customer\CompanyUserPolicy::class,
         \App\JsonApi\Proxies\PartnerCustomer::class => \App\Policies\Customer\PartnerPolicy::class,
-    ];
+        \App\JsonApi\Proxies\CategoryCustomer::class => \App\Policies\Customer\CategoryPolicy::class,
+        \App\JsonApi\Proxies\ProductCustomer::class => \App\Policies\Customer\ProductPolicy::class,
+
+        ];
 
     /**
      * Register any authentication / authorization services.
@@ -37,6 +41,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
     }
 }

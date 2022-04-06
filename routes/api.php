@@ -167,7 +167,12 @@ JsonApiRoute::server('Customer\V1')
         // company user routes
         $server->resource('my-companies', CustomerMyCompanyController::class);
         $server->resource('employees', CustomerEmployeeController::class); // => employees
-        $server->resource('partners', PartnerController::class); // => employees
+
+        $server->resource('partners', PartnerController::class)
+            ->relationships(function ($relationships) {
+                $relationships->hasMany('categories');
+                $relationships->hasMany('products');
+            });
         // partners
         // companies
     });
