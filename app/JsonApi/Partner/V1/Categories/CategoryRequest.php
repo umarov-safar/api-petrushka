@@ -1,13 +1,13 @@
 <?php
 
-namespace App\JsonApi\Partner\V1\Attributes;
+namespace App\JsonApi\Partner\V1\Categories;
 
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
-use \App\JsonApi\Admin\V1\Attributes\AttributeRequest as AdminAttributeRequest;
+use App\JsonApi\Admin\V1\Categories\CategoryRequest  as AdminCategoryRequest;
 
-class AttributeRequest extends AdminAttributeRequest
+class CategoryRequest extends AdminCategoryRequest
 {
 
     /**
@@ -20,11 +20,9 @@ class AttributeRequest extends AdminAttributeRequest
         $rules = parent::rules();
 
         $user = auth()->user();
-
         $partners = $user->partners()->forAdminUser($user->id)->get();
-        $partnersIds = $partners->pluck('id')->all() ?? [];
 
-        //if the $partnersIds is equal to empty array then never let  user to create attribute because he is not an admin
+        $partnersIds = $partners->pluck('id')->all() ?? [];
         $rules['partnerId'] = 'required|integer|' . Rule::in($partnersIds);
 
         return $rules;

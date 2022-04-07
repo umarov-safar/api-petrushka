@@ -30,14 +30,9 @@ class CategoryRequest extends ResourceRequest
 
         $unique = Rule::unique('categories');
 
-        if($category) {
-            $unique = $unique->ignore($category);
-        }
-
-        return [
+        $rules = [
             'name' => 'required|string|min:2',
             'categoryType' => 'required|integer|' . Rule::in(Category::TYPES),
-            'slug' => 'required|string|' . $unique,
             'position' => 'nullable|integer',
             'active' => 'nullable|boolean',
             'parentId' => 'nullable|integer|exists:categories,id',
@@ -53,6 +48,14 @@ class CategoryRequest extends ResourceRequest
             'attributes.*.presentation' => 'nullable|string',
             'isAlcohol' => 'nullable|boolean'
         ];
+
+        if($category) {
+            $unique = $unique->ignore($category);
+            $rules['slug'] = 'required|string|unique:categories,slug,' . $category->id;
+        }
+
+        return  $rules;
+
     }
 
 }

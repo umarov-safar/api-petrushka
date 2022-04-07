@@ -17,7 +17,6 @@ use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class AttributeController extends Controller
 {
-
     use Actions\FetchMany;
     use Actions\FetchOne;
 //    use Actions\Store;

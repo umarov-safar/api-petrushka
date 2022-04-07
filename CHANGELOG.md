@@ -7,6 +7,10 @@ API по спецификации [JSON API(v1.0)](https://jsonapi.org/format/)
 ### Added:
 - Описание ошибок при выполнении методов; 
 
+## [1.34.0] - 2022.04.07
+### Added:
+- Партнёр: create, update, view Категория 
+
 ## [1.33.0] - 2022.04.06
 ### Added:
 - Create, update, view атрибут партнера
