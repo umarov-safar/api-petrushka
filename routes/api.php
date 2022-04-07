@@ -35,6 +35,8 @@ use \App\Http\Controllers\Api\Partner\V1\AccountController as PartnerAccountCont
 use \App\Http\Controllers\Api\Partner\V1\CustomerController as PartnerCustomerController;
 use \App\Http\Controllers\Api\Partner\V1\AttributeController as PartnerAttributeController;
 use \App\Http\Controllers\Api\Partner\V1\CategoryController as PartnerCategoryController;
+use \App\Http\Controllers\Api\Partner\V1\ProductController as PartnerProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -200,4 +202,6 @@ JsonApiRoute::server('Partner\V1')
         $server->resource('attributes', PartnerAttributeController::class);
 
         $server->resource('categories', PartnerCategoryController::class);
+
+        $server->resource('products', PartnerProductController::class);
     });

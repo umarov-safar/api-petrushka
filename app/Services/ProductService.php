@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Dtos\ProductDto;
+use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 
@@ -51,7 +52,7 @@ class ProductService {
         if($attributes = $request->getAttributes()) {
             $attributesIds = collect($attributes)->pluck('id')->toArray();
 
-            $attributeOriginal = Product::whereIn('id', $attributesIds)
+            $attributeOriginal = Attribute::whereIn('id', $attributesIds)
                 ->get(['id', 'name', 'slug'])
                 ->toArray();
 

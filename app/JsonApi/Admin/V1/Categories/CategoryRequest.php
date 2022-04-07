@@ -28,13 +28,12 @@ class CategoryRequest extends ResourceRequest
     {
         $category = $this->model();
 
-        $unique = Rule::unique('categories');
-
         $rules = [
             'name' => 'required|string|min:2',
             'categoryType' => 'required|integer|' . Rule::in(Category::TYPES),
             'position' => 'nullable|integer',
             'active' => 'nullable|boolean',
+            'slug' => 'required|string|unique:categories,slug',
             'parentId' => 'nullable|integer|exists:categories,id',
             'partnerId' => 'nullable|integer|exists:partners,id',
             'iconUrl' => 'nullable|string',
@@ -50,12 +49,10 @@ class CategoryRequest extends ResourceRequest
         ];
 
         if($category) {
-            $unique = $unique->ignore($category);
-            $rules['slug'] = 'required|string|unique:categories,slug,' . $category->id;
+            $rules['slug'] = $rules['slug'] . ',' . $category->id;
         }
 
         return  $rules;
-
     }
 
 }

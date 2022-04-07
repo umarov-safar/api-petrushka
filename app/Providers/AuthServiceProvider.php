@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\JsonApi\Proxies\AttributePartner;
 use App\JsonApi\Proxies\CategoryPartner;
+use App\JsonApi\Proxies\ProductPartner;
 use App\Models\Role;
 use App\Policies\AbilityPolicy;
+use App\Policies\Partner\ProductPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Silber\Bouncer\Database\Ability;
 
@@ -27,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\JsonApi\Proxies\MyCompany::class => \App\Policies\Partner\MyCompanyPolicy::class,
         \App\JsonApi\Proxies\AttributePartner::class => \App\Policies\Partner\AttributePolicy::class,
         \App\JsonApi\Proxies\CategoryPartner::class => \App\Policies\Partner\CategoryPolicy::class,
+        \App\JsonApi\Proxies\ProductPartner::class => \App\Policies\Partner\ProductPolicy::class,
 
         \App\JsonApi\Proxies\MyCompanyCustomer::class => \App\Policies\Customer\MyCompanyPolicy::class,
         \App\JsonApi\Proxies\CompanyUserCustomer::class => \App\Policies\Customer\CompanyUserPolicy::class,

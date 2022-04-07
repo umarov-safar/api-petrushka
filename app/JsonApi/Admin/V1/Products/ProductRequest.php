@@ -27,16 +27,12 @@ class ProductRequest extends ResourceRequest
     {
         $product = $this->model();
 
-        $unique = Rule::unique('products');
-
-        if($product) $unique = $unique->ignore($product);
-
-        return [
+        $rules = [
             'name' => 'required|string',
             'sku' => 'required|integer',
             'description' => 'required|string',
             'descriptionOriginal' => 'required|string',
-            'slug' => 'required|string|' . $unique,
+            'slug' => 'required|string|unique:products,slug',
             'humanVolume' => 'nullable|string',
             'canonicalPermalink' => 'nullable|string',
             'isAlcohol' => 'nullable|boolean',
@@ -51,6 +47,12 @@ class ProductRequest extends ResourceRequest
             'attributes.*.presentation' => 'nullable|string',
             'attributes.*.value_id' => 'nullable|exists:attribute_values,id',
         ];
+
+        if($product) {
+            $rules['slug'] = $rules['slug'] . ',' . $product->id;
+        }
+
+        return $rules;
     }
 
 }

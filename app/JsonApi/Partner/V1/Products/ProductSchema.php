@@ -1,8 +1,8 @@
 <?php
 
-namespace App\JsonApi\Admin\V1\Products;
+namespace App\JsonApi\Partner\V1\Products;
 
-use App\Models\Product;
+use App\JsonApi\Proxies\ProductPartner as Product;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -11,9 +11,9 @@ use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\ProxySchema;
 
-class ProductSchema extends Schema
+class ProductSchema extends ProxySchema
 {
 
     /**

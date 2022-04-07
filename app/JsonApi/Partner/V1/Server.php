@@ -40,6 +40,7 @@ class Server extends BaseServer
             Customers\CustomerSchema::class,
             Attributes\AttributeSchema::class,
             Categories\CategorySchema::class,
+            Products\ProductSchema::class,
         ];
     }
 }
