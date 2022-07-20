@@ -94,7 +94,7 @@ JsonApiRoute::server('Admin\V1')
     ->resources(function ($server) {
         //Route::post('auth/logout', [AuthController::class, 'logout']); // logout
 
-        $server->resource('account', AccountController::class);
+        $server->resource('account', AccoupntController::class);
         Route::delete('account', [AccountController::class, 'logout']); // logout
         /**
          * POST     /account - изменить аккаунт

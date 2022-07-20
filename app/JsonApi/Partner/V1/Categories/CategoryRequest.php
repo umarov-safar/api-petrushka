@@ -23,7 +23,7 @@ class CategoryRequest extends AdminCategoryRequest
         $partners = $user->partners()->forAdminUser($user->id)->get();
 
         $partnersIds = $partners->pluck('id')->all() ?? [];
-        $rules['partnerId'] = 'required|integer|' . Rule::in($partnersIds);
+        $rules['relatedPartners.*.id'] = 'required|integer|' . Rule::in($partnersIds);
 
         return $rules;
     }

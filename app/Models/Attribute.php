@@ -42,4 +42,10 @@ class Attribute extends Model
     {
         return $this->hasMany(AttributeValue::class);
     }
+
+
+    public function partnerOwner()
+    {
+        return $this->belongsTo(Partner::class, 'partner_id');
+    }
 }

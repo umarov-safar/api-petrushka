@@ -14,7 +14,8 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\ProxySchema;
 
-class AttributeSchema extends ProxySchema
+class
+AttributeSchema extends ProxySchema
 {
 
     /**

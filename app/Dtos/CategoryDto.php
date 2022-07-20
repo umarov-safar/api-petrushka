@@ -34,9 +34,9 @@ class CategoryDto {
     protected ?int $parent_id;
 
     /**
-     * @var int|null
+     * @var array|null
      */
-    protected ?int $partner_id;
+    protected ?array $related_partners;
 
     /**
      * @var string|null
@@ -81,7 +81,7 @@ class CategoryDto {
      * @param int $position
      * @param int $active
      * @param int|null $parent_id
-     * @param int|null $partner_id
+     * @param array|null $related_partners
      * @param string|null $icon_url
      * @param string|null $alt_icon
      * @param string|null $canonical_url
@@ -97,7 +97,7 @@ class CategoryDto {
         int $position,
         int $active,
         ?int $parent_id,
-        ?int $partner_id,
+        ?array $related_partners,
         ?string $icon_url,
         ?string $alt_icon,
         ?string $canonical_url,
@@ -113,7 +113,7 @@ class CategoryDto {
         $this->position = $position;
         $this->active = $active;
         $this->parent_id = $parent_id;
-        $this->partner_id = $partner_id;
+        $this->related_partners = $related_partners;
         $this->icon_url = $icon_url;
         $this->alt_icon = $alt_icon;
         $this->canonical_url = $canonical_url;
@@ -173,11 +173,11 @@ class CategoryDto {
     }
 
     /**
-     * @return int|null
+     * @return array|null
      */
-    public function getPartnerId(): ?int
+    public function getRelatedPartners(): ?array
     {
-        return $this->partner_id;
+        return $this->related_partners;
     }
 
     /**
@@ -213,7 +213,7 @@ class CategoryDto {
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getRequirements(): ?array
     {

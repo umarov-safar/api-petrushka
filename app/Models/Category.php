@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 /**
  * App\Models\Category
@@ -15,7 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $position Поле для сортировка
  * @property int $active Категория активная если значения 1 не активная 0
  * @property int|null $parent_id Идентификатор родительского каталога
- * @property int|null $partner_id Идентификатор партнера, если партнер создал категорию
+ * ['id' => int, 'category_name' => string, 'active' => boolean]
+ * @property int|null $related_partners Партнёры у каторых отабражает эта категория
  * @property string|null $icon_url Ссылка на иконка
  * @property string|null $alt_icon Описание иконка
  * @property string|null $canonical_url Канонический URL
@@ -41,7 +43,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsAlcohol($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereRelatedPartners($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category wherePartnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category wherePosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category wherePromoService($value)
@@ -55,6 +57,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    use HasJsonRelationships;
 
     protected $fillable = [
         'name',
@@ -63,7 +66,7 @@ class Category extends Model
         'position',
         'active',
         'parent_id',
-        'partner_id',
+        'related_partners',
         'icon_url',
         'alt_icon',
         'canonical_url',
@@ -77,6 +80,7 @@ class Category extends Model
         'requirements' => 'array',
         'promo_service' => 'array',
         'attributes' => 'array',
+        'related_partners' => 'array',
     ];
 
     /*
@@ -98,4 +102,17 @@ class Category extends Model
     const IS_ALCOHOL_NO = 0;
 
     const DEFAULT_POSITION = 0;
+
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+
+    public function  partners()
+    {
+        return $this->belongsToJson(Partner::class, 'related_partners[]->id');
+    }
+
 }

@@ -46,9 +46,9 @@ class CreateCategoriesTable extends Migration
                 ->nullable()
                 ->comment('Идентификатор родительского каталога');
 
-            $table->foreignIdFor(\App\Models\Partner::class)
+            $table->jsonb('related_partners')
                 ->nullable()
-                ->comment('Идентификатор партнера, если партнер создал категорию');
+                ->comment('Партнёры у каторых отабражает эта категория');
 
             $table->string('icon_url')
                 ->nullable()
@@ -88,9 +88,6 @@ class CreateCategoriesTable extends Migration
                 ->references('id')
                 ->on('categories');
 
-            $table->foreign('partner_id')
-                ->references('id')
-                ->on('partners');
         });
 
     }

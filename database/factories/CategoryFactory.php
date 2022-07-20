@@ -22,7 +22,6 @@ class CategoryFactory extends Factory
             'slug' => $this->faker->slug(),
             'position' => $this->faker->numberBetween(1, 30),
             'active' => $this->faker->boolean(60),
-            'partner_id' => Partner::all()->random()->id,
             'icon_url' => $this->faker->imageUrl(),
             'alt_icon' => $this->faker->sentence(),
             'canonical_url' => $this->faker->url(),

@@ -4,6 +4,7 @@ namespace App\JsonApi\Partner\V1\Categories;
 
 use App\JsonApi\Proxies\CategoryPartner as Category;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\ArrayList;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
@@ -39,7 +40,6 @@ class CategorySchema extends ProxySchema
             Number::make('position'),
             Boolean::make('active'),
             Number::make('parentId'),
-            Number::make('partnerId'),
             Str::make('iconUrl'),
             Str::make('altIcon'),
             Str::make('canonicalUrl'),
@@ -47,6 +47,7 @@ class CategorySchema extends ProxySchema
             Str::make('children'),
             Str::make('requirements'),
             Str::make('attributes'),
+            ArrayList::make('relatedPartners'),
             Boolean::make('isAlcohol'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

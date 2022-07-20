@@ -52,7 +52,7 @@ class CategoryService {
         $category->slug = $request->getSlug();
         $category->position = $request->getPosition();
         $category->active = $request->getActive();
-        $category->partner_id = $request->getPartnerId();
+        $category->related_partners = $request->getRelatedPartners();
         $category->parent_id = $request->getParentId();
         $category->icon_url = $request->getIconUrl();
         $category->alt_icon = $request->getAltIcon();
